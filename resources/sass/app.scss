@@ -1,0 +1,97 @@
+@import 'bootstrap/scss/bootstrap';
+
+:root{
+    --primaryColor: #3B3A48;
+    --hrColor: #79798f;
+    --effectColor: #7247F0;
+    --backgroundColor: #F2F2F2;
+}
+
+body{
+    background-color: var(--backgroundColor) !important;
+}
+
+aside{
+    background-color: var(--primaryColor) !important;
+    border-right: 2px solid var(--effectColor);
+    -webkit-box-shadow: 2px -1px 5px 0px rgba(114,71,240,1);
+    -moz-box-shadow: 2px -1px 5px 0px rgba(114,71,240,1);
+    box-shadow: 2px -1px 5px 0px rgba(114,71,240,1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0 15px !important;
+}
+
+aside .effect{
+    text-align: center;
+    color: #fff !important;
+    font-weight: 300 !important;
+    text-transform: uppercase;
+}
+
+aside .effect span{
+    font-weight: 700;
+    color: var(--effectColor);
+}
+
+aside hr{
+    color: var(--hrColor);
+}
+
+
+aside nav a{
+    color: #fff;
+    text-decoration: none;
+}
+
+main{
+
+    .top{
+        padding: 15px;
+
+        h5{
+            color: #9EA7AD;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        a{
+
+            color: #fff;
+            background-color: var(--effectColor);
+            padding: 7px 20px !important;
+            text-decoration: none;
+            border-radius: 20px;
+        }
+    }
+
+    table{
+
+        .subscription{
+
+            span{
+                background-color: #DBF5E4;
+                color: #6BDC9C;
+                padding: 7px 10px;
+                border-radius: 5px;
+            }
+        }
+
+        .false{
+
+            span{
+                background-color: #FCF2DB;
+                color: #EED171;
+            }
+        }
+
+        a{
+            background-color: var(--effectColor) !important;
+            text-decoration: none;
+            color: #fff;
+            padding: 7px 10px;
+            border-radius: 5px;
+        }
+    }
+}
