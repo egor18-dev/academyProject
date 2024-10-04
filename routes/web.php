@@ -24,3 +24,7 @@ Route::get('/dashboard', function () {
 Route::get('/users', function () {
     return view('users/view_users');
 });
+
+Route::get('/add-user', function () {
+    return view('users/add_user');
+});
