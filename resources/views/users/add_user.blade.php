@@ -12,23 +12,24 @@
                 </div>
               </div>
             </div>
-            <form action="#!">
+            <form action="{{ route('add-user') }}" method="POST">
+              @csrf 
               <div class="row gy-3 gy-md-4 overflow-hidden">
                 <div class="col-12">
-                  <label for="firstName" class="form-label">Nombre <span class="text-danger">*</span></label>
-                  <input type="email" class="form-control" name="firstName" id="firstName" placeholder="Nombre del usuario" required>
+                  <label for="name" class="form-label">Nombre <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}" placeholder="Nombre del usuario">
                 </div>
                 <div class="col-12">
-                  <label for="lastName" class="form-label">Apellidos <span class="text-danger">*</span></label>
-                  <input type="email" class="form-control" name="lastName" id="lastName" placeholder="Apellido del usuario" required>
+                  <label for="surnames" class="form-label">Apellidos <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="surnames" id="surnames" value="{{ old('surnames') }}" placeholder="Apellido del usuario">
                 </div>
                 <div class="col-12">
                   <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                  <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" value=" {{old('email')}} ">
                 </div>
                 <div class="col-12">
-                  <label for="email" class="form-label">Función <span class="text-danger">*</span></label>
-                  <select class="form-select" aria-label="Default select example">
+                  <label for="function" class="form-label">Función <span class="text-danger">*</span></label>
+                  <select class="form-select" name="function" id="function" aria-label="Default select example">
                         @foreach ($roles as $role)
                             <option value="1">{{ $role->name }}</option>
                         @endforeach
@@ -36,7 +37,7 @@
                 </div>
                 <div class="col-12">
                   <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
-                  <input type="password" class="form-control" name="password" id="password" value="" required>
+                  <input type="password" class="form-control" name="password" id="password" value="{{ old('password') }}">
                 </div>
                 <div class="col-12">
                   <div class="form-check">

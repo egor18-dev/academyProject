@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -12,5 +13,29 @@ class UserController extends Controller
     {
         $roles = Role::all();
         return view('users/add_user', ['roles' => $roles]);
+    }
+
+    public function addUser (Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'surnames' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'surnames.required' => 'Los apellidos son obligatorios.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'Debes ingresar un correo electrónico válido.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos :min caracteres.', 
+        ]);
+
+        if($validator->fails()){
+            return back()->withInput()->withErrors($validator);
+        }
+
+        echo "data correct";
+        die;
     }
 }

@@ -31,3 +31,4 @@ Route::get('/users', function () {
 });
 
 Route::get('/add-user', [UserController::class, 'dashboardCreateUser']);
+Route::post('/add-user', [UserController::class, 'addUser'])->name('add-user');
