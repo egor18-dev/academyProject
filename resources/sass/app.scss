@@ -1,63 +1,60 @@
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
 
-:root{
-    --primaryColor: #3B3A48;
+:root {
+    --primaryColor: #3b3a48;
     --hrColor: #79798f;
-    --effectColor: #7247F0;
-    --backgroundColor: #F2F2F2;
+    --effectColor: #7247f0;
+    --backgroundColor: #f2f2f2;
 }
 
-body{
+body {
     background-color: var(--backgroundColor) !important;
 }
 
-aside{
+aside {
     background-color: var(--primaryColor) !important;
     border-right: 2px solid var(--effectColor);
-    -webkit-box-shadow: 2px -1px 5px 0px rgba(114,71,240,1);
-    -moz-box-shadow: 2px -1px 5px 0px rgba(114,71,240,1);
-    box-shadow: 2px -1px 5px 0px rgba(114,71,240,1);
+    -webkit-box-shadow: 2px -1px 5px 0px rgba(114, 71, 240, 1);
+    -moz-box-shadow: 2px -1px 5px 0px rgba(114, 71, 240, 1);
+    box-shadow: 2px -1px 5px 0px rgba(114, 71, 240, 1);
     position: absolute;
     top: 0;
     left: 0;
     padding: 0 15px !important;
 }
 
-aside .effect{
+aside .effect {
     text-align: center;
     color: #fff !important;
     font-weight: 300 !important;
     text-transform: uppercase;
 }
 
-aside .effect span{
+aside .effect span {
     font-weight: 700;
     color: var(--effectColor);
 }
 
-aside hr{
+aside hr {
     color: var(--hrColor);
 }
 
-
-aside nav a{
+aside nav a {
     color: #fff;
     text-decoration: none;
 }
 
-main{
-
-    .top{
+main {
+    .top {
         padding: 15px;
 
-        h5{
-            color: #9EA7AD;
+        h5 {
+            color: #9ea7ad;
             font-weight: 300;
             letter-spacing: 2px;
         }
 
-        a{
-
+        a {
             color: #fff;
             background-color: var(--effectColor);
             padding: 7px 20px !important;
@@ -66,27 +63,24 @@ main{
         }
     }
 
-    table{
-
-        .subscription{
-
-            span{
-                background-color: #DBF5E4;
-                color: #6BDC9C;
+    table {
+        .subscription {
+            span {
+                background-color: #dbf5e4;
+                color: #6bdc9c;
                 padding: 7px 10px;
                 border-radius: 5px;
             }
         }
 
-        .false{
-
-            span{
-                background-color: #FCF2DB;
-                color: #EED171;
+        .false {
+            span {
+                background-color: #fcf2db;
+                color: #eed171;
             }
         }
 
-        a{
+        a {
             background-color: var(--effectColor) !important;
             text-decoration: none;
             color: #fff;
@@ -96,7 +90,7 @@ main{
     }
 }
 
-.addBtn{
+.addBtn {
     background-color: var(--effectColor);
     color: #fff;
     padding: 7px 25px;
@@ -107,51 +101,79 @@ main{
 
 // Home
 
-.main-home{
+.main-home {
     width: auto;
     height: 100vh;
     overflow: hidden !important;
 
     display: flex;
 
-    .section{
+    .section {
         width: 0;
         height: 100%;
         flex-grow: 1;
         position: relative;
         transition: 500ms all;
+        overflow: hidden !important;
 
-        &:hover{
+        &:hover {
             flex-grow: 2;
+
+            img {
+                filter: brightness(80%);
+            }
+
+            a{
+                transform: translateX(0%);
+                opacity: 1;
+            }
+
+            h5{
+                transform: translateY(200%);
+                opacity: 0;
+            }
         }
 
-        img{
+        img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             filter: brightness(55%);
+            transition: 250ms all;
         }
 
-        .info{
-            width: 100%;
-            height: 100%;
+        h5, a{
+            width: fit-content;
             position: absolute;
-            top: 0;
+            bottom: 150px;
             left: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: end;
-            z-index: 999;
-            padding-bottom: 150px;
+            right: 0;
+            margin: auto;
+        }
 
-            h5{
-                color: #fff;
-                text-transform: uppercase;
-                font-size: 3.5em;
-                letter-spacing: 2px;
-                font-weight: 700;
-            }
+        h5{
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 3.5em;
+            letter-spacing: 2px;
+            font-weight: 700;
+            transition: 250ms all;
+        }
+
+        a{
+            font-size: 2em;
+            background-color: var(--effectColor) !important;
+            padding: 7px 40px;
+            background-color: transparent;
+            color: #fff;
+            border-radius: 40px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            transform: translateX(-200%);
+            opacity: 0;
+            transition: 250ms all;
         }
     }
 }
