@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,4 @@ Route::get('/users', function () {
     return view('users/view_users');
 });
 
-Route::get('/add-user', function () {
-    return view('users/add_user');
-});
+Route::get('/add-user', [UserController::class, 'dashboardCreateUser']);

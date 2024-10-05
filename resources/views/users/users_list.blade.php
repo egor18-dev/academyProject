@@ -1,5 +1,5 @@
 <div class="container-fluid users mt-3 p-0">
-    <table class="table align-middle mb-0 p-0 bg-white mx-3">
+    <table class="table align-middle mb-0 p-0 bg-white mx-3 w-100">
         <thead class="bg-light">
             <tr>
                 <th>Nombre</th>

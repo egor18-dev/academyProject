@@ -1,16 +1,8 @@
 @extends('welcome')
 @section('content')
     <section class="container-fluid">
-        <div class="row w-100">
-            <div>
-                @include('templates/header')
-            </div>
-            <div>
-                @include('main')
-            </div>
-            <div>
-                @include('templates/footer')
-            </div>
-        </div>
+            {{-- @include('templates/header') --}}
+            @include('main')
+            {{-- @include('templates/footer') --}}
     </section>
 @endsection
