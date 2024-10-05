@@ -25,6 +25,11 @@ class UserController extends Controller
         return view('users/add_user', ['roles' => $roles]);
     }
 
+    public function signUp ()
+    {
+        return view('auth/sign_up');
+    }
+
     public function addUser (Request $request)
     {
         $validator = Validator::make($request->all(),[

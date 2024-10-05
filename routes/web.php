@@ -26,6 +26,7 @@ Route::get('/dashboard', function () {
     return view('page');
 });
 
-Route::get('/users', [UserController::class, 'retrieveUsers']);
+Route::get('/users', [UserController::class, 'retrieveUsers'])->name('users');
 Route::get('/add-user', [UserController::class, 'dashboardCreateUser']);
+Route::get('/sign-up', [UserController::class, 'signUp'])->name('sign-up');
 Route::post('/add-user', [UserController::class, 'addUser'])->name('add-user');

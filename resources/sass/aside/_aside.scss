@@ -1,0 +1,32 @@
+aside {
+    background-color: var(--primaryColor) !important;
+    border-right: 2px solid var(--effectColor);
+    -webkit-box-shadow: 2px -1px 5px 0px rgba(114, 71, 240, 1);
+    -moz-box-shadow: 2px -1px 5px 0px rgba(114, 71, 240, 1);
+    box-shadow: 2px -1px 5px 0px rgba(114, 71, 240, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0 15px !important;
+}
+
+aside .effect {
+    text-align: center;
+    color: #fff !important;
+    font-weight: 300 !important;
+    text-transform: uppercase;
+}
+
+aside .effect span {
+    font-weight: 700;
+    color: var(--effectColor);
+}
+
+aside hr {
+    color: var(--hrColor);
+}
+
+aside nav a {
+    color: #fff;
+    text-decoration: none;
+}

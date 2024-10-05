@@ -1,3 +1,4 @@
+
 @extends('page')
 @section('page')
     <main class="container-fluid mt-3">
