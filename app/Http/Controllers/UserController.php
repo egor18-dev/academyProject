@@ -6,9 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+    public function retrieveUsers () 
+    {
+        $users = User::all();
+
+        return view('users/view_users', ['users' => $users]);
+    }
+
     public function dashboardCreateUser ()
     {
         $roles = Role::all();
@@ -35,7 +45,14 @@ class UserController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
-        echo "data correct";
-        die;
+        User::create([
+            'name' =>$request->name,
+            'surnames' => $request->surnames,
+            'email' => $request->email,
+            'password' => Hash::make($request->password, ['rounds' => 12])
+        ]);
+
+        return redirect()->to('users');
+
     }
 }
