@@ -16,12 +16,10 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        // Crear permisos si no existen
         Permission::firstOrCreate(['name' => 'create-users']);
         Permission::firstOrCreate(['name' => 'edit-users']);
         Permission::firstOrCreate(['name' => 'delete-users']);
 
-        // Crear roles si no existen
         $adminRole = Role::firstOrCreate(['name' => 'Administrador']);
         $studentRole = Role::firstOrCreate(['name' => 'Estudiante']); 
 

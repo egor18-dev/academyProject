@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-12">
                   <div class="d-grid">
-                    <button class="btn btn-lg btn-primary" type="submit">Crear cuenta</button>
+                    <button class="principalBtn" type="submit">Crear cuenta</button>
                   </div>
                 </div>
               </div>
