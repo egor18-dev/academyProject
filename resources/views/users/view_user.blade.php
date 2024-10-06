@@ -29,12 +29,24 @@
                   <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" id="email" placeholder="name@example.com" value=" {{old('email') ? old('email') : $user->email}} ">
                 </div>
                 <div class="col-12">
+                    <label for="role" class="form-label">Función <span class="text-danger">*</span></label>
+                    <select class="form-select" name="role" id="role">
+                          @foreach ($roles as $role)
+                            @if ($role->name === $actualUserRole)
+                              <option selected value="{{ $role->name }}">{{ $role->name }}</option>
+                            @else
+                              <option value="{{ $role->name }}">{{ $role->name }}</option>
+                            @endif                            
+                          @endforeach
+                    </select>
+                  </div>
+                <div class="col-12">
                   <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
                   <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''  }}" name="password" id="password" value="{{ old('password') }}">
                 </div>
                 <div class="col-12">
                   <div class="d-grid">
-                    <button class="principalBtn" type="submit">Crear cuenta</button>
+                    <button class="principalBtn" type="submit">Actualizar cuenta</button>
                   </div>
                 </div>
               </div>

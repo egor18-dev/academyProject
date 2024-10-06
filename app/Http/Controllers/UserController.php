@@ -66,9 +66,11 @@ class UserController extends Controller
     public function viewUser (Request $request, $uuid)
     {
         $user = User::where('uuid', $uuid)->first();
+        $roles = Role::all();
+        $actualUserRole = $user->getRoleNames()->isNotEmpty() ? implode(', ', $user->getRoleNames()->toArray()) : 'Estudiante';
 
         if(!$user) return redirect()->to('dashboard');
 
-        return view('users/view_user', ['user' => $user]);
+        return view('users/view_user', ['user' => $user, 'roles' => $roles, 'actualUserRole' => $actualUserRole]);
     }
 }
