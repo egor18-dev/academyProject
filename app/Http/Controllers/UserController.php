@@ -63,7 +63,7 @@ class UserController extends Controller
 
     }
 
-    public function viewUser (Request $request, $uuid)
+    public function retrieveUser (Request $request, $uuid)
     {
         $user = User::where('uuid', $uuid)->first();
         $roles = Role::all();
@@ -71,6 +71,6 @@ class UserController extends Controller
 
         if(!$user) return redirect()->to('dashboard');
 
-        return view('users/view_user', ['user' => $user, 'roles' => $roles, 'actualUserRole' => $actualUserRole]);
+        return view('users/update_user', ['user' => $user, 'roles' => $roles, 'actualUserRole' => $actualUserRole]);
     }
 }

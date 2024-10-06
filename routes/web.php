@@ -30,4 +30,4 @@ Route::get('/users', [UserController::class, 'retrieveUsers'])->name('users');
 Route::get('/add-user', [UserController::class, 'dashboardCreateUser']);
 Route::get('/sign-up', [UserController::class, 'signUp'])->name('sign-up');
 Route::post('/add-user', [UserController::class, 'addUser'])->name('add-user');
-Route::get('/view-user/{uuid}', [UserController::class, 'viewUser'])->name('edit-user');
+Route::get('/update-user/{uuid}', [UserController::class, 'retrieveUser'])->name('update-user');
