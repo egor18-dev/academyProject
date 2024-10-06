@@ -62,4 +62,13 @@ class UserController extends Controller
         return redirect()->to('users');
 
     }
+
+    public function viewUser (Request $request, $uuid)
+    {
+        $user = User::where('uuid', $uuid)->first();
+
+        if(!$user) return redirect()->to('dashboard');
+
+        return view('users/view_user', ['user' => $user]);
+    }
 }
