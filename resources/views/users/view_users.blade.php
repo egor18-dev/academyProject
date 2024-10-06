@@ -13,6 +13,7 @@
             <tbody>
                 @foreach ($users as $user)
                 <tr>
+                    
                     <td>
                         <div class="d-flex align-items-center">
                             <img
@@ -28,7 +29,7 @@
                         </div>
                     </td>
                     <td class="role">Administrador</td>
-                    <td class="subscription"><span>Activa</span></td> <!-- Estado de suscripción -->
+                    <td class="subscription"><span>Activa</span></td>
                 </tr>
                 @endforeach
             </tbody>

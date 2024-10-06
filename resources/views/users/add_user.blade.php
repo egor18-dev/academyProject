@@ -3,7 +3,7 @@
 @section('page')
     <main class="container-fluid mt-3">
       <div class="row w-100">
-        <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
+        <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-12">
           <div class="bg-white p-4 p-md-5 shadow-sm">
             <div class="row w-100">
               <div class="col-12">
