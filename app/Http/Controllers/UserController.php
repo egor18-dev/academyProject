@@ -57,7 +57,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password, ['rounds' => 12])
         ]);
 
-        $user->assignRole('Estudiante');
+        $user->assignRole($request->role ? $request->role : 'Estudiante');
 
         return redirect()->to('users');
 

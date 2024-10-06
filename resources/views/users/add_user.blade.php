@@ -29,10 +29,10 @@
                   <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" id="email" placeholder="name@example.com" value=" {{old('email')}} ">
                 </div>
                 <div class="col-12">
-                  <label for="function" class="form-label">Función <span class="text-danger">*</span></label>
-                  <select class="form-select" name="function" id="function" aria-label="Default select example">
+                  <label for="role" class="form-label">Función <span class="text-danger">*</span></label>
+                  <select class="form-select" name="role" id="role">
                         @foreach ($roles as $role)
-                            <option value="1">{{ $role->name }}</option>
+                            <option value="{{ $role->name }}">{{ $role->name }}</option>
                         @endforeach
                   </select>
                 </div>
