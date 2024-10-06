@@ -28,7 +28,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="role">Administrador</td>
+                    @if($user->getRoleNames()->isNotEmpty())
+                        <td class="role">{{ implode(', ', $user->getRoleNames()->toArray()) }}</td>
+                    @endif
                     <td class="subscription"><span>Activa</span></td>
                 </tr>
                 @endforeach
