@@ -13,8 +13,9 @@
                 </div>
               </div>
             </div>
-            <form action="{{ route('add-user') }}" method="POST">
+            <form action="{{ route('update-user', ['uuid' => $user->uuid]) }}" method="POST">
               @csrf 
+              @method('PUT')
               <div class="row gy-3 gy-md-4 overflow-hidden">
                 <div class="col-12">
                   <label for="name" class="form-label">Nombre <span class="text-danger">*</span></label>

@@ -73,4 +73,33 @@ class UserController extends Controller
 
         return view('users/update_user', ['user' => $user, 'roles' => $roles, 'actualUserRole' => $actualUserRole]);
     }
+
+    public function updateUser (Request $request, $uuid)
+    {
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'surnames' => 'required',
+            'email' => 'required|email',
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'surnames.required' => 'Los apellidos son obligatorios.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'Debes ingresar un correo electrónico válido.',
+        ]);
+
+        if($validator->fails()){
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $user = User::where('uuid', $uuid)->first();
+
+        if(!$user){
+            return redirect()->back()->withErrors(['user' => 'Usuario no encontrado']);
+        }
+
+        $user->fill($request->only(['name', 'surnames', 'email']));
+        $user->save();
+
+        return redirect()->back()->with('success', 'Usuario actualizado con éxito.');
+    }
 }
