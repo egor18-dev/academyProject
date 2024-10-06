@@ -23,7 +23,7 @@ Route::get('/home', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
-    return view('page');
+    return redirect()->to('/users');
 });
 
 Route::get('/users', [UserController::class, 'retrieveUsers'])->name('users');
