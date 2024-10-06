@@ -76,6 +76,7 @@ class UserController extends Controller
 
     public function updateUser (Request $request, $uuid)
     {
+
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'surnames' => 'required',
@@ -99,6 +100,11 @@ class UserController extends Controller
 
         $user->fill($request->only(['name', 'surnames', 'email']));
         $user->save();
+
+        if($request->role)
+        {
+            $user->syncRoles([$request->role]);
+        }
 
         return redirect()->back()->with('success', 'Usuario actualizado con éxito.');
     }

@@ -28,6 +28,19 @@ aside {
         color: #fff;
         text-decoration: none;
       }
+
+      .active{
+        background-color: #fff;
+        color: #000;
+        padding: 7px;
+        border-radius: 10px;
+
+        svg{
+          fill: #eee !important;
+          stroke: #eee !important;
+        }
+      }
+      
     }
   }
   

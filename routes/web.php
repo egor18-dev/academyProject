@@ -26,9 +26,11 @@ Route::get('/dashboard', function () {
     return redirect()->to('/users');
 });
 
-Route::get('/users', [UserController::class, 'retrieveUsers'])->name('users');
-Route::get('/add-user', [UserController::class, 'dashboardCreateUser']);
-Route::get('/sign-up', [UserController::class, 'signUp'])->name('sign-up');
-Route::post('/add-user', [UserController::class, 'addUser'])->name('add-user');
-Route::get('/update-user/{uuid}', [UserController::class, 'retrieveUser'])->name('update-user');
-Route::put('/update-user/{uuid}', [UserController::class, 'updateUser']);
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/', [UserController::class, 'retrieveUsers'])->name('users');
+    Route::get('/add', [UserController::class, 'dashboardCreateUser']);
+    Route::get('/sign-up', [UserController::class, 'signUp'])->name('sign-up');
+    Route::post('/add', [UserController::class, 'addUser'])->name('add-user');
+    Route::get('/update/{uuid}', [UserController::class, 'retrieveUser'])->name('update-user');
+    Route::put('/update/{uuid}', [UserController::class, 'updateUser']);
+});
