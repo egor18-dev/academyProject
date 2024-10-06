@@ -50,12 +50,14 @@ class UserController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
-        User::create([
+        $user = User::create([
             'name' =>$request->name,
             'surnames' => $request->surnames,
             'email' => $request->email,
             'password' => Hash::make($request->password, ['rounds' => 12])
         ]);
+
+        $user->assignRole('Estudiante');
 
         return redirect()->to('users');
 
