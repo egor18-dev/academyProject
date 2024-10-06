@@ -54,6 +54,19 @@
             </form>
           </div>
       </div>
-  </div>
+
+      </div>
+
+      @if(session('success'))
+        <div class="container-fluid mt-3 p-0 overflow-hidden">
+          <div class="row w-100">
+            <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-12">
+              <div class="alert alert-success" role="alert">
+                {{session('success')}}
+              </div>
+            </div>
+        </div>
+      @endif
+      
     </main>
 @endsection
