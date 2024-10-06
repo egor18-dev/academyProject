@@ -36,5 +36,8 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="container-fluid mt-3">
+            {{ $users->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 @endsection

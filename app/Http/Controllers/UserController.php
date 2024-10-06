@@ -14,7 +14,7 @@ class UserController extends Controller
 
     public function retrieveUsers () 
     {
-        $users = User::all();
+        $users = User::paginate(5);
 
         return view('users/view_users', ['users' => $users]);
     }

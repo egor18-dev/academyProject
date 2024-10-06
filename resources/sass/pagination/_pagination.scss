@@ -1,0 +1,12 @@
+.pagination{
+    font-size: 0.7em !important;
+
+    .active{
+
+        span{
+            background-color: var(--effectColor) !important;
+            border: none !important;
+            outline: none !important;
+        }
+    }
+}
