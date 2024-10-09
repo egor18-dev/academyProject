@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClassesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,9 +29,17 @@ Route::get('/dashboard', function () {
 
 Route::group(['prefix' => 'users'], function () {
     Route::get('/', [UserController::class, 'retrieveUsers'])->name('users');
-    Route::get('/add', [UserController::class, 'dashboardCreateUser']);
     Route::get('/sign-up', [UserController::class, 'signUp'])->name('sign-up');
+    Route::get('/add', [UserController::class, 'dashboardCreateUser']);
     Route::post('/add', [UserController::class, 'addUser'])->name('add-user');
     Route::get('/update/{uuid}', [UserController::class, 'retrieveUser'])->name('update-user');
     Route::put('/update/{uuid}', [UserController::class, 'updateUser']);
+});
+
+Route::group(['prefix' => 'classes'], function(){
+    Route::get('/', [ClassesController::class, 'retrieveClasses'])->name('classes');
+    Route::get('/add', [ClassesController::class, 'dashboardCreateClass']);
+    Route::post('/add', [ClassesController::class, 'addClass'])->name('add-class');
+    Route::get('/update/{uuid}', [ClassesController::class, 'retrieveClass'])->name('update-class');
+    Route::put('/update/{uuid}', [ClassesController::class, 'updateClass']);
 });
