@@ -1,4 +1,4 @@
-<h5>TASQUES PENDENTS:</h5>
+<h3>TASQUES PENDENTS:</h3>
 <ul>
     <li><strong>Gestió d'Usuaris:</strong>
         <ul>
