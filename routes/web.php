@@ -30,10 +30,10 @@ Route::get('/dashboard', function () {
 Route::group(['prefix' => 'users'], function () {
     Route::get('/', [UserController::class, 'retrieveUsers'])->name('users');
     Route::get('/sign-up', [UserController::class, 'signUp'])->name('sign-up');
-    Route::get('/add', [UserController::class, 'dashboardCreateUser']);
+    Route::get('/add', [UserController::class, 'dashboardCreateUser'])->name('users/add');
     Route::post('/add', [UserController::class, 'addUser'])->name('add-user');
-    Route::get('/update/{uuid}', [UserController::class, 'retrieveUser'])->name('update-user');
-    Route::put('/update/{uuid}', [UserController::class, 'updateUser']);
+    Route::get('/update/{uuid}', [UserController::class, 'retrieveUser'])->name('users/update');
+    Route::put('/update/{uuid}', [UserController::class, 'updateUser'])->name('update-user');
 });
 
 Route::group(['prefix' => 'classes'], function(){

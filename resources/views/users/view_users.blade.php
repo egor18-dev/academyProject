@@ -11,7 +11,7 @@
                                     Contacts<span class="badge bg-light text-default rounded ms-1 fs-12 align-middle">28</span>
                                 </div>
                                 <div class="d-flex flex-wrap gap-2">
-                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#create-contact"><i class="ri-add-line me-1 fw-medium align-middle"></i>Crear contacto</button>
+                                    <a class="btn btn-primary btn-sm" href="{{ route('users/add') }}">Crear contacto</a>
                                     <button class="btn btn-success-light btn-sm">Exportar como CSV</button>
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                                                             <div>
                                                                 <a data-bs-toggle="offcanvas" href="#offcanvasExample"
                                                                 role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$user->name}}</span></a>
-                                                                <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>Jul,24 2024 - 4:45PM</span>
+                                                                <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>{{$user->updated_at}}</span>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -63,8 +63,8 @@
                                                     </td>
                                                     <td>
                                                         <div class="btn-list">
-                                                            <a data-bs-toggle="offcanvas" href="#offcanvasExample"
-                                                            role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning"><svg width="15px" height="15px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.8 12.963L2 18l4.8-.63L18.11 6.58a2.612 2.612 0 00-3.601-3.785L3.8 12.963z"></path> </g></svg></a>
+                                                            <a data-bs-toggle="offcanvas"
+                                                            role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning" href="{{ route('users/update', ['uuid' => $user->uuid]) }}"><svg width="15px" height="15px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.8 12.963L2 18l4.8-.63L18.11 6.58a2.612 2.612 0 00-3.601-3.785L3.8 12.963z"></path> </g></svg></a>
                                                             <button class="btn btn-sm btn-danger"><svg fill="#fff" width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M0 14.545L1.455 16 8 9.455 14.545 16 16 14.545 9.455 8 16 1.455 14.545 0 8 6.545 1.455 0 0 1.455 6.545 8z" fill-rule="evenodd"></path> </g></svg></button>
                                                         </div>
                                                     </td>

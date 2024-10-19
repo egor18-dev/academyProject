@@ -1,72 +1,77 @@
-
 @extends('page')
 @section('page')
-    <main class="container-fluid mt-3">
-      <div class="row w-100">
-        <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-12">
-          <div class="bg-white p-4 p-md-5 shadow-sm">
-            <div class="row w-100">
-              <div class="col-12">
-                <div class="mb-5">
-                  <h2 class="h3">Actualizar usuario</h2>
-                  <h3 class="fs-6 fw-normal text-secondary m-0">Introduce toda la información</h3>
-                </div>
-              </div>
-            </div>
-            <form action="{{ route('update-user', ['uuid' => $user->uuid]) }}" method="POST">
-              @csrf 
-              @method('PUT')
-              <div class="row gy-3 gy-md-4 overflow-hidden">
-                <div class="col-12">
-                  <label for="name" class="form-label">Nombre <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" id="name" value="{{ old('name') ? old('name') : $user->name }}" placeholder="Nombre del usuario">
-                </div>
-                <div class="col-12">
-                  <label for="surnames" class="form-label">Apellidos <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control {{ $errors->has('surnames') ? 'is-invalid' : '' }}" name="surnames" id="surnames" value="{{ old('surnames') ? old('surnames') : $user->surnames }}" placeholder="Apellido del usuario">
-                </div>
-                <div class="col-12">
-                  <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                  <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" id="email" placeholder="name@example.com" value=" {{old('email') ? old('email') : $user->email}} ">
-                </div>
-                <div class="col-12">
-                    <label for="role" class="form-label">Función <span class="text-danger">*</span></label>
-                    <select class="form-select" name="role" id="role">
-                          @foreach ($roles as $role)
-                            @if ($role->name === $actualUserRole)
-                              <option selected value="{{ $role->name }}">{{ $role->name }}</option>
-                            @else
-                              <option value="{{ $role->name }}">{{ $role->name }}</option>
-                            @endif                            
-                          @endforeach
-                    </select>
+<div class="container-fluid mt-3">
+  <div class="row">
+      <div class="col-xl-12">
+          <div class="card custom-card">
+              <div class="card-header justify-content-between">
+                  <div class="card-title">
+                      Actualizar Usuario
                   </div>
-                <div class="col-12">
-                  <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
-                  <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''  }}" name="password" id="password" value="{{ old('password') }}">
-                </div>
-                <div class="col-12">
-                  <div class="d-grid">
-                    <button class="principalBtn" type="submit">Actualizar cuenta</button>
-                  </div>
-                </div>
               </div>
-            </form>
+              <div class="card-body">
+                  <form action="{{ route('update-user', ['uuid' => $user->uuid]) }}" method="POST" class="row g-3 needs-validation" novalidate>
+                      @csrf 
+                      @method('PUT')
+                      <div class="col-md-6">
+                          <label for="name" class="form-label">Nombre <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" id="name" value="{{ old('name') ? old('name') : $user->name }}" placeholder="Nombre del usuario" required>
+                          <div class="invalid-feedback">
+                              Por favor, proporciona un nombre válido.
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="surnames" class="form-label">Apellidos <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control {{ $errors->has('surnames') ? 'is-invalid' : '' }}" name="surnames" id="surnames" value="{{ old('surnames') ? old('surnames') : $user->surnames }}" placeholder="Apellido del usuario" required>
+                          <div class="invalid-feedback">
+                              Por favor, proporciona apellidos válidos.
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                          <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" id="email" value="{{ old('email') ? old('email') : $user->email }}" placeholder="nombre@ejemplo.com" required>
+                          <div class="invalid-feedback">
+                              Por favor, proporciona un correo electrónico válido.
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="role" class="form-label">Función <span class="text-danger">*</span></label>
+                          <select class="form-select" name="role" id="role" required>
+                              @foreach ($roles as $role)
+                                  <option value="{{ $role->name }}" {{ $role->name === $actualUserRole ? 'selected' : '' }}>{{ $role->name }}</option>
+                              @endforeach
+                          </select>
+                          <div class="invalid-feedback">
+                              Por favor, selecciona una función.
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
+                          <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" name="password" id="password" value="{{ old('password') }}" required>
+                          <div class="invalid-feedback">
+                              Por favor, proporciona una contraseña.
+                          </div>
+                      </div>
+                      <div class="col-12">
+                          <button class="btn btn-primary" type="submit">Actualizar cuenta</button>
+                      </div>
+                  </form>
+              </div>
           </div>
       </div>
+  </div>
 
-      </div>
-
-      @if(session('success'))
-        <div class="container-fluid mt-3 p-0 overflow-hidden">
-          <div class="row w-100">
-            <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-12">
+  @if(session('success'))
+  <div class="container-fluid mt-3">
+      <div class="row">
+          <div class="col-xl-12">
               <div class="alert alert-success" role="alert">
-                {{session('success')}}
+                  {{ session('success') }}
               </div>
-            </div>
-        </div>
-      @endif
-      
-    </main>
+          </div>
+      </div>
+  </div>
+  @endif
+
+</div>
 @endsection
