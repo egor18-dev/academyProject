@@ -13,8 +13,8 @@
                     <p class="text-muted mb-0">Una vez eliminado, no se podrá utilizar nuevamente. Esta acción es irreversible.</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger">Eliminar</button>
-                    <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary">Eliminar</button>
+                    <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
