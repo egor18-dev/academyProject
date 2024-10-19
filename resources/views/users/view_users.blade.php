@@ -1,5 +1,27 @@
 @extends('page')
 @section('page')
+<div class="container-fluid min-vh-100 confirmationMenu">
+    <div class="modal fade show" id="modaldemo8" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block;">
+        <div class="modal-dialog modal-dialog-centered text-center" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">Confirmación de Eliminación</h6>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <h6>¿Estás seguro de que quieres eliminar al usuario?</h6>
+                    <p class="text-muted mb-0">Una vez eliminado, no se podrá utilizar nuevamente. Esta acción es irreversible.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger">Eliminar</button>
+                    <button class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     <div class="container-fluid p-3">
         <!-- Start::row-1 -->
         <div class="row">

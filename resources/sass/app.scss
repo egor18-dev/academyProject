@@ -92,3 +92,13 @@ body {
 @import "util/border";
 @import "util/opacity";
 @import "util/typography";
+
+.confirmationMenu{
+    widows: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: hsla(0, 0%, 0%, 0.700);
+    z-index: 9999 !important;
+}
