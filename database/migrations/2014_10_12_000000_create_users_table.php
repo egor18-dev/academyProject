@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique(); 
+            $table->uuid(column: 'uuid')->unique(); 
             $table->string('name');
             $table->string('surnames');
             $table->string('email')->unique();
@@ -31,4 +31,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('users');
     }
+    
 };

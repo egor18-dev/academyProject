@@ -12,12 +12,12 @@ class LevelController extends Controller
     public function index() 
     {
         $levels = Level::paginate(5);
-        return view('users.view_users', ['users' => $levels]);
+        return view('levels.view_levels', ['levels' => $levels]);
     }
 
     public function create()
     {
-        return view('users.add_user');
+        return view('levels.add_level');
     }
 
     public function store(Request $request)
@@ -36,10 +36,10 @@ class LevelController extends Controller
 
         $level = Level::create([
             'name' => $request->name,
-            'description' => $request->surnames,
+            'description' => $request->description,
         ]);
 
-        return redirect()->route('users.index');
+        return redirect()->route('levels.index');
     }
 
     public function show($uuid)
@@ -49,7 +49,7 @@ class LevelController extends Controller
             return redirect()->to('dashboard');
         }
         
-        return view('users.update_user', ['level' => $level]);
+        return view('levels.update_level', ['level' => $level]);
     }
 
     public function update(Request $request, $uuid)

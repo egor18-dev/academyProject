@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\LevelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,15 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('/{uuid}', [UserController::class, 'show'])->name('users.show');
     Route::put('/{uuid}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{uuid}', [UserController::class, 'delete'])->name('users.delete');
+});
+
+Route::group(['prefix' => 'levels'], function () {
+    Route::get('/', [LevelController::class, 'index'])->name('levels.index');
+    Route::get('/create', [LevelController::class, 'create'])->name('levels.create');
+    Route::post('/', [LevelController::class, 'store'])->name('levels.store');
+    Route::get('/{uuid}', [LevelController::class, 'show'])->name('levels.show');
+    Route::put('/{uuid}', [LevelController::class, 'update'])->name('levels.update');
+    Route::delete('/{uuid}', [LevelController::class, 'destroy'])->name('levels.delete');
 });
 
 Route::group(['prefix' => 'classes'], function(){
