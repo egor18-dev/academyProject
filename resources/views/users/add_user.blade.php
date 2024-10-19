@@ -10,7 +10,7 @@
                   </div>
               </div>
               <div class="card-body">
-                  <form action="{{ route('add-user') }}" method="POST" class="row g-3 needs-validation" novalidate>
+                  <form action="{{ route('users.store') }}" method="POST" class="row g-3 needs-validation" novalidate>
                       @csrf 
                       <div class="col-md-6">
                           <label for="name" class="form-label">Nombre <span class="text-danger">*</span></label>
@@ -35,7 +35,7 @@
                       </div>
                       <div class="col-md-6">
                           <label for="role" class="form-label">Función <span class="text-danger">*</span></label>
-                          <select class="form-select" name="role" id="role" required>
+                          <select class="form-select {{ $errors->has('role') ? 'is-invalid' : '' }}" name="role" id="role" required>
                               <option value="" selected disabled>Selecciona un rol...</option>
                               @foreach ($roles as $role)
                                   <option value="{{ $role->name }}">{{ $role->name }}</option>
@@ -54,7 +54,7 @@
                       </div>
                       <div class="col-12">
                           <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="" id="iAgree" required>
+                              <input class="form-check-input" type="checkbox" id="iAgree" required>
                               <label class="form-check-label" for="iAgree">
                                   Yo acepto los <a href="#!" class="link-primary text-decoration-none">términos y condiciones</a>
                               </label>
