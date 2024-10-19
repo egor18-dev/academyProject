@@ -113,7 +113,7 @@ class UserController extends Controller
         if($user){
             $removedUser = $user->delete();
 
-            return $removedUser === true ? redirect()->back()->with('success', 'Usuario eliminado correctamente') : redirect()->back()->withErrors(['error' => 'Error al eliminar el usuario']);
+            return $removedUser === true ? redirect()->back()->with('success', "Usuario $user->name eliminado correctamente") : redirect()->back()->withErrors(['error' => 'Error al eliminar el usuario']);
         }
 
         return redirect()->to('users');
