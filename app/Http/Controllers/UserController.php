@@ -110,7 +110,10 @@ class UserController extends Controller
     {
         $user = User::where('uuid', $uuid)->firstOrFail();
 
-        var_dump($user);
-        die;
+        if($user){
+            $user->delete();
+        }
+
+        return redirect()->to('users');
     }
 }
