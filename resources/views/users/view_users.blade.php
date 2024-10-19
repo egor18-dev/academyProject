@@ -24,8 +24,6 @@
         </div>
     </div>
 </div>
-
-
     <div class="container-fluid p-3">
         <!-- Start::row-1 -->
         <div class="row">
@@ -118,6 +116,14 @@
                 </div>
             </div>
         </div>
+        @if (session()->has('success'))
+            <div class="alert alert-success d-flex align-items-center" role="alert">
+                <svg style="fill: #0CC763" class="flex-shrink-0 me-2 svg-success" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 24 24" width="1.5rem" fill="#000000"><path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+                <div>
+                    {{session()->get('success')}}
+                </div>
+            </div>
+        @endif
     </div>
 @endsection
 
