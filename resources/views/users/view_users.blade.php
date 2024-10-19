@@ -1,90 +1,96 @@
-
-    @extends('page')
+@extends('page')
 @section('page')
-            <div class="container-fluid p-3">
-                <!-- Start::row-1 -->
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="card custom-card">
-                            <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-3">
-                                <div class="card-title">
-                                    Contacts<span class="badge bg-light text-default rounded ms-1 fs-12 align-middle">28</span>
-                                </div>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <a class="btn btn-primary btn-sm" href="{{ route('users/add') }}">Crear contacto</a>
-                                    <button class="btn btn-success-light btn-sm">Exportar como CSV</button>
-                                </div>
-                            </div>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table text-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">
-                                                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-                                                </th>
-                                                <th scope="col">Nombre</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Rol</th>
-                                                <th scope="col">Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($users as $user)
-                                                <tr class="crm-contact">
-                                                    <td>
-                                                        <input class="form-check-input" type="checkbox" id="checkboxNoLabel1" value="" aria-label="...">
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center gap-2">
-                                                            <div class="lh-1">
-                                                                <span class="avatar avatar-rounded avatar-sm">
-                                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&s" alt="">
-                                                                </span>
-                                                            </div>
-                                                            <div>
-                                                                <a data-bs-toggle="offcanvas" href="#offcanvasExample"
-                                                                role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$user->name}}</span></a>
-                                                                <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>{{$user->updated_at}}</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div>
-                                                            <span class="d-block mb-1"><i class="ri-mail-line me-2 align-middle fs-14 text-muted"></i>{{$user->email}}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center flex-wrap gap-1">
-                                                            @if($user->getRoleNames()->isNotEmpty())
-                                                                <span class="badge bg-primary-transparent">{{ implode(', ', $user->getRoleNames()->toArray()) }}</span>
-                                                            @endif
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-list">
-                                                            <a data-bs-toggle="offcanvas"
-                                                            role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning" href="{{ route('users/update', ['uuid' => $user->uuid]) }}"><svg width="15px" height="15px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.8 12.963L2 18l4.8-.63L18.11 6.58a2.612 2.612 0 00-3.601-3.785L3.8 12.963z"></path> </g></svg></a>
-                                                            <button class="btn btn-sm btn-danger"><svg fill="#fff" width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M0 14.545L1.455 16 8 9.455 14.545 16 16 14.545 9.455 8 16 1.455 14.545 0 8 6.545 1.455 0 0 1.455 6.545 8z" fill-rule="evenodd"></path> </g></svg></button>
-                                                        </div>
-                                                    </td>
-                                                </tr> 
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="card-footer border-top-0">
-                                <div class="d-flex align-items-center">
-                                   
-                                </div>
-                            </div>
+    <div class="container-fluid p-3">
+        <!-- Start::row-1 -->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-3">
+                        <div class="card-title">
+                            Contacts<span class="badge bg-light text-default rounded ms-1 fs-12 align-middle">28</span>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">Crear contacto</a>
+                            <button class="btn btn-success-light btn-sm">Exportar como CSV</button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">
+                                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                                        </th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Rol</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($users as $user)
+                                        <tr class="crm-contact">
+                                            <td>
+                                                <input class="form-check-input" type="checkbox" id="checkboxNoLabel1" value="" aria-label="...">
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="lh-1">
+                                                        <span class="avatar avatar-rounded avatar-sm">
+                                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&s" alt="">
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <a data-bs-toggle="offcanvas" href="#offcanvasExample"
+                                                        role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$user->name}}</span></a>
+                                                        <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>{{$user->updated_at}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <span class="d-block mb-1"><i class="ri-mail-line me-2 align-middle fs-14 text-muted"></i>{{$user->email}}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center flex-wrap gap-1">
+                                                    @if($user->getRoleNames()->isNotEmpty())
+                                                        <span class="badge bg-primary-transparent">{{ implode(', ', $user->getRoleNames()->toArray()) }}</span>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-list">
+                                                    <a data-bs-toggle="offcanvas"
+                                                    role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning" href="{{ route('users.show', ['uuid' => $user->uuid]) }}">
+                                                        <svg width="15px" height="15px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff">
+                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                            <g id="SVGRepo_iconCarrier"> 
+                                                                <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.8 12.963L2 18l4.8-.63L18.11 6.58a2.612 2.612 0 00-3.601-3.785L3.8 12.963z"></path> 
+                                                            </g>
+                                                        </svg>
+                                                    </a>
+                                                    <button class="btn btn-sm btn-danger">
+                                                        <svg fill="#fff" width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                            <g id="SVGRepo_iconCarrier"> 
+                                                                <path d="M0 14.545L1.455 16 8 9.455 14.545 16 16 14.545 9.455 8 16 1.455 14.545 0 8 6.545 1.455 0 0 1.455 6.545 8z" fill-rule="evenodd"></path> 
+                                                            </g>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr> 
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-
     </div>
-
 @endsection
-

@@ -21,9 +21,16 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::firstOrCreate(['name' => 'delete-users']);
 
         $adminRole = Role::firstOrCreate(['name' => 'Administrador']);
+        $teacherRole = Role::firstOrCreate(['name' => 'Profesor']);
         $studentRole = Role::firstOrCreate(['name' => 'Estudiante']); 
 
         $adminRole->syncPermissions([
+            'create-users',
+            'edit-users',
+            'delete-users',
+        ]);
+
+        $teacherRole->syncPermissions([
             'create-users',
             'edit-users',
             'delete-users'

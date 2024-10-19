@@ -11,26 +11,28 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-
-    public function retrieveUsers () 
+    // Muestra la lista de usuarios paginados
+    public function index() 
     {
         $users = User::paginate(5);
-
-        return view('users/view_users', ['users' => $users]);
+        return view('users.view_users', ['users' => $users]);
     }
 
-    public function dashboardCreateUser ()
+    // Muestra el formulario para crear un nuevo usuario
+    public function create()
     {
         $roles = Role::all();
-        return view('users/add_user', ['roles' => $roles]);
+        return view('users.add_user', ['roles' => $roles]);
     }
 
-    public function signUp ()
+    // Muestra el formulario de registro
+    public function showSignUp()
     {
-        return view('auth/sign_up');
+        return view('auth.sign_up');
     }
 
-    public function addUser (Request $request)
+    // Almacena un nuevo usuario en la base de datos
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
             'name' => 'required',
@@ -51,32 +53,34 @@ class UserController extends Controller
         }
 
         $user = User::create([
-            'name' =>$request->name,
+            'name' => $request->name,
             'surnames' => $request->surnames,
             'email' => $request->email,
             'password' => Hash::make($request->password, ['rounds' => 12])
         ]);
 
-        $user->assignRole($request->role ? $request->role : 'Estudiante');
+        $user->assignRole($request->role ?: 'Estudiante');
 
-        return redirect()->to('users');
-
+        return redirect()->route('users.index');
     }
 
-    public function retrieveUser (Request $request, $uuid)
+    // Muestra los detalles del usuario para su actualización
+    public function show($uuid)
     {
         $user = User::where('uuid', $uuid)->first();
+        if (!$user) {
+            return redirect()->to('dashboard');
+        }
+        
         $roles = Role::all();
         $actualUserRole = $user->getRoleNames()->isNotEmpty() ? implode(', ', $user->getRoleNames()->toArray()) : 'Estudiante';
 
-        if(!$user) return redirect()->to('dashboard');
-
-        return view('users/update_user', ['user' => $user, 'roles' => $roles, 'actualUserRole' => $actualUserRole]);
+        return view('users.update_user', ['user' => $user, 'roles' => $roles, 'actualUserRole' => $actualUserRole]);
     }
 
-    public function updateUser (Request $request, $uuid)
+    // Actualiza un usuario existente
+    public function update(Request $request, $uuid)
     {
-
         $validator = Validator::make($request->all(),[
             'name' => 'required',
             'surnames' => 'required',
@@ -101,8 +105,7 @@ class UserController extends Controller
         $user->fill($request->only(['name', 'surnames', 'email']));
         $user->save();
 
-        if($request->role)
-        {
+        if ($request->role) {
             $user->syncRoles([$request->role]);
         }
 
