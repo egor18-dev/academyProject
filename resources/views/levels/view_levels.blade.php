@@ -59,11 +59,6 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center gap-2">
-                                                    <div class="lh-1">
-                                                        <span class="avatar avatar-rounded avatar-sm">
-                                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&s" alt="">
-                                                        </span>
-                                                    </div>
                                                     <div>
                                                         <a data-bs-toggle="offcanvas" href="#offcanvasExample"
                                                         role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$level->name}}</span></a>
