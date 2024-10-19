@@ -111,14 +111,13 @@ class UserController extends Controller
         $user = User::where('uuid', $uuid)->firstOrFail();
 
         if($user){
-            // $removedUser = $user->delete();
-            $removedUser = null;
+            $removedUser = $user->delete();
 
             return $removedUser 
             ? redirect()->back()->with('success', "Usuario $user->name eliminado correctamente") 
             : redirect()->back()->withErrors(['error' => 'Error al eliminar el usuario']);
         }
-
-        return redirect()->to('users');
+    
+        return redirect()->back()->withErrors(['error' => 'Usuario no encontrado']);
     }
 }
