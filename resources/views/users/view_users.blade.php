@@ -6,15 +6,19 @@
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
                     <h6 class="modal-title">Confirmación de Eliminación</h6>
-                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button aria-label="Close" class="btn-close closeBtn"></button>
                 </div>
                 <div class="modal-body text-start">
-                    <h6>¿Estás seguro de que quieres eliminar al usuario?</h6>
+                    <h6>¿Estás seguro de que quieres eliminar al usuario <strong class='removeText'></strong>?</h6>
                     <p class="text-muted mb-0">Una vez eliminado, no se podrá utilizar nuevamente. Esta acción es irreversible.</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary">Eliminar</button>
-                    <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <form method="post" id="deleteUserForm" action="">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-primary">Eliminar</button>
+                    </form>
+                    <button class="btn btn-light closeBtn">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -94,7 +98,7 @@
                                                             </g>
                                                         </svg>
                                                     </a>
-                                                    <button class="btn btn-sm btn-danger">
+                                                    <button class="btn btn-sm btn-danger removeBtn" onclick="removeUser('{{$user->uuid}}', '{{$user->name}}')">
                                                         <svg fill="#fff" width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
                                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -116,3 +120,29 @@
         </div>
     </div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    const removeUser = (uuid, name) => {
+        const form = $('form');
+        $('.removeText').text(name);
+
+        if(form){
+            form.attr('action', `{{ url('users') }}/${uuid}`);
+        }
+    }
+
+    $(document).ready(() => {
+
+        $('.removeBtn').click(() => {
+
+            $('.confirmationMenu').show();
+        });
+
+        $('.closeBtn').click(() => {
+            $('.confirmationMenu').hide();
+            $('.removeText').text("");
+        }); 
+    });
+</script>

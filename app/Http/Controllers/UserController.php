@@ -11,27 +11,23 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // Muestra la lista de usuarios paginados
     public function index() 
     {
         $users = User::paginate(5);
         return view('users.view_users', ['users' => $users]);
     }
 
-    // Muestra el formulario para crear un nuevo usuario
     public function create()
     {
         $roles = Role::all();
         return view('users.add_user', ['roles' => $roles]);
     }
 
-    // Muestra el formulario de registro
     public function showSignUp()
     {
         return view('auth.sign_up');
     }
 
-    // Almacena un nuevo usuario en la base de datos
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -64,7 +60,6 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    // Muestra los detalles del usuario para su actualización
     public function show($uuid)
     {
         $user = User::where('uuid', $uuid)->first();
@@ -78,7 +73,6 @@ class UserController extends Controller
         return view('users.update_user', ['user' => $user, 'roles' => $roles, 'actualUserRole' => $actualUserRole]);
     }
 
-    // Actualiza un usuario existente
     public function update(Request $request, $uuid)
     {
         $validator = Validator::make($request->all(),[
@@ -110,5 +104,13 @@ class UserController extends Controller
         }
 
         return redirect()->back()->with('success', 'Usuario actualizado con éxito.');
+    }
+
+    public function delete($uuid)
+    {
+        $user = User::where('uuid', $uuid)->firstOrFail();
+
+        var_dump($user);
+        die;
     }
 }

@@ -9,10 +9,10 @@
 
     <!--BOOTSTRAP-->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!--JQUERY-->
 </head>
 
 <body>
     @yield('content')
 </body>
-
 </html>
