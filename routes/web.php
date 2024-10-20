@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\LevelController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,10 +47,11 @@ Route::group(['prefix' => 'levels'], function () {
     Route::delete('/{uuid}', [LevelController::class, 'delete'])->name('levels.delete');
 });
 
-Route::group(['prefix' => 'classes'], function(){
-    Route::get('/', [ClassesController::class, 'retrieveClasses'])->name('classes');
-    Route::get('/add', [ClassesController::class, 'dashboardCreateClass']);
-    Route::post('/add', [ClassesController::class, 'addClass'])->name('add-class');
-    Route::get('/update/{uuid}', [ClassesController::class, 'retrieveClass'])->name('update-class');
-    Route::put('/update/{uuid}', [ClassesController::class, 'updateClass']);
+Route::group(['prefix' => 'classes'], function () {
+    Route::get('/', [ClassController::class, 'index'])->name('classes.index');
+    Route::get('/create', [ClassController::class, 'create'])->name('classes.create');
+    Route::post('/', [ClassController::class, 'store'])->name('classes.store');
+    Route::get('/{uuid}', [ClassController::class, 'show'])->name('classes.show');
+    Route::put('/{uuid}', [ClassController::class, 'update'])->name('classes.update');
+    Route::delete('/{uuid}', [ClassController::class, 'delete'])->name('classes.delete');
 });

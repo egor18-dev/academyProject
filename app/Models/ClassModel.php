@@ -10,7 +10,7 @@ class ClassModel extends Model
     use HasFactory;
     
     protected $table = 'classes';
-    protected $fillable = ['level_id', 'title', 'video_url'];
+    protected $fillable = ['level_id', 'title', 'description', 'video_url'];
 
     public function level()
     {
