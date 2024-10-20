@@ -1,33 +1,150 @@
 @extends('page')
 @section('page')
-<div class="container-fluid users mt-3 p-0 d-flex flex-column users">
-        <a href="{{ route('add-class') }}" class="add-user mb-3">Crear clase</a>
-        <table class="table align-middle mb-0 p-0 bg-white mx-3 w-100">
-            <thead class="bg-light">
-                <tr>
-                    <th>Título</th>
-                    <th>Nivel</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($classes as $class)
-                <tr>
-                    
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <div class="ms-3 d-flex flex-column p-0 info">
-                                <h5 class="h6">{{$class->title}} <a href="{{ route('update-class', ['uuid' => $class->id]) }}"><svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></a></h5>
-                            </div>
-                        </div>
-                    </td>
-                    
-                    <td>{{$class->level_id}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <div class="container-fluid mt-3">
-            {{ $classes->links('pagination::bootstrap-5') }}
+<div class="container-fluid min-vh-100 confirmationMenu">
+    <div class="modal fade show" id="modaldemo8" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block;">
+        <div class="modal-dialog modal-dialog-centered text-center" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">Confirmación de Eliminación</h6>
+                    <button aria-label="Close" class="btn-close closeBtn"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <h6>¿Estás seguro de que quieres eliminar <strong class='removeText'></strong>?</h6>
+                    <p class="text-muted mb-0">Una vez eliminado, no se podrá utilizar nuevamente. Esta acción es irreversible.</p>
+                </div>
+                <div class="modal-footer">
+                    <form method="post" id="deleteClassForm" action="">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-primary">Eliminar</button>
+                    </form>
+                    <button class="btn btn-light closeBtn">Cancelar</button>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+    <div class="container-fluid p-3">
+        <!-- Start::row-1 -->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-3">
+                        <div class="card-title">
+                            Clases<span class="badge bg-light text-default rounded ms-1 fs-12 align-middle">{{$count}}</span>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-primary btn-sm" href="{{ route('classes.create') }}">Crear clase</a>
+                            <button class="btn btn-success-light btn-sm">Exportar como CSV</button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">
+                                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                                        </th>
+                                        <th scope="col">Clase</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($classes as $class)
+                                        <tr class="crm-contact">
+                                            <td>
+                                                <input class="form-check-input" type="checkbox" id="checkboxNoLabel1" value="" aria-label="...">
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div>
+                                                        <a data-bs-toggle="offcanvas" href="#offcanvasExample"
+                                                        role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$class->name}}</span></a>
+                                                        <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>{{$class->updated_at}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <span class="d-block mb-1"><i class="ri-mail-line me-2 align-middle fs-14 text-muted"></i>{{$class->description}}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-list">
+                                                    <a data-bs-toggle="offcanvas"
+                                                    role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning" href="{{ route('classes.show', ['uuid' => $class->uuid]) }}">
+                                                        <svg width="15px" height="15px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff">
+                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                            <g id="SVGRepo_iconCarrier"> 
+                                                                <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.8 12.963L2 18l4.8-.63L18.11 6.58a2.612 2.612 0 00-3.601-3.785L3.8 12.963z"></path> 
+                                                            </g>
+                                                        </svg>
+                                                    </a>
+                                                    <button class="btn btn-sm btn-danger removeBtn" onclick="removeUser('{{$class->uuid}}', '{{$class->name}}')">
+                                                        <svg fill="#fff" width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                            <g id="SVGRepo_iconCarrier"> 
+                                                                <path d="M0 14.545L1.455 16 8 9.455 14.545 16 16 14.545 9.455 8 16 1.455 14.545 0 8 6.545 1.455 0 0 1.455 6.545 8z" fill-rule="evenodd"></path> 
+                                                            </g>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr> 
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (session()->has('success'))
+            <div class="alert alert-success d-flex align-items-center" role="alert">
+                <svg style="fill: #0CC763" class="flex-shrink-0 me-2 svg-success" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 0 24 24" width="1.5rem" fill="#000000"><path d="M0 0h24v24H0V0zm0 0h24v24H0V0z" fill="none"/><path d="M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+                <div>
+                    {{session()->get('success')}}
+                </div>
+            </div>
+        @endif
+        @if ($errors->has('error'))
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <svg style="fill: #FF383C" class="flex-shrink-0 me-2 svg-danger" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="1.5rem" viewBox="0 0 24 24" width="1.5rem" fill="#000000"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M15.73,3H8.27L3,8.27v7.46L8.27,21h7.46L21,15.73V8.27L15.73,3z M19,14.9L14.9,19H9.1L5,14.9V9.1L9.1,5h5.8L19,9.1V14.9z"/><rect height="6" width="2" x="11" y="7"/><rect height="2" width="2" x="11" y="15"/></g></g></g></svg>
+                <div>
+                    {{ $errors->first('error') }}
+                </div>
+            </div>
+        @endif
+        
+    </div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    const removeUser = (uuid, name) => {
+        const form = $('form');
+        $('.removeText').text(name);
+
+        if(form){
+            form.attr('action', `{{ url('classes') }}/${uuid}`);
+        }
+    }
+
+    $(document).ready(() => {
+
+        $('.removeBtn').click(() => {
+
+            $('.confirmationMenu').show();
+        });
+
+        $('.closeBtn').click(() => {
+            $('.confirmationMenu').hide();
+            $('.removeText').text("");
+        }); 
+    });
+</script>
