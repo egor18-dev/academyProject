@@ -12,12 +12,12 @@
               <div class="card-body">
                   <form action="{{ route('users.store') }}" method="POST" class="row g-3 needs-validation" novalidate>
                       @csrf 
-                      <div class="col-lg-12">
+                      <div class="col-lg-6">
                         <label for="title" class="form-label">Título <span class="text-danger">*</span></label>
                         <input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" name="title" id="title" value="{{ old('title') }}" placeholder="Título de la clase">
                       </div>
                       <div class="col-lg-6">
-                          <label for="role" class="form-label">Función <span class="text-danger">*</span></label>
+                          <label for="role" class="form-label">Nivel <span class="text-danger">*</span></label>
                           <select class="form-select {{ $errors->has('role') ? 'is-invalid' : '' }}" name="role" id="role" required>
                               <option value="" selected disabled>Selecciona un nivel...</option>
                               @foreach ($levels as $level)
@@ -28,26 +28,19 @@
                               Por favor, selecciona una función.
                           </div>
                       </div>
-                      <div class="col-md-6">
-                          <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
-                          <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" name="password" id="password" required>
-                          <div class="invalid-feedback">
-                              Por favor, proporciona una contraseña.
-                          </div>
-                      </div>
+                      <div class="col-md-12">
+                        <label for="description" class="form-label">Descripción <span class="text-danger">*</span></label>
+                        <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description" placeholder="Descripción del nivel" required>{{ old('description') }}</textarea>
+                        <div class="invalid-feedback">
+                            Por favor, proporciona una descripción válida.
+                        </div>
+                    </div>
+                      <div class="col-xl-12">
+                            <label for="formFile" class="form-label">Sube un video <span class="text-danger">*</span></label>
+                            <input class="form-control" type="file" id="formFile">
+                    </div>
                       <div class="col-12">
-                          <div class="form-check">
-                              <input class="form-check-input" type="checkbox" id="iAgree" required>
-                              <label class="form-check-label" for="iAgree">
-                                  Yo acepto los <a href="#!" class="link-primary text-decoration-none">términos y condiciones</a>
-                              </label>
-                              <div class="invalid-feedback">
-                                  Debes aceptar los términos antes de enviar.
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-12">
-                          <button class="btn btn-primary" type="submit">Crear cuenta</button>
+                          <button class="btn btn-primary" type="submit">Subir video</button>
                       </div>
                   </form>
               </div>
