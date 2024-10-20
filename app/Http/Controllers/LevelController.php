@@ -12,7 +12,7 @@ class LevelController extends Controller
     public function index() 
     {
         $levels = Level::paginate(5);
-        return view('levels.view_levels', ['levels' => $levels]);
+        return view('levels.view_levels', ['levels' => $levels, 'count' => $levels->count()]);
     }
 
     public function create()

@@ -31,7 +31,7 @@
                 <div class="card custom-card">
                     <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-3">
                         <div class="card-title">
-                            Niveles<span class="badge bg-light text-default rounded ms-1 fs-12 align-middle">28</span>
+                            Niveles<span class="badge bg-light text-default rounded ms-1 fs-12 align-middle">{{$count}}</span>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
                             <a class="btn btn-primary btn-sm" href="{{ route('levels.create') }}">Crear nivel</a>
