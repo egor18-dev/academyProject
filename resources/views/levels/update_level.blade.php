@@ -10,7 +10,7 @@
                   </div>
               </div>
               <div class="card-body">
-                  <form action="{{ route('users.update', ['uuid' => $level->uuid]) }}" method="POST" class="row g-3 needs-validation" novalidate>
+                  <form action="{{ route('levels.update', ['uuid' => $level->uuid]) }}" method="POST" class="row g-3 needs-validation" novalidate>
                       @csrf 
                       @method('PUT')
                       <div class="col-md-12">
