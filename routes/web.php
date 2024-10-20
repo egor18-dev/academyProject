@@ -44,7 +44,7 @@ Route::group(['prefix' => 'levels'], function () {
     Route::post('/', [LevelController::class, 'store'])->name('levels.store');
     Route::get('/{uuid}', [LevelController::class, 'show'])->name('levels.show');
     Route::put('/{uuid}', [LevelController::class, 'update'])->name('levels.update');
-    Route::delete('/{uuid}', [LevelController::class, 'destroy'])->name('levels.delete');
+    Route::delete('/{uuid}', [LevelController::class, 'delete'])->name('levels.delete');
 });
 
 Route::group(['prefix' => 'classes'], function(){

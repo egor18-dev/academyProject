@@ -9,11 +9,11 @@
                     <button aria-label="Close" class="btn-close closeBtn"></button>
                 </div>
                 <div class="modal-body text-start">
-                    <h6>¿Estás seguro de que quieres eliminar al usuario <strong class='removeText'></strong>?</h6>
+                    <h6>¿Estás seguro de que quieres eliminar <strong class='removeText'></strong>?</h6>
                     <p class="text-muted mb-0">Una vez eliminado, no se podrá utilizar nuevamente. Esta acción es irreversible.</p>
                 </div>
                 <div class="modal-footer">
-                    <form method="post" id="deleteUserForm" action="">
+                    <form method="post" id="deleteLevelForm" action="">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-primary">Eliminar</button>
@@ -131,7 +131,7 @@
         $('.removeText').text(name);
 
         if(form){
-            form.attr('action', `{{ url('users') }}/${uuid}`);
+            form.attr('action', `{{ url('levels') }}/${uuid}`);
         }
     }
 
