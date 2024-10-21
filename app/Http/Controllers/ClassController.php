@@ -98,6 +98,16 @@ class ClassController extends Controller
 
     public function delete($uuid)
     {
+        $class = ClassModel::where('uuid', $uuid)->firstOrFail();
 
+        if($class){
+            $removedClass = $class->delete();
+
+            return $removedClass
+            ? redirect()->back()->with('success', "Video $class->name eliminado correctamente") 
+            : redirect()->back()->withErrors(['error' => 'Error al eliminar el video']);
+        }
+    
+        return redirect()->back()->withErrors(['error' => 'Video no encontrado']);
     }
 }
