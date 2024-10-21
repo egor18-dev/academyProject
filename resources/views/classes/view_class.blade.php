@@ -1,7 +1,7 @@
 @extends('welcome')
 @section('content')
 <!-- app-header -->
-<header class="app-header sticky" id="header">
+<header class="app-header" id="header">
 
     <!-- Start::main-header-container -->
     <div class="main-header-container container-fluid">
@@ -995,21 +995,21 @@
 
 </header>
     <div class="row w-100 min-vh-100 bg-white">
-        <div class="col-lg-9 d-flex flex-column videos">
+        <div class="col-lg-9 d-flex flex-column videos p-0 ">
             @if($class->video_stream)
                     <video controls loop class="rounded">
                         <source src="{{ route('classes.stream', ['id' => $class->id]) }}" type="video/mp4">
                         Tu navegador no soporta la reproducción de videos.
                     </video>
-                    <div class="info p-3">
+                    <div class="info">
                         <h5>{{$class->title}}</h5>
                         <p>
                             {{$class->description}}
                         </p>
                     </div>
-                        <div class="container-fluid">
+                        <div class="container-fluid px-0 comments">
                           <div class="row d-flex justify-content-start">
-                            <div class="col-md-12 col-lg-10 col-xl-8">
+                            <div class="col-md-12 col-lg-10 col-xl-8 p-0">
                               <div class="card">
                                 <div class="card-body">
                                   <div class="d-flex flex-start align-items-center">
@@ -1049,6 +1049,9 @@
                         </div>
                       
             @endif
+        </div>
+        <div class="col-lg-3 all-videos p-0">
+            <h5>Contenido de la academia</h5>
         </div>
 </div>
 
