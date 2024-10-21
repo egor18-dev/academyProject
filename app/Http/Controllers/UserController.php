@@ -23,7 +23,7 @@ class UserController extends Controller
         return view('users.add_user', ['roles' => $roles]);
     }
 
-    public function showSignUp()
+    public function showCreateForm()
     {
         return view('auth.sign_up');
     }

@@ -32,7 +32,7 @@
         <div class="row w-100 justify-content-center">
             <div class="col-lg-3 left"></div>
             <div class="col-lg-4 bg-white p-5">
-                <form action="{{ route('add-user') }}" method="POST">
+                <form action="{{ route('users.store') }}" method="POST">
                     @csrf 
                     <div class="row gy-3 gy-md-4 overflow-hidden">
                       <div class="col-12">

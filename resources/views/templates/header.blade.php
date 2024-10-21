@@ -21,7 +21,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="{{ route('users.create') }}">Empezar</a>
+      <a class="btn-getstarted" href="{{ route('users.showCreateForm') }}">Empezar</a>
 
     </div>
   </header>
