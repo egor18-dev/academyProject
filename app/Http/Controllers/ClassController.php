@@ -12,14 +12,15 @@ class ClassController extends Controller
 {
     public function index() 
     {
-       $classes = ClassModel::with('media')->get();
+        $classes = ClassModel::with('media')->get(); 
+        $count = ClassModel::count();
 
-       foreach ($classes as $class) {
+        foreach ($classes as $class) {
             $videos = $class->getMedia('videos');
             $class->videos = $videos;
         }
-
-        return view('classes.view_classes', ['classes' => $classes, 'count' => 0]);
+    
+        return view('classes.view_classes', ['classes' => $classes, 'count' => $count]);
     }
 
     public function create()

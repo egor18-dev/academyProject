@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique(); 
+            $table->uuid(column: 'uuid')->unique(); 
             $table->string('name'); // 'Nivell 1, 2, 3...'
             $table->string('description');
             $table->timestamps();

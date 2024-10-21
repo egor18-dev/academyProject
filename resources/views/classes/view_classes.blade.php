@@ -46,7 +46,7 @@
                                         <th scope="col">
                                             <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
                                         </th>
-                                        <th scope="col">Clase</th>
+                                        <th scope="col">Titulo</th>
                                         <th scope="col">Descripción</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
@@ -61,7 +61,7 @@
                                                 <div class="d-flex align-items-center gap-2">
                                                     <div>
                                                         <a data-bs-toggle="offcanvas" href="#offcanvasExample"
-                                                        role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$class->name}}</span></a>
+                                                        role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$class->title}}</span></a>
                                                         <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>{{$class->updated_at}}</span>
                                                     </div>
                                                 </div>
@@ -73,6 +73,10 @@
                                             </td>
                                             <td>
                                                 <div class="btn-list">
+                                                    <a data-bs-toggle="offcanvas"
+                                                    role="button" aria-controls="offcanvasExample" class="btn btn-success btn-sm" href="{{ route('classes.show', ['uuid' => $class->uuid]) }}">
+                                                        <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                    </a>
                                                     <a data-bs-toggle="offcanvas"
                                                     role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning" href="{{ route('classes.show', ['uuid' => $class->uuid]) }}">
                                                         <svg width="15px" height="15px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff">
