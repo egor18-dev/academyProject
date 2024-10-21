@@ -42,7 +42,7 @@ class UserController extends Controller
         $creadentials = $request->only(['email', 'password']);
 
         if (Auth::attempt($creadentials, $request->has('remember'))) {
-            return redirect()->route('dashboard'); // Redirigir a dashboard si el login es exitoso
+            return redirect()->route('home.index');
         }
 
         return redirect()->back()->withErrors(['error' => 'Las credenciales no coinciden con nuestros registros.']);
@@ -56,12 +56,12 @@ class UserController extends Controller
 
     public function showEnterForm()
     {
-        return $this->viewWithAuthName('auth.sign_in');
+        return view('auth.sign_in');
     }
 
     public function showCreateForm()
     {
-        return $this->viewWithAuthName('auth.sign_up');
+        return view('auth.sign_up');
     }
 
     public function store(Request $request)
@@ -93,14 +93,14 @@ class UserController extends Controller
 
         $user->assignRole($request->role ?: 'Estudiante');
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.enter');
     }
 
     public function show($uuid)
     {
         $user = User::where('uuid', $uuid)->first();
         if (!$user) {
-            return redirect()->to('dashboard');
+            return redirect()->to('users.enter');
         }
 
         $roles = Role::all();
