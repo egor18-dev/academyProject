@@ -49,6 +49,8 @@ Route::group(['prefix' => 'levels'], function () {
 
 Route::group(['prefix' => 'classes'], function () {
     Route::get('/', [ClassController::class, 'index'])->name('classes.index');
+    Route::get('/view/{uuid}', [ClassController::class, 'view'])->name('classes.view');
+    Route::get('/{id}/stream', [ClassController::class, 'streamVideo'])->name('classes.stream');
     Route::get('/create', [ClassController::class, 'create'])->name('classes.create');
     Route::post('/', [ClassController::class, 'store'])->name('classes.store');
     Route::get('/{uuid}', [ClassController::class, 'show'])->name('classes.show');

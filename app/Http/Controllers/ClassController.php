@@ -23,6 +23,32 @@ class ClassController extends Controller
         return view('classes.view_classes', ['classes' => $classes, 'count' => $count]);
     }
 
+    public function streamVideo ($id)
+    {
+        $class = ClassModel::findOrFail($id);
+
+        $video = $class->getFirstMedia('videos');
+
+        if($video)
+        {
+            return $video->toResponse(request());
+        }
+
+        abort(404, 'Video no encontrado');
+    }
+
+    public function view($uuid)
+    {
+        $class = ClassModel::with('media')->where('uuid', $uuid)->firstOrFail();
+
+        $video = $class->getFirstMedia('videos');
+
+        $class->video_stream = $video ? $video->getUrl() : null;
+
+
+        return view('classes.view_class', ['class' => $class]);
+    }
+
     public function create()
     {
         $levels = Level::all();
