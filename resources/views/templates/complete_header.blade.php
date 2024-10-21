@@ -939,10 +939,10 @@
                     data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <div class="d-flex align-items-center">
                         <div class="me-xl-2 me-0">
-                            <img src="../assets/images/faces/2.jpg" alt="img" class="avatar avatar-sm avatar-rounded">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&s" alt="img" class="avatar avatar-sm avatar-rounded">
                         </div>
                         <div class="d-xl-block d-none lh-1">
-                            <span class="fw-medium lh-1">Mr. Jack</span>
+                            <span class="fw-medium lh-1">{{$name}}</span>
                         </div>
                     </div>
                 </a>

@@ -18,6 +18,8 @@ class HomeController extends Controller
             $class->videos = $videos;
         }
     
-        return view('home.view_home', ['classes' => $classes, 'count' => $count]);
+        $name = auth()->user()->name;
+
+        return view('home.view_home', ['classes' => $classes, 'count' => $count, 'name' => $name]);
     }
 }
