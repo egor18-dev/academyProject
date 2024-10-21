@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function index() 
@@ -17,10 +17,36 @@ class UserController extends Controller
         return view('users.view_users', ['users' => $users, 'count' => User::count()]);
     }
 
+    public function enter (Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ], [
+            'email.required' => 'El campo de correo electrónico es obligatorio.',
+            'email.email' => 'Por favor, introduce un correo electrónico válido.',
+            'password.required' => 'El campo de contraseña es obligatorio.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+        ]);
+
+        $creadentials = $request->only(['email','password']);
+
+        if(Auth::attempt($creadentials, $request->has('remember'))) {
+
+        }
+
+        return redirect()->back()->withErrors(['error' => 'Las credenciales no coinciden con nuestros registros.']);
+    }
+
     public function create()
     {
         $roles = Role::all();
         return view('users.add_user', ['roles' => $roles]);
+    }
+
+    public function showEnterForm ()
+    {
+        return view('auth.sign_in');
     }
 
     public function showCreateForm()
