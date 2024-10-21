@@ -9,15 +9,25 @@ use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+
 class UserController extends Controller
 {
+    // Método privado que retorna la vista con el nombre del usuario autenticado
+    private function viewWithAuthName($view, $data = [])
+    {
+        return view($view, array_merge($data, ['name' => auth()->user()->name]));
+    }
+
     public function index() 
     {
         $users = User::paginate(5);
-        return view('users.view_users', ['users' => $users, 'count' => User::count()]);
+        return $this->viewWithAuthName('users.view_users', [
+            'users' => $users,
+            'count' => User::count()
+        ]);
     }
 
-    public function enter (Request $request)
+    public function enter(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -29,10 +39,10 @@ class UserController extends Controller
             'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
         ]);
 
-        $creadentials = $request->only(['email','password']);
+        $creadentials = $request->only(['email', 'password']);
 
-        if(Auth::attempt($creadentials, $request->has('remember'))) {
-            
+        if (Auth::attempt($creadentials, $request->has('remember'))) {
+            return redirect()->route('dashboard'); // Redirigir a dashboard si el login es exitoso
         }
 
         return redirect()->back()->withErrors(['error' => 'Las credenciales no coinciden con nuestros registros.']);
@@ -41,22 +51,22 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('users.add_user', ['roles' => $roles]);
+        return $this->viewWithAuthName('users.add_user', ['roles' => $roles]);
     }
 
-    public function showEnterForm ()
+    public function showEnterForm()
     {
-        return view('auth.sign_in');
+        return $this->viewWithAuthName('auth.sign_in');
     }
 
     public function showCreateForm()
     {
-        return view('auth.sign_up');
+        return $this->viewWithAuthName('auth.sign_up');
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'surnames' => 'required',
             'email' => 'required|email',
@@ -67,10 +77,10 @@ class UserController extends Controller
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'Debes ingresar un correo electrónico válido.',
             'password.required' => 'La contraseña es obligatoria.',
-            'password.min' => 'La contraseña debe tener al menos :min caracteres.', 
+            'password.min' => 'La contraseña debe tener al menos :min caracteres.',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
 
@@ -92,16 +102,20 @@ class UserController extends Controller
         if (!$user) {
             return redirect()->to('dashboard');
         }
-        
+
         $roles = Role::all();
         $actualUserRole = $user->getRoleNames()->isNotEmpty() ? implode(', ', $user->getRoleNames()->toArray()) : 'Estudiante';
 
-        return view('users.update_user', ['user' => $user, 'roles' => $roles, 'actualUserRole' => $actualUserRole]);
+        return $this->viewWithAuthName('users.update_user', [
+            'user' => $user,
+            'roles' => $roles,
+            'actualUserRole' => $actualUserRole
+        ]);
     }
 
     public function update(Request $request, $uuid)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'surnames' => 'required',
             'email' => 'required|email',
@@ -112,13 +126,13 @@ class UserController extends Controller
             'email.email' => 'Debes ingresar un correo electrónico válido.',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
 
         $user = User::where('uuid', $uuid)->first();
 
-        if(!$user){
+        if (!$user) {
             return redirect()->back()->withErrors(['user' => 'Usuario no encontrado']);
         }
 
@@ -136,14 +150,14 @@ class UserController extends Controller
     {
         $user = User::where('uuid', $uuid)->firstOrFail();
 
-        if($user){
+        if ($user) {
             $removedUser = $user->delete();
 
-            return $removedUser 
-            ? redirect()->back()->with('success', "Usuario $user->name eliminado correctamente") 
-            : redirect()->back()->withErrors(['error' => 'Error al eliminar el usuario']);
+            return $removedUser
+                ? redirect()->back()->with('success', "Usuario $user->name eliminado correctamente")
+                : redirect()->back()->withErrors(['error' => 'Error al eliminar el usuario']);
         }
-    
+
         return redirect()->back()->withErrors(['error' => 'Usuario no encontrado']);
     }
 }
