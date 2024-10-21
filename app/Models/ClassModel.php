@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Support\Str;
 
 class ClassModel extends Model implements HasMedia
 {
@@ -27,5 +28,14 @@ class ClassModel extends Model implements HasMedia
     public function exams()
     {
         return $this->hasMany(Exam::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
     }
 }

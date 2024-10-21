@@ -10,7 +10,7 @@
                   </div>
               </div>
               <div class="card-body">
-                  <form action="{{ route('users.store') }}" method="POST" class="row g-3 needs-validation" novalidate>
+                  <form action="{{ route('classes.store') }}" method="POST" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
                       @csrf 
                       <div class="col-lg-6">
                         <label for="title" class="form-label">Título <span class="text-danger">*</span></label>
@@ -18,10 +18,10 @@
                       </div>
                       <div class="col-lg-6">
                           <label for="role" class="form-label">Nivel <span class="text-danger">*</span></label>
-                          <select class="form-select {{ $errors->has('role') ? 'is-invalid' : '' }}" name="role" id="role" required>
+                          <select class="form-select {{ $errors->has('role') ? 'is-invalid' : '' }}" name="level_id" id="level_id" required>
                               <option value="" selected disabled>Selecciona un nivel...</option>
                               @foreach ($levels as $level)
-                                  <option value="{{ $level->name }}">{{ $level->name }}</option>
+                                  <option value="{{ $level->uuid }}">{{ $level->name }}</option>
                               @endforeach
                           </select>
                           <div class="invalid-feedback">

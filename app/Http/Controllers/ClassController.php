@@ -12,8 +12,14 @@ class ClassController extends Controller
 {
     public function index() 
     {
-        $classes = ClassModel::paginate(5);
-        return view('classes.view_classes', ['classes' => $classes, 'count' => $classes->count()]);
+       $classes = ClassModel::with('media')->get();
+
+       foreach ($classes as $class) {
+            $videos = $class->getMedia('videos');
+            $class->videos = $videos;
+        }
+
+        return view('classes.view_classes', ['classes' => $classes, 'count' => 0]);
     }
 
     public function create()
@@ -40,11 +46,17 @@ class ClassController extends Controller
             'video.max' => 'El video no debe exceder los 20MB.'
         ]);
 
-        $classes = ClassModel::create([
+        $class = ClassModel::create([
             'level_id' => $request->level_id,
             'title' => $request->title,
             'description' => $request->description,
         ]);
+
+        if($request->hasFile('video')){
+           $class->addMediaFromRequest('video')->toMediaCollection('videos'); 
+        }
+
+        return redirect()->back()->with('success', 'Clase subido exitosamente!');
     }
 
     public function show($uuid)

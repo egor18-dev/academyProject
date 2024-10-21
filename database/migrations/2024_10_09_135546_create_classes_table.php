@@ -10,10 +10,11 @@ return new class extends Migration
     {
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('level_id')->constrained()->onDelete('cascade');
+            $table->uuid(column: 'uuid')->unique(); 
+            $table->uuid('level_id');
+            $table->foreign('level_id')->references('uuid')->on('levels')->onDelete('cascade'); 
             $table->string('title');
             $table->string('description');
-            $table->text('video_url'); // URL del video de la clase
             $table->timestamps();
         });
     }
