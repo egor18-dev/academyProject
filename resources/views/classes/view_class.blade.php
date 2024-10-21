@@ -1036,12 +1036,11 @@
                                     <div class="form-outline w-100">
                                       <textarea class="form-control" id="textAreaExample" rows="4"
                                         style="background: #fff;"></textarea>
-                                      <label class="form-label" for="textAreaExample">Message</label>
+                                      <label class="form-label" for="textAreaExample">Mensaje</label>
                                     </div>
                                   </div>
                                   <div class="float-end">
-                                    <button type="button" class="btn btn-primary btn-sm">Post comment</button>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Cancel</button>
+                                    <button type="button" class="btn btn-primary btn-sm">Comentar</button>
                                   </div>
                                 </div>
                               </div>
