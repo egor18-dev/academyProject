@@ -1052,6 +1052,30 @@
         </div>
         <div class="col-lg-3 all-videos p-0">
             <h5>Contenido de la academia</h5>
+                @foreach ($levels as $level)
+                <div class="accordion w-100 p-0" id="accordionPanelsStayOpenExample">
+                    <div class="accordion-item w-100">
+                      <h2 class="accordion-header p-0" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            {{$level->name}}
+                        </button>
+                      </h2>
+                      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            @foreach($level->classes as $class)
+                            <div class="class-item">
+                                <ul>
+                                    <li>
+                                        <a href="{{ route('classes.view', ['uuid' => $class->uuid]) }}">{{ $class->title }}</a>
+                                    </li>                                    
+                                </ul>
+                            </div>
+                            @endforeach
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                @endforeach
         </div>
 </div>
 

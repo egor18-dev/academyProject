@@ -14,7 +14,7 @@ class Level extends Model
 
     public function classes()
     {
-        return $this->hasMany(ClassModel::class);
+        return $this->hasMany(ClassModel::class, 'level_id', 'uuid');
     }
 
     protected static function boot()

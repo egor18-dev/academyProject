@@ -41,12 +41,16 @@ class ClassController extends Controller
     {
         $class = ClassModel::with('media')->where('uuid', $uuid)->firstOrFail();
 
+        $levels = Level::with(['classes' => function ($query) {
+            $query->with('media');
+        }])->orderBy('id', 'asc')->get();
+
         $video = $class->getFirstMedia('videos');
 
         $class->video_stream = $video ? $video->getUrl() : null;
 
 
-        return view('classes.view_class', ['class' => $class]);
+        return view('classes.view_class', ['class' => $class, 'levels' => $levels]);
     }
 
     public function create()
