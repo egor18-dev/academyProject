@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Validator;
 
 class ClassController extends Controller
 {
+    // Método privado que retorna la vista con el nombre del usuario autenticado
+    private function viewWithAuthName($view, $data = [])
+    {
+        return view($view, array_merge($data, ['name' => auth()->user()->name]));
+    }
+
     public function index() 
     {
         $classes = ClassModel::with('media')->get(); 
@@ -20,17 +26,18 @@ class ClassController extends Controller
             $class->videos = $videos;
         }
     
-        return view('classes.view_classes', ['classes' => $classes, 'count' => $count]);
+        return $this->viewWithAuthName('classes.view_classes', [
+            'classes' => $classes,
+            'count' => $count
+        ]);
     }
 
-    public function streamVideo ($id)
+    public function streamVideo($id)
     {
         $class = ClassModel::findOrFail($id);
-
         $video = $class->getFirstMedia('videos');
 
-        if($video)
-        {
+        if ($video) {
             return $video->toResponse(request());
         }
 
@@ -46,20 +53,19 @@ class ClassController extends Controller
         }])->orderBy('id', 'asc')->get();
 
         $video = $class->getFirstMedia('videos');
-
         $class->video_stream = $video ? $video->getUrl() : null;
 
-
-        return view('classes.view_class', ['class' => $class, 'levels' => $levels]);
+        return $this->viewWithAuthName('classes.view_class', [
+            'class' => $class,
+            'levels' => $levels
+        ]);
     }
 
     public function create()
     {
         $levels = Level::all();
-
-        return view('classes.add_class', ['levels' => $levels]);
+        return $this->viewWithAuthName('classes.add_class', ['levels' => $levels]);
     }
-
 
     public function store(Request $request)
     {
@@ -83,35 +89,35 @@ class ClassController extends Controller
             'description' => $request->description,
         ]);
 
-        if($request->hasFile('video')){
-           $class->addMediaFromRequest('video')->toMediaCollection('videos'); 
+        if ($request->hasFile('video')) {
+            $class->addMediaFromRequest('video')->toMediaCollection('videos');
         }
 
-        return redirect()->back()->with('success', 'Clase subido exitosamente!');
+        return redirect()->back()->with('success', 'Clase subida exitosamente!');
     }
 
     public function show($uuid)
     {
-
+        // Implementar si es necesario
     }
 
     public function update(Request $request, $uuid)
     {
-
+        // Implementar si es necesario
     }
 
     public function delete($uuid)
     {
         $class = ClassModel::where('uuid', $uuid)->firstOrFail();
 
-        if($class){
+        if ($class) {
             $removedClass = $class->delete();
 
             return $removedClass
-            ? redirect()->back()->with('success', "Video $class->name eliminado correctamente") 
-            : redirect()->back()->withErrors(['error' => 'Error al eliminar el video']);
+                ? redirect()->back()->with('success', "Clase $class->name eliminada correctamente")
+                : redirect()->back()->withErrors(['error' => 'Error al eliminar la clase']);
         }
-    
-        return redirect()->back()->withErrors(['error' => 'Video no encontrado']);
+
+        return redirect()->back()->withErrors(['error' => 'Clase no encontrada']);
     }
 }

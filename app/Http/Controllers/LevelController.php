@@ -9,28 +9,37 @@ use Illuminate\Support\Facades\Validator;
 
 class LevelController extends Controller
 {
-    public function index() 
+    // Método privado que retorna la vista con el nombre del usuario autenticado
+    private function viewWithAuthName($view, $data = [])
+    {
+        return view($view, array_merge($data, ['name' => auth()->user()->name]));
+    }
+
+    public function index()
     {
         $levels = Level::paginate(5);
-        return view('levels.view_levels', ['levels' => $levels, 'count' => $levels->count()]);
+        return $this->viewWithAuthName('levels.view_levels', [
+            'levels' => $levels,
+            'count' => $levels->count()
+        ]);
     }
 
     public function create()
     {
-        return view('levels.add_level');
+        return $this->viewWithAuthName('levels.add_level');
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
         ], [
             'name.required' => 'El nombre es obligatorio.',
-            'description.required' => 'La descripción son obligatorios.',
+            'description.required' => 'La descripción es obligatoria.',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
 
@@ -48,27 +57,27 @@ class LevelController extends Controller
         if (!$level) {
             return redirect()->to('dashboard');
         }
-        
-        return view('levels.update_level', ['level' => $level]);
+
+        return $this->viewWithAuthName('levels.update_level', ['level' => $level]);
     }
 
     public function update(Request $request, $uuid)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
         ], [
             'name.required' => 'El nombre es obligatorio.',
-            'description.required' => 'La descripción son obligatorios.',
+            'description.required' => 'La descripción es obligatoria.',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
 
         $level = Level::where('uuid', $uuid)->first();
 
-        if(!$level) {
+        if (!$level) {
             return redirect()->back()->withErrors(['error' => 'Nivel no encontrado']);
         }
 
@@ -82,14 +91,14 @@ class LevelController extends Controller
     {
         $level = Level::where('uuid', $uuid)->firstOrFail();
 
-        if($level){
+        if ($level) {
             $removedLevel = $level->delete();
 
             return $removedLevel
-            ? redirect()->back()->with('success', "Nivel $level->name eliminado correctamente") 
-            : redirect()->back()->withErrors(['error' => 'Error al eliminar el nivel']);
+                ? redirect()->back()->with('success', "Nivel $level->name eliminado correctamente")
+                : redirect()->back()->withErrors(['error' => 'Error al eliminar el nivel']);
         }
-    
+
         return redirect()->back()->withErrors(['error' => 'Nivel no encontrado']);
     }
 }

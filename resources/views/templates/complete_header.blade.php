@@ -935,7 +935,7 @@
             <!-- Start::header-element -->
             <li class="header-element dropdown">
                 <!-- Start::header-link|dropdown-toggle -->
-                <a href="javascript:void(0);" class="header-link dropdown-toggle" id="mainHeaderProfile"
+                <a href="{{route('users.index')}}" class="header-link dropdown-toggle" id="mainHeaderProfile"
                     data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <div class="d-flex align-items-center">
                         <div class="me-xl-2 me-0">
