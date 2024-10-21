@@ -32,7 +32,8 @@ class UserController extends Controller
         $creadentials = $request->only(['email','password']);
 
         if(Auth::attempt($creadentials, $request->has('remember'))) {
-
+            var_dump("welcome");
+            die();
         }
 
         return redirect()->back()->withErrors(['error' => 'Las credenciales no coinciden con nuestros registros.']);
