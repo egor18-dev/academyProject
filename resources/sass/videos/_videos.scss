@@ -7,11 +7,25 @@
     }
 
     h5{
-        text-transform: uppercase;
         font-weight: 700;
     }
 
     p{
-        
+
+    }
+
+    .reminder{
+        border: 1px solid #dadada;
+        padding: 15px;
+        border-radius: 5px;
+
+        h5{
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        p{
+            color: #c7c7c7;
+        }
     }
 }
