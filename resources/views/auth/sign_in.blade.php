@@ -40,6 +40,14 @@
                         <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" name="password" id="password" value="{{ old('password') }}">
                     </div>
                     <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" name="remember" id="remember">
+                            <label class="form-check-label text-secondary" for="remember">
+                                Recordarme
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12">
                         <div class="d-grid">
                             <button type="submit">Iniciar Sesión</button>
                         </div>
