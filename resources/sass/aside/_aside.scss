@@ -1,46 +1,44 @@
+aside *{
+    color: #fff !important;
+}
+
 aside {
-    background-color: var(--primaryColor) !important;
-    border-right: 2px solid var(--effectColor);
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 0 15px !important;
-    width: 100%;
-  
-    .effect {
+  background-color: var(--primaryColor) !important;
+  border-right: 2px solid var(--effectColor);
+  padding: 0 15px !important;
+
+  .effect {
       text-align: center;
       color: #fff !important;
       font-weight: 300 !important;
       text-transform: uppercase;
-  
+
       span {
-        font-weight: 700;
-        color: var(--effectColor);
+          font-weight: 700;
+          color: var(--effectColor);
       }
-    }
-  
-    hr {
-      color: var(--hrColor);
-    }
-  
-    nav {
-      a {
-        color: #fff;
-        text-decoration: none;
-      }
-
-      .active{
-        background-color: #fff;
-        color: #000;
-        padding: 7px;
-        border-radius: 10px;
-
-        svg{
-          fill: #eee !important;
-          stroke: #eee !important;
-        }
-      }
-      
-    }
   }
-  
+
+  hr {
+      color: var(--hrColor);
+  }
+
+  nav {
+      a {
+          color: #fff;
+          text-decoration: none;
+      }
+
+      .active {
+          background-color: #fff;
+          color: #000;
+          padding: 7px;
+          border-radius: 10px;
+
+          svg {
+              fill: #eee !important;
+              stroke: #eee !important;
+          }
+      }
+  }
+}
