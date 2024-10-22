@@ -54,12 +54,18 @@ class ClassController extends Controller
 
     public function view($uuid)
     {
-        $class = ClassModel::with('media:id,model_id,collection_name')->where('uuid', $uuid)->firstOrFail();
-        $levels = $this->getCachedLevels();
-        $video = $class->getFirstMedia('videos');
-        $class->video_stream = $video ? $video->getUrl() : '';
+        $class = ClassModel::with('media')->where('uuid', $uuid)->firstOrFail();
 
-        return $this->viewWithAuthName('classes.view_class', compact('class', 'levels'));
+        $levels = Level::with(['classes' => function ($query) {
+            $query->with('media');
+        }])->orderBy('id', 'asc')->get();
+
+        $video = $class->getFirstMedia('videos');
+
+        $class->video_stream = $video ? $video->getUrl() : null;
+
+
+        return view('classes.view_class', ['class' => $class, 'levels' => $levels]);
     }
 
     public function create()
@@ -92,7 +98,7 @@ class ClassController extends Controller
 
         try {
             if ($request->hasFile('video')) {
-                $class->addMediaFromRequest('video')->toMediaCollection('videos');
+                $class->addMediaFromRequest('video')->toMediaCollection('videos', 'media');
                 return redirect()->to('classes')->with('success', 'Clase subida exitosamente!');
             }
         } catch (\Exception $e) {
