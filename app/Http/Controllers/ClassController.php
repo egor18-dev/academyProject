@@ -7,6 +7,7 @@ use App\Models\ClassModel;
 use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ClassController extends Controller
 {
@@ -23,6 +24,7 @@ class ClassController extends Controller
 
         foreach ($classes as $class) {
             $videos = $class->getMedia('videos');
+            $class->description = Str::limit($class->description, 50, '...');
             $class->videos = $videos;
         }
     
