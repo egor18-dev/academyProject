@@ -90,11 +90,14 @@ class ClassController extends Controller
             'description' => $request->description,
         ]);
 
-        if ($request->hasFile('video')) {
-            $class->addMediaFromRequest('video')->toMediaCollection('videos');
+        try {
+            if ($request->hasFile('video')) {
+                $class->addMediaFromRequest('video')->toMediaCollection('videos');
+                return redirect()->to('classes')->with('success', 'Clase subida exitosamente!');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Error al subir el video: ' . $e->getMessage()]);
         }
-
-        return redirect()->back()->with('success', 'Clase subida exitosamente!');
     }
 
     public function delete($uuid)
