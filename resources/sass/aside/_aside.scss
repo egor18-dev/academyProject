@@ -3,9 +3,11 @@ aside *{
 }
 
 aside {
-  background-color: var(--primaryColor) !important;
-  border-right: 2px solid var(--effectColor);
-  padding: 0 15px !important;
+    position: static !important;
+    width: 100% !important;
+    background-color: var(--primaryColor) !important;
+    border-right: 2px solid var(--effectColor);
+    padding: 0 15px !important;
 
   .effect {
       text-align: center;
