@@ -15,7 +15,7 @@ class UserController extends Controller
     // Método privado que retorna la vista con el nombre del usuario autenticado
     private function viewWithAuthName($view, $data = [])
     {
-        return view($view, array_merge($data, ['name' => auth()->user()->name]));
+        return view($view, array_merge($data, ['name' => 'Egor']));
     }
 
     public function index() 
