@@ -2,18 +2,20 @@
 @section('page')
 <section class="container-fluid p-3">
     <div class="card custom-card profile-card">
-        <div class="card-body pb-0 position-relative">
+        <div class="card-body pb-0">
             <div class="profile-banner-img">
-                <img src="https://academia.tradimo.com/img/mobile.jpg" class="rounded w-100" style="height: 30vh">            </div>
+                <img src="https://academia.tradimo.com/img/mobile.jpg" class="rounded w-100" style="height: 30vh">
+            </div>
             <span class="avatar avatar-xxl avatar-rounded bg-light">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg" alt="">
             </span>
             <div
                 class="mt-4 mb-0 p-4 d-flex align-items-center flex-wrap gap-3 justify-content-between">
-                <div>
-                    <h5 class="fw-semibold m-0">{{$user->name}}</h5>
-                    <span class="d-block fw-medium text-muted mb-1 pt-0">{{$user->surnames}}</span>
-                </div>
+                <div class="">
+                <h5 class="fw-semibold m-0">{{$user->name}}</h5>
+                <span class="d-block fw-medium text-muted mb-1 pt-0">{{$user->surnames}}</span>
+                <a href="#" class="btn btn-primary btn-sm mt-3">Editar perfil</a>
+                </div> 
                 <div class="d-flex mb-0 flex-wrap gap-4">
                     <div
                         class="py-2 ps-2 pe-3 rounded-pill d-flex align-items-center border gap-3">
