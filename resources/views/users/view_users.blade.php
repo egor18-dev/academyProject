@@ -62,7 +62,7 @@
                                                 <div class="d-flex align-items-center gap-2">
                                                     <div class="lh-1">
                                                         <span class="avatar avatar-rounded avatar-sm">
-                                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&s" alt="">
+                                                            <img src="{{ route('profile.image', ['uuid' => $user->uuid]) }}" alt="">
                                                         </span>
                                                     </div>
                                                     <div>
