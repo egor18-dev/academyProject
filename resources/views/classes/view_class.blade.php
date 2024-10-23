@@ -32,8 +32,8 @@
                                   {{$class->description}}
                                 </p>
                                  <blockquote class="blockquote custom-blockquote blog-blockquote primary mb-4 text-center">
-                                     <h6 class="lh-base">Los mercados nunca están equivocados, las opiniones a menudo lo están.</h6>
-                                     <footer class="blockquote-footer mt-3 fs-14 text-muted mb-0"><cite title="Source Title">Jesse Livermore</cite></footer>
+                                     <h6 class="lh-base">Tendrás que sacrificar algo para llegar al siguiente nivel. El éxito es costoso, y si no estás dispuesto a pagar el precio, no lo conseguirás</h6>
+                                     <footer class="blockquote-footer mt-3 fs-14 text-muted mb-0"><cite title="Source Title">Eric Thomas</cite></footer>
                                      <span class="quote-icon"><i class="ri-chat-quote-fill"></i></span>
                                  </blockquote>
                                  <p class="mb-0">
