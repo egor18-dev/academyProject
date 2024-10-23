@@ -62,7 +62,7 @@
                                                 <div class="d-flex align-items-center gap-2">
                                                     <div class="lh-1">
                                                         <span class="avatar avatar-rounded avatar-sm">
-                                                            <img src="{{ route('profile.image', ['uuid' => $user->uuid]) }}" alt="">
+                                                            <img src="{{ route('profile.image', ['uuid' => $user->uuid]) }}" alt="img profile {{$user->name}}">
                                                         </span>
                                                     </div>
                                                     <div>
