@@ -129,6 +129,8 @@ class UserController extends Controller
             'profile_image.max' => 'El tamaño de la imagen no debe exceder los 2MB.',
         ]);
 
+        $firstPart = explode('.', $request->route()->getName())[0];
+
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
@@ -155,7 +157,7 @@ class UserController extends Controller
             $user->addMediaFromRequest('profile_image')->toMediaCollection('profile_image', 'media');
         }
 
-        return redirect()->to('users')->with('success', 'Usuario actualizado con éxito.');
+        return redirect()->to($firstPart)->with('success', 'Usuario actualizado con éxito.');
     }
 
     public function delete($uuid)
