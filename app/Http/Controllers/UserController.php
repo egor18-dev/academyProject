@@ -136,7 +136,7 @@ class UserController extends Controller
         $user = User::where('uuid', $uuid)->first();
 
         if (!$user) {
-            return redirect()->to('users')->withErrors(['user' => 'Usuario no encontrado']);
+            return redirect()->to('users')->withErrors(['error' => 'Usuario no encontrado']);
         }
 
         $user->fill($request->only(['name', 'surnames', 'email']));
