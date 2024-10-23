@@ -55,45 +55,6 @@
                                          <div class="d-flex align-items-start gap-3 flex-wrap">
                                              <div>
                                                  <span class="avatar avatar-lg avatar-rounded  p-1 bg-light borde">
-                                                     <img src="../assets/images/faces/3.jpg" alt="">
-                                                 </span>
-                                             </div>
-                                             <div class="flex-fill w-50">
-                                                 <div class="p-3 bg-light border rounded">
-                                                     <span class="fw-medium d-block mb-1">TechEnthusiast21</span>
-                                                     <span class="d-block mb-3 text-muted">Wow, these 3D images are mind-blowing! The depth and realism are incredible. It's like stepping into another dimension.</span>
-                                                     <div class="btn-list">
-                                                         <button class="btn btn-sm btn-primary-light btn-wave">Reply<i class="ri-reply-line ms-1"></i></button>
-                                                         <button class="btn btn-sm btn-secondary-light btn-wave">Report<i class="ri-error-warning-line ms-1"></i></button>
-                                                     </div>
-                                                 </div>
-                                                 <div class="list-group-item border-0 pe-0 pb-0">
-                                                     <div class="d-flex align-items-start gap-3 flex-wrap">
-                                                         <div>
-                                                             <span class="avatar avatar-lg avatar-rounded p-1 bg-light border">
-                                                                 <img src="../assets/images/faces/4.jpg" alt="">
-                                                             </span>
-                                                         </div>
-                                                         <div class="flex-fill w-50">
-                                                             <div class="p-3 bg-light border rounded">
-                                                                 <span class="fw-medium d-block mb-1">Karnakaran463</span>
-                                                                 <span class="d-block mb-3 text-muted">Great job on showcasing the power of 3D technology!</span>
-                                                                 <div class="btn-list">
-                                                                     <button class="btn btn-sm btn-primary-light btn-wave">Reply<i class="ri-reply-line ms-1"></i></button>
-                                                                     <button class="btn btn-sm btn-secondary-light btn-wave">Report<i class="ri-error-warning-line ms-1"></i></button>
-                                                                 </div>
-                                                             </div>
-                                                             
-                                                         </div>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </li>
-                                     <li class="list-group-item border-0 border-bottom">
-                                         <div class="d-flex align-items-start gap-3 flex-wrap">
-                                             <div>
-                                                 <span class="avatar avatar-lg avatar-rounded  p-1 bg-light borde">
                                                      <img src="../assets/images/faces/13.jpg" alt="">
                                                  </span>
                                              </div>

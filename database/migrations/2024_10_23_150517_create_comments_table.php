@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->uuid(column: 'uuid')->unique(); 
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade'); 
             $table->uuid('class_id');
             $table->foreign('class_id')->references('uuid')->on('classes')->onDelete('cascade'); 
             $table->longText('description');
