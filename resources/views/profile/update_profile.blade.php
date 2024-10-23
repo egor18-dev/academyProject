@@ -29,8 +29,8 @@
                                     placeholder="Ingresa Email">
                             </div>
                             <div class="col-xl-12">
-                                <label for="formFile" class="form-label">Foto perfil</label>
-                                <input class="form-control" type="file" id="formFile" name="video" accept="video/*">
+                                <label for="formFile" class="form-label">Foto de perfil</label>
+                                <input class="form-control" type="file" id="formFile" name="profile_image" accept="image/*">
                             </div>
                         </div>
                         <div class="card-footer border-top-0">
