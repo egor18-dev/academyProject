@@ -45,6 +45,7 @@ Route::group(['prefix' => 'users'], function () {
 Route::group(['prefix' => 'profile'], function () {
     Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/{uuid}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/image/{uuid}', [ProfileController::class, 'serveImage'])->name('profile.image');
     Route::put('/{uuid}', [UserController::class, 'update'])->name('profile.update');
 });
 

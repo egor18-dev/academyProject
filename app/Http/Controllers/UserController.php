@@ -120,11 +120,14 @@ class UserController extends Controller
             'name' => 'required',
             'surnames' => 'required',
             'email' => 'required|email',
+            'profile_image' => 'nullable|image|max:2048'
         ], [
             'name.required' => 'El nombre es obligatorio.',
             'surnames.required' => 'Los apellidos son obligatorios.',
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'Debes ingresar un correo electrónico válido.',
+            'profile_image.image' => 'El archivo debe ser una imagen.',
+            'profile_image.max' => 'El tamaño de la imagen no debe exceder los 2MB.',
         ]);
 
         if ($validator->fails()) {
@@ -142,6 +145,15 @@ class UserController extends Controller
 
         if ($request->role) {
             $user->syncRoles([$request->role]);
+        }
+
+        if($request->hasFile('profile_image')){
+
+            if($user->hasMedia('profile_image')){
+                $user->clearMediaCollection('profile_image');
+            }
+
+            $user->addMediaFromRequest('profile_image')->toMediaCollection('profile_image', 'media');
         }
 
         return redirect()->back()->with('success', 'Usuario actualizado con éxito.');

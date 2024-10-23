@@ -7,7 +7,7 @@
                 <img src="https://academia.tradimo.com/img/mobile.jpg" class="rounded w-100" style="height: 30vh">
             </div>
             <span class="avatar avatar-xxl avatar-rounded bg-light">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg" alt="">
+                <img src="{{ route('profile.image', ['uuid' => $user->uuid]) }}" alt="img-profile">
             </span>
             <div
                 class="mt-4 mb-0 p-4 d-flex align-items-center flex-wrap gap-3 justify-content-between">
