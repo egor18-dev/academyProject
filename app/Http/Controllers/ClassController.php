@@ -8,7 +8,6 @@ use App\Models\Comments;
 use App\Models\Level;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use FFMpeg\FFMpeg;
@@ -20,18 +19,9 @@ class ClassController extends Controller
         return view($view, array_merge($data, ['name' => 'Egor']));
     }
 
-    private function getCachedLevels()
-    {
-        return Cache::remember('levels', 60, function () {
-            return Level::with(['classes' => function ($query) {
-                $query->with('media:id,model_id,collection_name');
-            }])->orderBy('id', 'asc')->get();
-        });
-    }
-
     public function index()
     {
-         $classes = ClassModel::with('media:id,model_id,collection_name')->get();
+        $classes = ClassModel::with('media:id,model_id,collection_name')->get();
         $count = $classes->count();
 
         foreach ($classes as $class) {
@@ -44,11 +34,11 @@ class ClassController extends Controller
     }
 
     public function serveImage($uuid)
-    {   
+    {
         $classModel = ClassModel::where('uuid', $uuid)->first();
 
         if($classModel && auth()->check()){
-            
+
             $image = $classModel->getFirstMedia('video_img');
 
             if($image && auth()->check()){
@@ -64,7 +54,7 @@ class ClassController extends Controller
         abort(403);
     }
 
-    public function videos ()
+    public function videos()
     {
         $classes = ClassModel::with('media:id,model_id,collection_name')->get();
         $count = $classes->count();
@@ -100,15 +90,73 @@ class ClassController extends Controller
             $query->with('media');
         }])->orderBy('id', 'asc')->get();
 
-
         $comments = Comments::where('class_id', $class->uuid)->with('user')->get();
 
         return view('classes.view_class', ['class' => $class, 'levels' => $levels, 'user' => $user, 'comments' => $comments]);
     }
 
+    public function show($uuid)
+    {
+        $class = ClassModel::where('uuid', $uuid)->first();
+        $levels = Level::all();
+
+        if(!$class)
+            return redirect()->to('classes')->withErrors(['error' => 'Classe no encontrada']);
+
+        return view('classes.update_class', ['class' => $class, 'levels' => $levels]);
+    }
+
+    public function update(Request $request, $uuid)
+    {
+        $request->validate([
+            'level_id' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+            'video_img' => 'nullable|image|max:2048',
+            'video' => 'nullable|mimes:mp4,mov,avi|max:20000'
+        ], [
+            'level_id.required' => 'El nivel es obligatorio.',
+            'title.required' => 'El título es obligatorio.',
+            'description.required' => 'La descripción es obligatoria.',
+            'video_img.image' => 'El archivo debe ser una imagen.',
+            'video_img.max' => 'El tamaño de la imagen no debe exceder los 2MB.',
+            'video.required' => 'El video es obligatorio.',
+            'video.mimes' => 'El video debe ser un archivo de tipo: mp4, mov, avi.',
+            'video.max' => 'El video no debe exceder los 20MB.'
+        ]);
+
+        $class = ClassModel::where('uuid', $uuid)->first();
+
+        if(!$class){
+            return redirect()->to('classes')->withErrors(['error' => 'Clase no encontrada']);
+        }
+
+        $class->update([
+            'level_id' => $request->level_id,
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        try {
+            if ($request->hasFile('video')) {
+                $class->clearMediaCollection('videos');
+                $class->addMediaFromRequest('video')->toMediaCollection('videos', 'media');
+            }
+
+            if($request->hasFile('video_img')){
+                $class->clearMediaCollection('video_img');
+                $class->addMediaFromRequest('video_img')->toMediaCollection('video_img', 'media');
+            }
+
+            return redirect()->to('classes')->with('success', 'Clase actualizada correctamente!');
+        } catch (\Exception $e) {
+            return redirect()->to('classes')->withErrors(['error' => 'Error al subir el video: ' . $e->getMessage()]);
+        }
+    }
+
     public function create()
     {
-        $levels = $this->getCachedLevels();
+        $levels = Level::all();
         return $this->viewWithAuthName('classes.add_class', compact('levels'));
     }
 
