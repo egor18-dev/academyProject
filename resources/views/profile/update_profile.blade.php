@@ -23,10 +23,14 @@
                                 <input type="text" class="form-control" id="profile-email" name="surnames" value="{{ $user->surnames }}"
                                     placeholder="Ingresa Apellidos">
                             </div>
-                            <div class="col-xl-12 mt-2">
+                            <div class="col-xl-12 my-2">
                                 <label for="profile-designation" class="form-label">Email :</label>
                                 <input type="email" class="form-control" id="profile-designation" name="email" value="{{ $user->email }}"
                                     placeholder="Ingresa Email">
+                            </div>
+                            <div class="col-xl-12">
+                                <label for="formFile" class="form-label">Foto perfil</label>
+                                <input class="form-control" type="file" id="formFile" name="video" accept="video/*">
                             </div>
                         </div>
                         <div class="card-footer border-top-0">
