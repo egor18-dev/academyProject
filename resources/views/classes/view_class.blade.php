@@ -122,9 +122,9 @@
                         <div class="card custom-card overflow-hidden">
                           <div class="card-header justify-content-between">
                               <div class="card-title">
-                                  {{$level->name}}
+                                  Siguientes videos
                               </div>
-                              <a href="javascript:void(0);" class="fs-12 text-muted"> View All<i class="ti ti-arrow-narrow-right ms-1"></i> </a>
+                              <a class="fs-12 text-muted">{{$class->count() - 1}} videos<i class="ti ti-arrow-narrow-right ms-1"></i> </a>
                           </div>
                           <div class="card-body p-0">
                               @if ($level->classes->isNotEmpty())
@@ -134,10 +134,10 @@
                                       <li class="list-group-item">
                                           <div class="d-flex gap-3 flex-wrap align-items-center">
                                               <span class="avatar avatar-xl">
-                                                  <img src="../assets/images/media/blog/14.jpg" class="img-fluid" alt="...">
+                                                  <img src="{{ route('userClasses.image', ['uuid' => $class->uuid]) }}" class="img-fluid" alt="img-class-{{$class->title}}">
                                               </span>
                                               <div class="flex-fill">
-                                                  <a href="javascript:void(0);" class="mb-0 badge bg-primary-transparent">Technology</a>
+                                                  <a href="javascript:void(0);" class="mb-0 badge bg-primary-transparent">{{$level->name}}</a>
                                                   <p class="mb-1 popular-blog-content text-truncate fw-medium">
                                                     {{$futureClass->title}}
                                                   </p>

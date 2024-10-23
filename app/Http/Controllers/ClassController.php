@@ -18,16 +18,6 @@ class ClassController extends Controller
         return view($view, array_merge($data, ['name' => 'Egor']));
     }
 
-    public function getVideoDuration($videoPath)
-    {
-        $ffmpeg = FFMpeg::create();
-        $video = $ffmpeg->open($videoPath);
-        $ffprobe = \FFMpeg\FFProbe::create();
-        $duration = $ffprobe->format($videoPath)->get('duration');
-
-        return gmdate("H:i:s", $duration);
-    }
-
     private function getCachedLevels()
     {
         return Cache::remember('levels', 60, function () {

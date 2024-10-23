@@ -14,7 +14,7 @@ return new class extends Migration
             $table->uuid('level_id');
             $table->foreign('level_id')->references('uuid')->on('levels')->onDelete('cascade'); 
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->timestamps();
         });
     }
