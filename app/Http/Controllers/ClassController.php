@@ -40,6 +40,24 @@ class ClassController extends Controller
         return $this->viewWithAuthName('classes.view_classes', compact('classes', 'count'));
     }
 
+    public function serveImage($uuid)
+    {   
+        $classModel = ClassModel::where('uuid', $uuid)->first();
+
+        if($classModel && auth()->check()){
+            
+            $image = $classModel->getFirstMedia('video_img');
+
+            if($image && auth()->check()){
+                return response()->file($image->getPath(), [
+                    'Content-Type' => $image->mime_type,
+                ]);
+            }
+        }
+
+        abort(403);
+    }
+
     public function videos ()
     {
         $classes = ClassModel::with('media:id,model_id,collection_name')->get();
@@ -94,11 +112,14 @@ class ClassController extends Controller
             'level_id' => 'required',
             'title' => 'required',
             'description' => 'required',
+            'video_img' => 'nullable|image|max:2048',
             'video' => 'required|mimes:mp4,mov,avi|max:20000'
         ], [
             'level_id.required' => 'El nivel es obligatorio.',
             'title.required' => 'El título es obligatorio.',
             'description.required' => 'La descripción es obligatoria.',
+            'video_img.image' => 'El archivo debe ser una imagen.',
+            'video_img.max' => 'El tamaño de la imagen no debe exceder los 2MB.',
             'video.required' => 'El video es obligatorio.',
             'video.mimes' => 'El video debe ser un archivo de tipo: mp4, mov, avi.',
             'video.max' => 'El video no debe exceder los 20MB.'
@@ -113,8 +134,13 @@ class ClassController extends Controller
         try {
             if ($request->hasFile('video')) {
                 $class->addMediaFromRequest('video')->toMediaCollection('videos', 'media');
-                return redirect()->to('classes')->with('success', 'Clase subida exitosamente!');
             }
+
+            if($request->hasFile('video_img')){
+                $class->addMediaFromRequest('video_img')->toMediaCollection('video_img', 'media');
+            }
+
+            return redirect()->to('classes')->with('success', 'Clase subida exitosamente!');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Error al subir el video: ' . $e->getMessage()]);
         }

@@ -36,8 +36,12 @@
                         </div>
                     </div>
                     <div class="col-xl-12">
-                        <label for="formFile" class="form-label">Sube un video <span class="text-danger">*</span></label>
-                        <input class="form-control" type="file" id="formFile" name="video" accept="video/*">
+                        <label for="video_img" class="form-label">Miniatura video</label>
+                        <input class="form-control" type="file" id="video_img" name="video_img" accept="image/*">
+                    </div>
+                    <div class="col-xl-12">
+                        <label for="video" class="form-label">Sube un video <span class="text-danger">*</span></label>
+                        <input class="form-control" type="file" id="video" name="video" accept="video/*">
                     </div>
                       <div class="col-12">
                           <button class="btn btn-primary" type="submit">Subir video</button>
