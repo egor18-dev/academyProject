@@ -18,6 +18,7 @@ class ProfileController extends Controller
     public function serveImage($uuid)
     {   
         $user = auth()->user();
+
         if($uuid === $user->uuid){
 
             $image = $user->getFirstMedia('profile_image');
@@ -25,6 +26,9 @@ class ProfileController extends Controller
             if($image && auth()->check()){
                 return response()->file($image->getPath(), [
                     'Content-Type' => $image->mime_type,
+                    'Cache-Control' => 'no-store, no-cache, must-revalidate',
+                    'Pragma' => 'no-cache',
+                    'Expires' => '0',
                 ]);
             }
         }
