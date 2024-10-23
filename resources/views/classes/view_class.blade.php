@@ -46,7 +46,7 @@
                          <div class="card custom-card overflow-hidden">
                              <div class="card-header">
                                  <div class="card-title">
-                                     Comments
+                                    Comentarios   
                                  </div>
                              </div>
                              <div class="card-body p-0">
@@ -181,32 +181,20 @@
                  <div class="card custom-card">
                      <div class="card-header">
                          <div class="card-title">
-                             Leave a comment
+                             Envia un comentario
                          </div>
                      </div>
                      <div class="card-body">
                          <div class="row gy-3">
-                             <div class="col-xl-6">
-                                 <label for="blog-first-name" class="form-label">First Name</label>
-                                 <input type="text" class="form-control" id="blog-first-name" placeholder="Enter Name">
-                             </div>
-                             <div class="col-xl-6">
-                                 <label for="blog-last-name" class="form-label">Last Name</label>
-                                 <input type="text" class="form-control" id="blog-last-name" placeholder="Enter Name">
-                             </div>
-                             <div class="col-xl-12"> 
-                                 <label for="blog-email" class="form-label">Email ID</label>
-                                 <input type="text" class="form-control" id="blog-email" placeholder="Enter Email">
-                             </div>
                              <div class="col-xl-12">
-                                 <label for="blog-comment" class="form-label">Write Comment</label>
+                                 <label for="blog-comment" class="form-label">Escribe un comentario</label>
                                  <textarea class="form-control" id="blog-comment" rows="5"></textarea>
                              </div>
                          </div>
                      </div>
                      <div class="card-footer">
                          <div class="text-end">
-                             <button class="btn btn-primary-light">Post Comment</button>
+                             <button class="btn btn-primary-light">Enviar</button>
                          </div>
                      </div>
 
