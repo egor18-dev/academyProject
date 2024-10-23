@@ -28,7 +28,7 @@ class ClassController extends Controller
 
     public function index()
     {
-        $classes = ClassModel::with('media:id,model_id,collection_name')->get();
+         $classes = ClassModel::with('media:id,model_id,collection_name')->get();
         $count = $classes->count();
 
         foreach ($classes as $class) {
@@ -38,6 +38,20 @@ class ClassController extends Controller
         }
 
         return $this->viewWithAuthName('classes.view_classes', compact('classes', 'count'));
+    }
+
+    public function videos ()
+    {
+        $classes = ClassModel::with('media:id,model_id,collection_name')->get();
+        $count = $classes->count();
+
+        foreach ($classes as $class) {
+            $videos = $class->getMedia('videos');
+            $class->description = Str::limit($class->description, 50, '...');
+            $class->videos = $videos;
+        }
+
+        return $this->viewWithAuthName('classes.videos', compact('classes', 'count'));
     }
 
     public function streamVideo($id)
