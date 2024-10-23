@@ -14,7 +14,7 @@
                 <div class="">
                 <h5 class="fw-semibold m-0">{{$user->name}}</h5>
                 <span class="d-block fw-medium text-muted mb-1 pt-0">{{$user->surnames}}</span>
-                <a href="#" class="btn btn-primary btn-sm mt-3">Editar perfil</a>
+                <a href="{{ route('profile.show', ['uuid' => $user->uuid]) }}" class="btn btn-primary btn-sm mt-3">Editar perfil</a>
                 </div> 
                 <div class="d-flex mb-0 flex-wrap gap-4">
                     <div

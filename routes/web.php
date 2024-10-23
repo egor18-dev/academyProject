@@ -42,6 +42,11 @@ Route::group(['prefix' => 'users'], function () {
     Route::delete('/{uuid}', [UserController::class, 'delete'])->name('users.delete');
 });
 
+Route::group(['prefix' => 'profile'], function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/{uuid}', [ProfileController::class, 'show'])->name('profile.show');
+});
+
 Route::group(['prefix' => 'levels'], function () {
     Route::get('/', [LevelController::class, 'index'])->name('levels.index');
     Route::get('/create', [LevelController::class, 'create'])->name('levels.create');
@@ -60,10 +65,6 @@ Route::group(['prefix' => 'classes'], function () {
     Route::get('/{uuid}', [ClassController::class, 'show'])->name('classes.show');
     Route::put('/{uuid}', [ClassController::class, 'update'])->name('classes.update');
     Route::delete('/{uuid}', [ClassController::class, 'delete'])->name('classes.delete');
-});
-
-Route::group(['prefix' => 'profile'], function () {
-    Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
 });
 
 Route::group(['prefix' => 'home'], function () {
