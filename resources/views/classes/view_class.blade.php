@@ -134,7 +134,7 @@
                                       <li class="list-group-item">
                                           <div class="d-flex gap-3 flex-wrap align-items-center">
                                               <span class="avatar avatar-xl">
-                                                  <img src="{{ route('userClasses.image', ['uuid' => $class->uuid]) }}" class="img-fluid" alt="img-class-{{$class->title}}">
+                                                  <img src="{{ route('userClasses.image', ['uuid' => $futureClass->uuid]) }}" class="img-fluid" alt="img-class-{{$class->title}}">
                                               </span>
                                               <div class="flex-fill">
                                                   <a href="javascript:void(0);" class="mb-0 badge bg-primary-transparent">{{$level->name}}</a>

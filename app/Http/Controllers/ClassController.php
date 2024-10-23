@@ -91,9 +91,9 @@ class ClassController extends Controller
             $query->with('media');
         }])->orderBy('id', 'asc')->get();
 
-        $video = $class->getFirstMedia('videos');
+        // $video = $class->getFirstMedia('videos');
 
-        $class->video_stream = $video ? $video->getUrl() : null;
+        // $class->video_stream = $video ? $video->getUrl() : null;
 
 
         return view('classes.view_class', ['class' => $class, 'levels' => $levels]);
