@@ -54,6 +54,9 @@ class ClassController extends Controller
             if($image && auth()->check()){
                 return response()->file($image->getPath(), [
                     'Content-Type' => $image->mime_type,
+                    'Cache-Control' => 'no-store, no-cache, must-revalidate',
+                    'Pragma' => 'no-cache',
+                    'Expires' => '0',
                 ]);
             }
         }
