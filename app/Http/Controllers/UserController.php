@@ -136,7 +136,7 @@ class UserController extends Controller
         $user = User::where('uuid', $uuid)->first();
 
         if (!$user) {
-            return redirect()->back()->withErrors(['user' => 'Usuario no encontrado']);
+            return redirect()->to('users')->withErrors(['user' => 'Usuario no encontrado']);
         }
 
         $user->fill($request->only(['name', 'surnames', 'email']));
@@ -155,7 +155,7 @@ class UserController extends Controller
             $user->addMediaFromRequest('profile_image')->toMediaCollection('profile_image', 'media');
         }
 
-        return redirect()->back()->with('success', 'Usuario actualizado con éxito.');
+        return redirect()->to('users')->with('success', 'Usuario actualizado con éxito.');
     }
 
     public function delete($uuid)
