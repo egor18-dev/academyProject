@@ -16,6 +16,11 @@ class Comments extends Model implements HasMedia
 
     protected $fillable = ['uuid', 'user_id', 'class_id', 'description'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'uuid');
+    }
+
     protected static function boot()
     {
         parent::boot();

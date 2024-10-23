@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClassModel;
+use App\Models\Comments;
 use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -85,18 +86,18 @@ class ClassController extends Controller
 
     public function view($uuid)
     {
+        $user = auth()->user();
+
         $class = ClassModel::with('media')->where('uuid', $uuid)->firstOrFail();
 
         $levels = Level::with(['classes' => function ($query) {
             $query->with('media');
         }])->orderBy('id', 'asc')->get();
 
-        // $video = $class->getFirstMedia('videos');
 
-        // $class->video_stream = $video ? $video->getUrl() : null;
+        $comments = Comments::where('class_id', $class->uuid)->with('user')->get();
 
-
-        return view('classes.view_class', ['class' => $class, 'levels' => $levels]);
+        return view('classes.view_class', ['class' => $class, 'levels' => $levels, 'user' => $user, 'comments' => $comments]);
     }
 
     public function create()

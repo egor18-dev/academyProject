@@ -78,13 +78,13 @@ class LevelController extends Controller
         $level = Level::where('uuid', $uuid)->first();
 
         if (!$level) {
-            return redirect()->back()->withErrors(['error' => 'Nivel no encontrado']);
+            return redirect()->to('levels')->withErrors(['error' => 'Nivel no encontrado']);
         }
 
         $level->fill($request->only(['name', 'description']));
         $level->save();
 
-        return redirect()->back()->with('success', 'Nivel actualizado con éxito.');
+        return redirect()->to('levels')->with('success', 'Nivel actualizado con éxito.');
     }
 
     public function delete($uuid)

@@ -1,4 +1,6 @@
-
+@extends('welcome')
+@section('content')
+@include('templates/header')
 <main class="main-home">
     <div class="section">
         <img src="https://cdn.prod.website-files.com/649220d2911fb5552e5aca5e/64c85a70b2ba9d101d5edb26_Team%20Focus.webp" alt="">
@@ -16,3 +18,4 @@
             <a href="#">Saber más</a>
     </div>
 </main>
+@endsection

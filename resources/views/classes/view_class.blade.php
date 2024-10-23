@@ -51,25 +51,27 @@
                              </div>
                              <div class="card-body p-0">
                                  <ul class="list-group list-group-flush" id="blog-details-comment-list">
-                                     <li class="list-group-item border-0 border-bottom">
-                                         <div class="d-flex align-items-start gap-3 flex-wrap">
-                                             <div>
-                                                 <span class="avatar avatar-lg avatar-rounded  p-1 bg-light borde">
-                                                     <img src="../assets/images/faces/13.jpg" alt="">
-                                                 </span>
-                                             </div>
-                                             <div class="flex-fill w-50">
-                                                 <div class="p-3 bg-light border rounded">
-                                                     <span class="fw-medium d-block mb-1">ArtsyExplorer</span>
-                                                     <span class="d-block mb-3 text-muted">The 3D images on your blog are a visual feast! I love how they bring a new level of engagement and interactivity. It's like art coming to life. Can't wait to see more creative uses of 3D in the future!</span>
-                                                     <div class="btn-list">
-                                                         <button class="btn btn-sm btn-primary-light btn-wave">Reply<i class="ri-reply-line ms-1"></i></button>
-                                                         <button class="btn btn-sm btn-secondary-light btn-wave">Report<i class="ri-error-warning-line ms-1"></i></button>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </li>
+                                    @foreach ($comments as $comment)
+                                        <li class="list-group-item border-0 border-bottom">
+                                            <div class="d-flex align-items-start gap-3 flex-wrap">
+                                                <div>
+                                                    <span class="avatar avatar-lg avatar-rounded  p-1 bg-light borde">
+                                                        <img src="{{ route('profile.image', ['uuid' => $user->uuid]) }}" alt="img profile {{$comment->user->name}}">
+                                                    </span>
+                                                </div>
+                                                <div class="flex-fill w-50">
+                                                    <div class="p-3 bg-light border rounded">
+                                                        <span class="fw-medium d-block mb-1">{{$comment->user->name}}</span>
+                                                        <span class="d-block mb-3 text-muted">{{$comment->description}}</span>
+                                                        {{-- <div class="btn-list">
+                                                            <button class="btn btn-sm btn-primary-light btn-wave">Reply<i class="ri-reply-line ms-1"></i></button>
+                                                            <button class="btn btn-sm btn-secondary-light btn-wave">Report<i class="ri-error-warning-line ms-1"></i></button>
+                                                        </div> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                     @endforeach
                                  </ul>
                              </div>
                          </div>
@@ -138,27 +140,39 @@
          <!--End::row-1 -->
 
          <div class="row">
-             <div class="col-xl-12">
-                 <div class="card custom-card">
-                     <div class="card-header">
-                         <div class="card-title">
-                             Envia un comentario
-                         </div>
-                     </div>
-                     <div class="card-body">
-                         <div class="row gy-3">
-                             <div class="col-xl-12">
-                                 <label for="blog-comment" class="form-label">Escribe un comentario</label>
-                                 <textarea class="form-control" id="blog-comment" rows="5"></textarea>
-                             </div>
-                         </div>
-                     </div>
-                     <div class="card-footer">
-                         <div class="text-end">
-                             <button class="btn btn-primary-light">Enviar</button>
-                         </div>
-                     </div>
-
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            Envia un comentario
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Inicia el formulario -->
+                        <form action="{{ route('comments.store') }}" method="POST">
+                            @csrf
+        
+                            <input type="hidden" name="user_id" value="{{ $user->uuid }}">
+        
+                            <input type="hidden" name="class_id" value="{{ $class->uuid }}">
+        
+                            <div class="row gy-3">
+                                <div class="col-xl-12">
+                                    <label for="blog-comment" class="form-label">Escribe un comentario</label>
+                                    <textarea class="form-control" id="blog-comment" name="description" rows="5" required></textarea>
+                                </div>
+                            </div>
+        
+                            <div class="card-footer">
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary-light">Enviar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
      </div>
  </div>
 </section>

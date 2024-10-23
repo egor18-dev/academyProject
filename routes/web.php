@@ -5,6 +5,7 @@ use App\Http\Controllers\ClassController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('users.enter');
+    return view('main');
 });
 
 Route::get('/home', function () {
@@ -73,4 +74,8 @@ Route::group(['prefix' => 'classes'], function () {
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
+});
+
+Route::group(['prefix' => 'comments'], function () {
+    Route::post('/', [CommentController::class, 'store'])->name('comments.store');
 });

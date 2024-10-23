@@ -93,7 +93,7 @@ class UserController extends Controller
 
         $user->assignRole($request->role ?: 'Estudiante');
 
-        return redirect()->route('users.enter');
+        return redirect()->route('users.index');
     }
 
     public function show($uuid)
