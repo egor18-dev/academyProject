@@ -9,12 +9,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use FFMpeg\FFMpeg;
 
 class ClassController extends Controller
 {
     private function viewWithAuthName($view, $data = [])
     {
         return view($view, array_merge($data, ['name' => 'Egor']));
+    }
+
+    public function getVideoDuration($videoPath)
+    {
+        $ffmpeg = FFMpeg::create();
+        $video = $ffmpeg->open($videoPath);
+        $ffprobe = \FFMpeg\FFProbe::create();
+        $duration = $ffprobe->format($videoPath)->get('duration');
+
+        return gmdate("H:i:s", $duration);
     }
 
     private function getCachedLevels()
@@ -64,9 +75,7 @@ class ClassController extends Controller
         $count = $classes->count();
 
         foreach ($classes as $class) {
-            $videos = $class->getMedia('videos');
             $class->description = Str::limit($class->description, 50, '...');
-            $class->videos = $videos;
         }
 
         return $this->viewWithAuthName('classes.videos', compact('classes', 'count'));

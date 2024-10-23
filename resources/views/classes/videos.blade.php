@@ -111,7 +111,6 @@
                                     <div class="card-body">
                                         <div class="position-relative mb-3 overflow-hidden rounded">
                                             <img src="{{ route('userClasses.image', ['uuid' => $class->uuid]) }}" class="card-img rounded" style="height: 30vh" alt="dsa.">
-                                            <p class="mb-0 bg-secondary text-fixed-white nft-auction-time"> 04hrs : 24m : 38s </p>
                                             <div class="nft-content">
                                                 <a href="javascript:void(0);" class="fs-14 fw-bold text-fixed-white">{{$class->title}}</a>
                                                 <div class="d-flex mb-0 align-items-center flex-wrap gap-2 justify-content-between">
