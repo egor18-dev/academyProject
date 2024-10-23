@@ -83,7 +83,7 @@
                                             </div>
                                             <div class="flex-fill">
                                                 <span class="d-block mb-2">Alumnos</span>
-                                                <h3 class="fw-semibold mb-2 lh-1">+25</h3>
+                                                <h3 class="fw-semibold mb-2 lh-1">+{{$totalUsers}}</h3>
                                             </div>
                                             <div class="dropdown"> 
                                                 <a aria-label="anchor" href="javascript:void(0);" data-bs-toggle="dropdown"> 

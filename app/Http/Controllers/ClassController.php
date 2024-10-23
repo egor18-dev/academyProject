@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ClassModel;
 use App\Models\Comments;
 use App\Models\Level;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
@@ -65,11 +66,13 @@ class ClassController extends Controller
         $classes = ClassModel::with('media:id,model_id,collection_name')->get();
         $count = $classes->count();
 
+        $totalUsers = User::count();
+
         foreach ($classes as $class) {
             $class->description = Str::limit($class->description, 50, '...');
         }
 
-        return $this->viewWithAuthName('classes.videos', compact('classes', 'count'));
+        return $this->viewWithAuthName('classes.videos', compact('classes', 'count', 'totalUsers'));
     }
 
     public function streamVideo($id)

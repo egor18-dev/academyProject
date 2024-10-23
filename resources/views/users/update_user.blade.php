@@ -10,7 +10,7 @@
                   </div>
               </div>
               <div class="card-body">
-                  <form action="{{ route('users.update', ['uuid' => $user->uuid]) }}" method="POST" class="row g-3 needs-validation" novalidate>
+                  <form action="{{ route('users.update', ['uuid' => $user->uuid]) }}" method="POST" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
                       @csrf 
                       @method('PUT')
                       <div class="col-md-6">
@@ -45,7 +45,11 @@
                               Por favor, selecciona una función.
                           </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-xl-12">
+                        <label for="formFile" class="form-label">Foto de perfil</label>
+                        <input class="form-control" type="file" id="formFile" name="profile_image" accept="image/*">
+                    </div>
+                      <div class="col-md-12">
                           <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
                           <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" name="password" id="password" value="{{ old('password') }}" required>
                           <div class="invalid-feedback">
