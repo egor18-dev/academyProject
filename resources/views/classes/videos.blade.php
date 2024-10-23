@@ -122,9 +122,9 @@
                                             </div>
                                         </div>
                                         <div class="d-grid">
-                                            <button class="btn btn-primary btn-wave">
+                                            <a href="{{ route('userClasses.view', ['uuid' => $class->uuid]) }}" class="btn btn-primary btn-wave">
                                                 Ver ahora
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
