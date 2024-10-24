@@ -10,9 +10,11 @@ return new class extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained()->onDelete('cascade');
+            $table->uuid()->unique();
+            $table->uuid('level_id');
+            $table->foreign('level_id')->references('uuid')->on('levels')->onDelete('cascade'); 
             $table->string('title');
-            $table->text('questions'); // Preguntes, posarem en format json així més fàcil
+            $table->string('description');
             $table->timestamps();
         });
     }
