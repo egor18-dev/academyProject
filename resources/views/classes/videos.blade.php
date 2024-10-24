@@ -106,13 +106,14 @@
                         </div>
                         <div class="row">
                             @foreach ($classes as $class)
-                            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="card custom-card">
+                            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 disabled">
+                                <div class="back"></div>
+                                <div class="card custom-card class">
                                     <div class="card-body">
                                         <div class="position-relative mb-3 overflow-hidden rounded">
                                             <img src="{{ route('userClasses.image', ['uuid' => $class->uuid]) }}" class="card-img rounded" style="height: 30vh" alt="dsa.">
                                             <div class="nft-content">
-                                                <a href="javascript:void(0);" class="fs-14 fw-bold text-fixed-white">{{$class->title}}</a>
+                                                <a class="fs-14 fw-bold text-fixed-white">{{$class->title}}</a>
                                                 <div class="d-flex mb-0 align-items-center flex-wrap gap-2 justify-content-between">
                                                     <div> 
                                                         <span class="fs-12 text-fixed-white d-block mb-1 op-8">Creado por</span>
@@ -142,4 +143,5 @@
         background-size: cover;
         background-repeat: no-repeat;
     }
+
 </style>

@@ -7,7 +7,7 @@
                      <div class="col-xl-12 all-videos">
                          <div class="card custom-card">
                              <div class="card-body pb-0">
-                                  <video controls>
+                                  <video controls loop>
                                     <source src="{{ route('classes.stream', ['id' => $class->id]) }}" type="video/mp4">
                                     Tu navegador no soporta la reproducción de videos.
                                     </video>
@@ -184,9 +184,7 @@
         const video = document.querySelectorAll('video')[0];
 
         if(video){
-            video.addEventListener('ended', () => {
-                console.log('video ended');
-            });
+            video.addEventListener('ended')
         }
 
     });
