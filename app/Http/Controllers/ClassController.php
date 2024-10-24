@@ -214,6 +214,36 @@ class ClassController extends Controller
         }
     }
 
+    public function markVideoAsWatched($userUuid, $classUuid)
+    {
+        $user = User::where('uuid', $userUuid)->first();
+
+        if(!$user){
+            return redirect()->to('users/enter');
+        }
+
+        $class = ClassModel::where('uuid', $classUuid)->first();
+
+        if($class){
+            return redirect()->back();
+        }
+
+        $progress = UserVideoProgress::where('user_id', $user->uuid)
+            ->where('class_id', $class->uuid)
+            ->first();
+
+        if($progress){
+            UserVideoProgress::create([
+                'user_id' => $user->uuid,
+                'class_id' => $class->uuid,
+                'watched' => 'true'
+            ]);
+
+        }
+
+        return redirect()->back();
+    }
+
     public function delete($uuid)
     {
         $class = ClassModel::where('uuid', $uuid)->firstOrFail();
