@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ExamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,7 +72,17 @@ Route::group(['prefix' => 'classes'], function () {
     Route::put('/{uuid}', [ClassController::class, 'update'])->name('classes.update');
     Route::delete('/{uuid}', [ClassController::class, 'delete'])->name('classes.delete');
     Route::post('/mark-video-watched/{userUuid}/{classUuid}', [ClassController::class, 'markVideoAsWatched'])
-    ->name('classes.mark');});
+        ->name('classes.mark');
+});
+
+Route::group(['prefix' => 'exams'], function () {
+    Route::get('/', [ExamController::class, 'index'])->name('exams.index');
+    Route::get('/create', [ExamController::class, 'create'])->name('exams.create');
+    Route::post('/', [ExamController::class, 'store'])->name('exams.store');
+    Route::get('/{uuid}', [ExamController::class, 'show'])->name('exams.show');
+    Route::put('/{uuid}', [ExamController::class, 'update'])->name('exams.update');
+    Route::delete('/{uuid}', [ExamController::class, 'delete'])->name('exams.delete');
+});
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
