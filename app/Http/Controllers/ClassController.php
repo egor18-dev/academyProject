@@ -58,25 +58,31 @@ class ClassController extends Controller
     public function videos()
     {
         $user = auth()->user();
-        
+    
         $classes = ClassModel::with('media:id,model_id,collection_name')->get();
-        
+
         $watchedVideos = UserVideoProgress::where('user_id', $user->uuid)
             ->pluck('class_id')
             ->toArray();
-        
+
         $count = $classes->count();
         $totalUsers = User::count();
 
+        $lastWatchedIndex = -1;
+
         foreach ($classes as $index => $class) {
             $class->description = Str::limit($class->description, 50, '...');
-
-            if($index === 0 && empty($watchedVideos)) {
+            
+            if (in_array($class->uuid, $watchedVideos)) {
                 $class->isWatched = true;
-            }else{
-                $class->isWatched = in_array($class->uuid, $watchedVideos);
+                $lastWatchedIndex = $index;
+            } else {
+                $class->isWatched = false;
             }
+        }
 
+        if ($lastWatchedIndex + 1 < $classes->count()) {
+            $classes[$lastWatchedIndex + 1]->isWatched = true;
         }
 
         return $this->viewWithAuthName('classes.videos', compact('classes', 'count', 'totalUsers'));
@@ -214,34 +220,38 @@ class ClassController extends Controller
         }
     }
 
-    public function markVideoAsWatched($userUuid, $classUuid)
+    public function markVideoAsWatched(Request $request, $userUuid, $classUuid)
     {
         $user = User::where('uuid', $userUuid)->first();
 
         if(!$user){
-            return redirect()->to('users/enter');
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
         $class = ClassModel::where('uuid', $classUuid)->first();
 
-        if($class){
-            return redirect()->back();
+        if(!$class){
+            return response()->json(['error' => 'Clase no encontrada'], 404);
         }
 
-        $progress = UserVideoProgress::where('user_id', $user->uuid)
-            ->where('class_id', $class->uuid)
+        $progress = UserVideoProgress::where('user_id', $userUuid)
+            ->where('class_id', $classUuid)
             ->first();
 
-        if($progress){
-            UserVideoProgress::create([
-                'user_id' => $user->uuid,
-                'class_id' => $class->uuid,
-                'watched' => 'true'
-            ]);
-
+        if(!$progress){
+            
+            try {
+                UserVideoProgress::create([
+                    'user_id' => $userUuid,
+                    'class_id' => $classUuid,
+                    'watched' => true
+                ]);
+            } catch (\Exception $e) {
+                return response()->json(['error' => 'Error al registrar el progreso del video: ' . $e->getMessage()], 500);
+            }
         }
 
-        return redirect()->back();
+        return response()->json(['message' => 'Video completed'], 200);
     }
 
     public function delete($uuid)

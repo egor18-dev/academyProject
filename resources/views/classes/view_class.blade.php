@@ -7,7 +7,7 @@
                      <div class="col-xl-12 all-videos">
                          <div class="card custom-card">
                              <div class="card-body pb-0">
-                                  <video controls loop>
+                                  <video controls data-class-id="{{ $class->uuid }}" data-user-id="{{ $user->uuid }}">
                                     <source src="{{ route('classes.stream', ['id' => $class->id]) }}" type="video/mp4">
                                     Tu navegador no soporta la reproducción de videos.
                                     </video>
@@ -178,14 +178,32 @@
 </section>
 @endsection
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    window.addEventListener('load', () => {
+   $(document).ready(function() {
+        $('video').on('ended', function() {
+            const $video = $(this);
 
-        const video = document.querySelectorAll('video')[0];
+            const classUuid = $video.data('class-id');
+            const userUuid  = $video.data('user-id');
 
-        if(video){
-            video.addEventListener('ended')
-        }
+            const ajaxUrl = "{{ route('classes.mark', ['userUuid' => 'USER_UUID', 'classUuid' => 'CLASS_UUID']) }}"
+                .replace('USER_UUID', userUuid)
+                .replace('CLASS_UUID', classUuid);
 
-    });
+            $.ajax({
+                url: ajaxUrl,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    console.log(response.message);
+                },
+                error: function(err) {
+                    console.error(err);
+                }
+            });
+        });
+   });
 </script>

@@ -48,11 +48,6 @@ class User extends Authenticatable implements HasMedia
         'password' => 'hashed',
     ];
 
-    public function videoProgress()
-    {
-        return $this->hasMany(UserVideoProgress::class);
-    }
-
     protected static function boot()
     {
         parent::boot();

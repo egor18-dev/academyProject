@@ -70,7 +70,8 @@ Route::group(['prefix' => 'classes'], function () {
     Route::get('/{uuid}', [ClassController::class, 'show'])->name('classes.show');
     Route::put('/{uuid}', [ClassController::class, 'update'])->name('classes.update');
     Route::delete('/{uuid}', [ClassController::class, 'delete'])->name('classes.delete');
-});
+    Route::post('/mark-video-watched/{userUuid}/{classUuid}', [ClassController::class, 'markVideoAsWatched'])
+    ->name('classes.mark');});
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');

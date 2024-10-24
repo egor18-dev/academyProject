@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Validator;
 
 class LevelController extends Controller
 {
-    // Método privado que retorna la vista con el nombre del usuario autenticado
     private function viewWithAuthName($view, $data = [])
     {
         return view($view, array_merge($data, ['name' => 'Egor']));

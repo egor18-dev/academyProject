@@ -11,11 +11,17 @@ class UserVideoProgress extends Model
     use HasFactory;
     protected $table = 'user_video_progress';
 
-    protected $fillable = [
-        'user_id',
-        'class_id',
-        'watched'
-    ];
+    protected $fillable = ['user_id','class_id','watched'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'uuid');
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(ClassModel::class, 'class_id', 'uuid');
+    }
 
     protected static function boot()
     {

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_video_progress', function (Blueprint $table) {
-            $table->uuid('id')->primary(); 
+            $table->id();
             $table->uuid(column: 'uuid')->unique(); 
             $table->uuid('user_id'); 
             $table->uuid('class_id');
