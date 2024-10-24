@@ -23,9 +23,9 @@
                           <label for="type" class="form-label">Tipo de Pregunta <span class="text-danger">*</span></label>
                           <select class="form-select {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type" required>
                               <option value="" disabled selected>Selecciona el tipo de pregunta</option>
-                              <option value="multiple_choice" {{ old('type') == 'multiple_choice' ? 'selected' : '' }}>Opción Múltiple</option>
-                              <option value="true_false" {{ old('type') == 'true_false' ? 'selected' : '' }}>Verdadero/Falso</option>
-                              <option value="short_answer" {{ old('type') == 'short_answer' ? 'selected' : '' }}>Respuesta Corta</option>
+                              <option value="opción_múltiple" {{ old('type') == 'opción_múltiple' ? 'selected' : '' }}>Opción Múltiple</option>
+                              <option value="verdadero_falso" {{ old('type') == 'verdadero_falso' ? 'selected' : '' }}>Verdadero/Falso</option>
+                              <option value="respuesta_corta" {{ old('type') == 'respuesta_corta' ? 'selected' : '' }}>Respuesta Corta</option>
                           </select>
                           <div class="invalid-feedback">
                               Por favor, selecciona un tipo válido.
