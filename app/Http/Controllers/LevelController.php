@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class LevelController extends Controller
 {
@@ -17,6 +18,12 @@ class LevelController extends Controller
     public function index()
     {
         $levels = Level::paginate(5);
+
+        foreach($levels as $level)
+        {
+            $level->description = Str::limit($level->description, 50, '...');
+        }
+
         return $this->viewWithAuthName('levels.view_levels', [
             'levels' => $levels,
             'count' => $levels->count()

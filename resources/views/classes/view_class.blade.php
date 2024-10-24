@@ -198,7 +198,11 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    console.log(response.message);
+                    const tempUuid = response.uuid;
+
+                    if(tempUuid){
+                        
+                    }
                 },
                 error: function(err) {
                     console.error(err);
