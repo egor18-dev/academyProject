@@ -121,10 +121,11 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="disabled-event"></div>
                                         </div>
                                         <div class="d-grid">
-                                            <a href="{{ route('userClasses.view', ['uuid' => $class->uuid]) }}" class="btn btn-primary btn-wave">
-                                                Ver ahora
+                                            <a href="{{ route('userClasses.view', ['uuid' => $class->uuid]) }}" class="btn btn-primary btn-wave {{$class->isWatched ? '' : 'disabled-button'}}">
+                                                {{$class->isWatched ? 'Ver' : 'Ver anteriores primero'}}
                                             </a>
                                         </div>
                                     </div>
@@ -142,6 +143,12 @@
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
+    }
+
+    .disabled-button{
+        opacity: 0.6;
+        cursor: none;
+        pointer-events: none;
     }
 
 </style>

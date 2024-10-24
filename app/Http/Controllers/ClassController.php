@@ -7,6 +7,7 @@ use App\Models\ClassModel;
 use App\Models\Comments;
 use App\Models\Level;
 use App\Models\User;
+use App\Models\UserVideoProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -56,13 +57,26 @@ class ClassController extends Controller
 
     public function videos()
     {
+        $user = auth()->user();
+        
         $classes = ClassModel::with('media:id,model_id,collection_name')->get();
+        
+        $watchedVideos = UserVideoProgress::where('user_id', $user->uuid)
+            ->pluck('class_id')
+            ->toArray();
+        
         $count = $classes->count();
-
         $totalUsers = User::count();
 
-        foreach ($classes as $class) {
+        foreach ($classes as $index => $class) {
             $class->description = Str::limit($class->description, 50, '...');
+
+            if($index === 0 && empty($watchedVideos)) {
+                $class->isWatched = true;
+            }else{
+                $class->isWatched = in_array($class->uuid, $watchedVideos);
+            }
+
         }
 
         return $this->viewWithAuthName('classes.videos', compact('classes', 'count', 'totalUsers'));
