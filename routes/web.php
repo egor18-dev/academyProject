@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ExamController;
@@ -82,6 +83,15 @@ Route::group(['prefix' => 'exams'], function () {
     Route::get('/{uuid}', [ExamController::class, 'show'])->name('exams.show');
     Route::put('/{uuid}', [ExamController::class, 'update'])->name('exams.update');
     Route::delete('/{uuid}', [ExamController::class, 'delete'])->name('exams.delete');
+});
+
+Route::group(['prefix' => 'exams/{examUuid}/questions'], function () {
+    Route::get('/', [QuestionController::class, 'index'])->name('questions.index');
+    Route::get('/create', [QuestionController::class, 'create'])->name('questions.create');
+    Route::post('/', [QuestionController::class, 'store'])->name('questions.store');
+    Route::get('/{questionUuid}', [QuestionController::class, 'show'])->name('questions.show');
+    Route::put('/{questionUuid}', [QuestionController::class, 'update'])->name('questions.update');
+    Route::delete('/{questionUuid}', [QuestionController::class, 'delete'])->name('questions.delete');
 });
 
 Route::group(['prefix' => 'home'], function () {

@@ -89,7 +89,7 @@
 
                 <!-- Start::slide -->
                 <li class="slide has-sub">
-                    <a href="{{route('exams.index')}}" class="side-menu__item {{ Route::is('exams*') ? 'active' : '' }}">
+                    <a href="{{route('exams.index')}}" class="side-menu__item {{ Route::is('exams.*') || Route::is('questions.*') ? 'active' : '' }}">
                         <svg fill="#fff" height="200px" class="side-menu__icon" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 204 204" xml:space="preserve" stroke="#fff">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

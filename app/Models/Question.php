@@ -4,20 +4,37 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['class_id', 'question_text', 'correct_answer', 'options'];
+    protected $table = 'questions';
 
-    public function classModel()
+    protected $fillable = [
+        'exam_id',
+        'question',
+        'type',
+        'options',
+        'answer',
+    ];
+
+    protected $casts = [
+        'options' => 'array',
+    ];
+
+    public function exam()
     {
-        return $this->belongsTo(ClassModel::class);
+        return $this->belongsTo(Exam::class, 'exam_id', 'uuid');
     }
 
-    public function exams()
+    protected static function boot()
     {
-        return $this->belongsToMany(Exam::class, 'exam_question');
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->uuid = (string) Str::uuid();
+        });
     }
 }

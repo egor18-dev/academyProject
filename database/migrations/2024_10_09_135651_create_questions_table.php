@@ -10,10 +10,13 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained()->onDelete('cascade'); // A quina classe pertany
-            $table->string('question_text'); // Text pregunta
-            $table->string('correct_answer'); // Resposta correcta
-            $table->json('options'); // Opció resposta format JSON
+            $table->uuid()->unique();
+            $table->uuid('exam_id'); 
+            $table->foreign('exam_id')->references('uuid')->on('exams')->onDelete('cascade');
+            $table->string('question'); 
+            $table->string('type'); 
+            $table->json('options')->nullable(); 
+            $table->string('answer'); 
             $table->timestamps();
         });
     }
