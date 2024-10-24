@@ -7,10 +7,10 @@
                      <div class="col-xl-12 all-videos">
                          <div class="card custom-card">
                              <div class="card-body pb-0">
-                                  <video controls loop>
+                                  <video controls>
                                     <source src="{{ route('classes.stream', ['id' => $class->id]) }}" type="video/mp4">
                                     Tu navegador no soporta la reproducción de videos.
-                                </video>
+                                    </video>
                                  <div class="d-flex align-items-center justify-content-between mb-3 mt-3 flex-wrap gap-2">
                                      <p class="h5 fw-semibold mb-0">{{$class->title}}</p>
                                      <div class="d-flex align-items-center">
@@ -92,7 +92,7 @@
                           <div class="card-body p-0">
                               @if ($level->classes->isNotEmpty())
                                 @foreach ($level->classes as $futureClass)
-                                  @if ($class->uuid !== $futureClass->uuid)
+                                  @if ($class->uuid !== $futureClass->uuid && $class->id < $futureClass->id)
                                     <ul class="list-group list-group-flush">
                                       <li class="list-group-item">
                                           <div class="d-flex gap-3 flex-wrap align-items-center">
@@ -178,4 +178,16 @@
 </section>
 @endsection
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    window.addEventListener('load', () => {
+
+        const video = document.querySelectorAll('video')[0];
+
+        if(video){
+            video.addEventListener('ended', () => {
+                console.log('video ended');
+            });
+        }
+
+    });
+</script>
