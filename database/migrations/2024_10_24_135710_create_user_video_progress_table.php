@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_video_progress', function (Blueprint $table) {
             $table->uuid('id')->primary(); 
+            $table->uuid(column: 'uuid')->unique(); 
             $table->uuid('user_id'); 
             $table->uuid('class_id');
             $table->boolean('watched')->default(false);
