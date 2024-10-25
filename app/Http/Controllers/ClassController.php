@@ -206,37 +206,38 @@ class ClassController extends Controller
             'level_id' => 'required',
             'title' => 'required',
             'description' => 'required',
-            'video_img' => 'nullable|image|max:2048',
+            'video_img' => 'required|image|max:2048',
             'video' => 'required|mimes:mp4,mov,avi|max:20000'
         ], [
             'level_id.required' => 'El nivel es obligatorio.',
             'title.required' => 'El título es obligatorio.',
             'description.required' => 'La descripción es obligatoria.',
-            'video_img.image' => 'El archivo debe ser una imagen.',
-            'video_img.max' => 'El tamaño de la imagen no debe exceder los 2MB.',
+            'video_img.required' => 'La miniatura del video es obligatoria.',
+            'video_img.image' => 'La miniatura debe ser una imagen.',
+            'video_img.max' => 'El tamaño de la miniatura no debe exceder los 2MB.',
             'video.required' => 'El video es obligatorio.',
             'video.mimes' => 'El video debe ser un archivo de tipo: mp4, mov, avi.',
             'video.max' => 'El video no debe exceder los 20MB.'
         ]);
-
+    
         $class = ClassModel::create([
             'level_id' => $request->level_id,
             'title' => $request->title,
             'description' => $request->description,
         ]);
-
+    
         try {
             if ($request->hasFile('video')) {
                 $class->addMediaFromRequest('video')->toMediaCollection('videos', 'media');
             }
-
+    
             if($request->hasFile('video_img')){
                 $class->addMediaFromRequest('video_img')->toMediaCollection('video_img', 'media');
             }
-
+    
             return redirect()->to('classes')->with('success', 'Clase subida exitosamente!');
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Error al subir el video: ' . $e->getMessage()]);
+            return redirect()->to('classes')->withErrors(['error' => 'Error al subir el video: ' . $e->getMessage()]);  
         }
     }
 
