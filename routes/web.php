@@ -33,11 +33,12 @@ Route::get('/dashboard', function () {
     return redirect()->to('/users');
 });
 
-Route::group(['prefix' => 'users'], function () {
+Route::get('users/add', [UserController::class, 'showCreateForm'])->name('users.showCreateForm');
+Route::get('users/enter', [UserController::class, 'showEnterForm'])->name('users.showEnterForm');
+
+Route::group(['prefix' => 'users', 'middleware' => ['role:admin']], function () {
     Route::get('/', [UserController::class, 'index'])->name('users.index');
     Route::get('/sign-up', [UserController::class, 'create'])->name('users.create');
-    Route::get('/add', [UserController::class, 'showCreateForm'])->name('users.showCreateForm');
-    Route::get('/enter', [UserController::class, 'showEnterForm'])->name('users.showEnterForm');
     Route::post('/', [UserController::class, 'store'])->name('users.store');
     Route::post('/enter', [UserController::class, 'enter'])->name('users.enter');
     Route::get('/{uuid}', [UserController::class, 'show'])->name('users.show');

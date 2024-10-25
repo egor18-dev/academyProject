@@ -16,15 +16,17 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        Permission::firstOrCreate(['name' => 'create-admins']);
         Permission::firstOrCreate(['name' => 'create-users']);
         Permission::firstOrCreate(['name' => 'edit-users']);
         Permission::firstOrCreate(['name' => 'delete-users']);
 
         $adminRole = Role::firstOrCreate(['name' => 'Administrador']);
-        $teacherRole = Role::firstOrCreate(['name' => 'Profesor']);
+        $teacherRole = Role::firstOrCreate(['name' => 'Editor']);
         $studentRole = Role::firstOrCreate(['name' => 'Estudiante']); 
 
         $adminRole->syncPermissions([
+            'create-admins',
             'create-users',
             'edit-users',
             'delete-users',

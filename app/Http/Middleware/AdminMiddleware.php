@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-class RoleMiddleware
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -20,10 +20,8 @@ class RoleMiddleware
             return redirect()->route('users.showEnterForm'); 
         }
 
-        // Obtener el usuario autenticado
         $user = Auth::user();
 
-        // Verificar si el usuario tiene el rol requerido
         if (Str::lower($user->role) !== "administrador") {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
