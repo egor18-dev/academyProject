@@ -59,48 +59,46 @@ class ClassController extends Controller
     public function videos()
     {
         $user = auth()->user();
-        $classes = ClassModel::with('media:id,model_id,collection_name')->get();
+        $classes = ClassModel::with('media:id,model_id,collection_name')
+                    ->orderByDesc('level_id') 
+                    ->get();
+        
         $watchedVideos = UserVideoProgress::where('user_id', $user->uuid)
             ->pluck('class_id')
             ->toArray();
-        $lastWatchedIndex = -1;
-
-        $levels = $classes->groupBy('level_id');
-
+        
+        $levels = $classes->groupBy('level_id')->sortKeysDesc();
+        
         $pendingExams = [];
-
+        $currentLevel = null;
+        
         foreach ($levels as $levelId => $levelClasses) {
             $allWatched = $levelClasses->every(function ($class) use ($watchedVideos) {
                 return in_array($class->uuid, $watchedVideos);
             });
-
-            if ($allWatched) {
-                $examTaken = UserExam::where('user_id', $user->uuid)
+        
+            if (!$allWatched) {
+                $currentLevel = $levelId; 
+                break;
+            }
+        
+            $examTaken = UserExam::where('user_id', $user->uuid)
                 ->whereHas('class', function ($query) use ($levelId) {
                     $query->where('level_id', $levelId);
                 })
                 ->exists();
-
-                if (!$examTaken) {
-                    $pendingExams[] = $levelId;
-                }
+        
+            if (!$examTaken) {
+                $pendingExams[] = $levelId;
             }
         }
-
-        foreach ($classes as $index => $class) {
+        
+        foreach ($classes as $class) {
             $class->description = Str::limit($class->description, 50, '...');
-            
-            if (in_array($class->uuid, $watchedVideos)) {
-                $class->isWatched = true;
-                $lastWatchedIndex = $index;
-            } else {
-                $class->isWatched = false;
-            }
+            $class->isAccessible = $class->level_id >= $currentLevel && (in_array($class->uuid, $watchedVideos) || $class->level_id == $currentLevel);
+            $class->isWatched = in_array($class->uuid, $watchedVideos);
         }
-
-        if ($lastWatchedIndex + 1 < $classes->count()) {
-            $classes[$lastWatchedIndex + 1]->isWatched = true;
-        }
+        
 
         return $this->viewWithAuthName('classes.videos', [
             'classes' => $classes,
@@ -108,6 +106,8 @@ class ClassController extends Controller
             'count' => $classes->count(),
             'totalUsers' => User::count(),
         ]);
+        
+
     }
 
     public function streamVideo($id)

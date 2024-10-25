@@ -132,14 +132,14 @@
                                             <div class="disabled-event"></div>
                                         </div>
                                         <div class="d-grid">
-                                            <a href="{{ route('userClasses.view', ['uuid' => $class->uuid]) }}" class="btn btn-primary btn-wave {{$class->isWatched ? '' : 'disabled-button'}}">
-                                                {{$class->isWatched ? 'Ver' : 'Ver anteriores primero'}}
+                                            <a href="{{ route('userClasses.view', ['uuid' => $class->uuid]) }}" class="btn btn-primary btn-wave {{$class->isAccessible ? '' : 'disabled-button'}}">
+                                                {{$class->isAccessible ? 'Ver' : 'Completa el nivel anterior'}}
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            @endforeach
+                        @endforeach
                     </div>
             </div>
         </section>
