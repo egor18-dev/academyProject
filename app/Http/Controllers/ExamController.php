@@ -117,4 +117,9 @@ class ExamController extends Controller
 
         return redirect()->back()->withErrors(['error' => 'Examen no encontrado']);
     }
+
+    public function showExam($uuid)
+    {
+       
+    }
 }

@@ -83,6 +83,7 @@ Route::group(['prefix' => 'exams'], function () {
     Route::get('/{uuid}', [ExamController::class, 'show'])->name('exams.show');
     Route::put('/{uuid}', [ExamController::class, 'update'])->name('exams.update');
     Route::delete('/{uuid}', [ExamController::class, 'delete'])->name('exams.delete');
+    Route::get('/{uuid}/showExam', [ExamController::class, 'showExam'])->name('exams.showExam');
 });
 
 Route::group(['prefix' => 'exams/{examUuid}/questions'], function () {

@@ -99,7 +99,6 @@ class ClassController extends Controller
             $class->isWatched = in_array($class->uuid, $watchedVideos);
         }
         
-
         return $this->viewWithAuthName('classes.videos', [
             'classes' => $classes,
             'pendingExams' => $pendingExams,
@@ -107,7 +106,6 @@ class ClassController extends Controller
             'totalUsers' => User::count(),
         ]);
         
-
     }
 
     public function streamVideo($id)
