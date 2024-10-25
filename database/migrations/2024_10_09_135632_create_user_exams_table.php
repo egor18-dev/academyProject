@@ -10,9 +10,11 @@ return new class extends Migration
     {
         Schema::create('user_exams', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('exam_id')->constrained()->onDelete('cascade');
-            $table->boolean('passed')->default(false);
+            $table->uuid()->unique();
+            $table->uuid('user_id');
+            $table->uuid('class_id');
+            $table->foreign('user_id')->constrained()->onDelete('cascade');
+            $table->foreign('class_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
