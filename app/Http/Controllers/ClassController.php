@@ -8,6 +8,7 @@ use App\Models\Comments;
 use App\Models\Level;
 use App\Models\User;
 use App\Models\UserVideoProgress;
+use App\Models\UserExam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -58,17 +59,33 @@ class ClassController extends Controller
     public function videos()
     {
         $user = auth()->user();
-    
         $classes = ClassModel::with('media:id,model_id,collection_name')->get();
-
         $watchedVideos = UserVideoProgress::where('user_id', $user->uuid)
             ->pluck('class_id')
             ->toArray();
-
-        $count = $classes->count();
-        $totalUsers = User::count();
-
         $lastWatchedIndex = -1;
+
+        $levels = $classes->groupBy('level_id');
+
+        $pendingExams = [];
+
+        foreach ($levels as $levelId => $levelClasses) {
+            $allWatched = $levelClasses->every(function ($class) use ($watchedVideos) {
+                return in_array($class->uuid, $watchedVideos);
+            });
+
+            if ($allWatched) {
+                $examTaken = UserExam::where('user_id', $user->uuid)
+                ->whereHas('class', function ($query) use ($levelId) {
+                    $query->where('level_id', $levelId);
+                })
+                ->exists();
+
+                if (!$examTaken) {
+                    $pendingExams[] = $levelId;
+                }
+            }
+        }
 
         foreach ($classes as $index => $class) {
             $class->description = Str::limit($class->description, 50, '...');
@@ -85,7 +102,12 @@ class ClassController extends Controller
             $classes[$lastWatchedIndex + 1]->isWatched = true;
         }
 
-        return $this->viewWithAuthName('classes.videos', compact('classes', 'count', 'totalUsers'));
+        return $this->viewWithAuthName('classes.videos', [
+            'classes' => $classes,
+            'pendingExams' => $pendingExams,
+            'count' => $classes->count(),
+            'totalUsers' => User::count(),
+        ]);
     }
 
     public function streamVideo($id)

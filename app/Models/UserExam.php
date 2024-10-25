@@ -22,6 +22,11 @@ class UserExam extends Model
         return $this->belongsTo(Exam::class);
     }
 
+    public function class()
+    {
+        return $this->belongsTo(ClassModel::class, 'uuid', 'uuid');  
+    }
+
     protected static function boot()
     {
         parent::boot();

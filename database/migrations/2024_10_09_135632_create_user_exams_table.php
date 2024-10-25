@@ -13,8 +13,8 @@ return new class extends Migration
             $table->uuid()->unique();
             $table->uuid('user_id');
             $table->uuid('class_id');
-            $table->foreign('user_id')->constrained()->onDelete('cascade');
-            $table->foreign('class_id')->constrained()->onDelete('cascade');
+            $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade');
+            $table->foreign('class_id')->references('uuid')->on('classes')->onDelete('cascade');
             $table->timestamps();
         });
     }
