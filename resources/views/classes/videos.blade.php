@@ -1,6 +1,13 @@
 @extends('page')
 @section('page')
-            <section class="container-fluid pt-3">
+            <section class="container-fluid position-relative pt-3">
+                <div class="alert-exam bg-primary text-white w-25 p-3 rounded position-fixed bottom-0 end-0 me-3 mb-3">
+                    <p>
+                        Para continuar, completa el siguiente examen. Lee cada pregunta con atención y responde según las indicaciones. Este paso es esencial para avanzar. ¡Buena suerte!
+                    </p>
+                    <a href="#" class="btn btn-white btn-sm">Hacer examen</a>
+                </div>
+                
                 <div class="row">
                     <div class="col-xxl-12">
                         <div class="row">
@@ -152,3 +159,5 @@
     }
 
 </style>
+
+
