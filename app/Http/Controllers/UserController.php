@@ -70,7 +70,8 @@ class UserController extends Controller
             'name' => 'required',
             'surnames' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8'
+            'password' => 'required|min:8',
+            'role' => 'required' // Se añade la validación para que el rol sea obligatorio
         ], [
             'name.required' => 'El nombre es obligatorio.',
             'surnames.required' => 'Los apellidos son obligatorios.',
@@ -78,21 +79,22 @@ class UserController extends Controller
             'email.email' => 'Debes ingresar un correo electrónico válido.',
             'password.required' => 'La contraseña es obligatoria.',
             'password.min' => 'La contraseña debe tener al menos :min caracteres.',
+            'role.required' => 'El rol es obligatorio.' 
         ]);
-
+    
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
-
+    
         $user = User::create([
             'name' => $request->name,
             'surnames' => $request->surnames,
             'email' => $request->email,
             'password' => Hash::make($request->password, ['rounds' => 12])
         ]);
-
-        $user->assignRole($request->role ?: 'Estudiante');
-
+    
+        $user->assignRole($request->role);
+    
         return redirect()->route('users.index');
     }
 
