@@ -15,38 +15,53 @@
                         @method('PUT')
                         <div class="col-lg-6">
                           <label for="title" class="form-label">Título <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" name="title" id="title" value="{{$class->title}}" placeholder="Título de la clase">
+                          <input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" name="title" id="title" value="{{ old('title', $class->title) }}" placeholder="Título de la clase">
+                          @if ($errors->has('title'))
+                              <div class="text-danger">
+                                  {{ $errors->first('title') }}
+                              </div>
+                          @endif
                         </div>
                         <div class="col-lg-6">
-                            <label for="role" class="form-label">Nivel <span class="text-danger">*</span></label>
-                            <select class="form-select {{ $errors->has('role') ? 'is-invalid' : '' }}" name="level_id" id="level_id" required>
+                            <label for="level_id" class="form-label">Nivel <span class="text-danger">*</span></label>
+                            <select class="form-select {{ $errors->has('level_id') ? 'is-invalid' : '' }}" name="level_id" id="level_id" required>
                                 <option value="" selected disabled>Selecciona un nivel...</option>
                                 @foreach ($levels as $level)
-                                    @if ($level->uuid === $class->level_id)
-                                        <option selected value="{{ $level->uuid }}">{{ $level->name }}</option>
-                                    @else
-                                        <option value="{{ $level->uuid }}">{{ $level->name }}</option>
-                                    @endif
+                                    <option value="{{ $level->uuid }}" {{ old('level_id', $class->level_id) == $level->uuid ? 'selected' : '' }}>{{ $level->name }}</option>
                                 @endforeach
                             </select>
-                            <div class="invalid-feedback">
-                                Por favor, selecciona una función.
-                            </div>
+                            @if ($errors->has('level_id'))
+                                <div class="text-danger">
+                                    {{ $errors->first('level_id') }}
+                                </div>
+                            @endif
                         </div>
                         <div class="col-md-12">
                           <label for="description" class="form-label">Descripción <span class="text-danger">*</span></label>
-                          <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description" placeholder="Descripción del nivel" required>{{ $class->description }}</textarea>
-                          <div class="invalid-feedback">
-                              Por favor, proporciona una descripción válida.
-                          </div>
+                          <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description" placeholder="Descripción del nivel" required>{{ old('description', $class->description) }}</textarea>
+                          @if ($errors->has('description'))
+                              <div class="text-danger">
+                                  {{ $errors->first('description') }}
+                              </div>
+                          @endif
                       </div>
                       <div class="col-xl-12">
-                          <label for="video_img" class="form-label">Miniatura video</label>
-                          <input class="form-control" type="file" id="video_img" name="video_img" accept="image/*">
+                          <label for="video_img" class="form-label">Miniatura video <span class="text-danger">*</span></label>
+                          <input class="form-control {{ $errors->has('video_img') ? 'is-invalid' : '' }}" type="file" id="video_img" name="video_img" accept="image/*">
+                          @if ($errors->has('video_img'))
+                              <div class="text-danger">
+                                  {{ $errors->first('video_img') }}
+                              </div>
+                          @endif
                       </div>
                       <div class="col-xl-12">
                           <label for="video" class="form-label">Sube un video <span class="text-danger">*</span></label>
-                          <input class="form-control" type="file" id="video" name="video" accept="video/*">
+                          <input class="form-control {{ $errors->has('video') ? 'is-invalid' : '' }}" type="file" id="video" name="video" accept="video/*">
+                          @if ($errors->has('video'))
+                              <div class="text-danger">
+                                  {{ $errors->first('video') }}
+                              </div>
+                          @endif
                       </div>
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Actualizar video</button>
@@ -56,5 +71,5 @@
             </div>
         </div>
     </div>
-  </div>
+</div>
 @endsection

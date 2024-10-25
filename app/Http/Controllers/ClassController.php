@@ -281,7 +281,7 @@ class ClassController extends Controller
         $removedClass = $class->delete();
 
         return $removedClass
-            ? redirect()->back()->with('success', "Clase $class->name eliminada correctamente")
+            ? redirect()->back()->with('success', "Clase $class->title eliminada correctamente")
             : redirect()->back()->withErrors(['error' => 'Error al eliminar la clase']);
     }
 }
