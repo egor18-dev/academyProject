@@ -53,8 +53,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
-                                    @if(!$user->hasRole('Administrador'))
+                                    @foreach ($users as $tempUser)
+                                    @if(!$tempUser->hasRole('Administrador') && $tempUser->uuid !== $user->uuid)
                                         <tr class="crm-contact">
                                             <td>
                                                 <input class="form-check-input" type="checkbox" id="checkboxNoLabel1" value="" aria-label="...">
@@ -63,32 +63,32 @@
                                                 <div class="d-flex align-items-center gap-2">
                                                     <div class="lh-1">
                                                         <span class="avatar avatar-rounded avatar-sm">
-                                                            <img src="{{ route('profile.image', ['uuid' => $user->uuid]) }}" alt="img profile {{$user->name}}">
+                                                            <img src="{{ route('profile.image', ['uuid' => $tempUser->uuid]) }}" alt="img profile {{$tempUser->name}}">
                                                         </span>
                                                     </div>
                                                     <div>
                                                         <a data-bs-toggle="offcanvas" href="#offcanvasExample"
-                                                        role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$user->name}}</span></a>
-                                                        <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>{{$user->updated_at}}</span>
+                                                        role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$tempUser->name}}</span></a>
+                                                        <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>{{$tempUser->updated_at}}</span>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div>
-                                                    <span class="d-block mb-1"><i class="ri-mail-line me-2 align-middle fs-14 text-muted"></i>{{$user->email}}</span>
+                                                    <span class="d-block mb-1"><i class="ri-mail-line me-2 align-middle fs-14 text-muted"></i>{{$tempUser->email}}</span>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center flex-wrap gap-1">
-                                                    @if($user->getRoleNames()->isNotEmpty())
-                                                        <span class="badge bg-primary-transparent">{{ implode(', ', $user->getRoleNames()->toArray()) }}</span>
+                                                    @if($tempUser->getRoleNames()->isNotEmpty())
+                                                        <span class="badge bg-primary-transparent">{{ implode(', ', $tempUser->getRoleNames()->toArray()) }}</span>
                                                     @endif
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="btn-list">
                                                     <a data-bs-toggle="offcanvas"
-                                                    role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning" href="{{ route('users.show', ['uuid' => $user->uuid]) }}">
+                                                    role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning" href="{{ route('users.show', ['uuid' => $tempUser->uuid]) }}">
                                                         <svg width="15px" height="15px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff">
                                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -97,7 +97,7 @@
                                                             </g>
                                                         </svg>
                                                     </a>
-                                                    <button class="btn btn-sm btn-danger removeBtn" onclick="removeUser('{{$user->uuid}}', '{{$user->name}}')">
+                                                    <button class="btn btn-sm btn-danger removeBtn" onclick="removeUser('{{$tempUser->uuid}}', '{{$tempUser->name}}')">
                                                         <svg fill="#fff" width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
                                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -111,7 +111,7 @@
                                         </tr> 
                                     @endif    
                                     @role('Administrador')
-                                        @if($user->hasRole('Administrador'))
+                                        @if($tempUser->hasRole('Administrador') && $tempUser->uuid !== $user->uuid)
                                         <tr class="crm-contact">
                                             <td>
                                                 <input class="form-check-input" type="checkbox" id="checkboxNoLabel1" value="" aria-label="...">
@@ -120,32 +120,32 @@
                                                 <div class="d-flex align-items-center gap-2">
                                                     <div class="lh-1">
                                                         <span class="avatar avatar-rounded avatar-sm">
-                                                            <img src="{{ route('profile.image', ['uuid' => $user->uuid]) }}" alt="img profile {{$user->name}}">
+                                                            <img src="{{ route('profile.image', ['uuid' => $tempUser->uuid]) }}" alt="img profile {{$tempUser->name}}">
                                                         </span>
                                                     </div>
                                                     <div>
                                                         <a data-bs-toggle="offcanvas" href="#offcanvasExample"
-                                                        role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$user->name}}</span></a>
-                                                        <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>{{$user->updated_at}}</span>
+                                                        role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$tempUser->name}}</span></a>
+                                                        <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>{{$tempUser->updated_at}}</span>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div>
-                                                    <span class="d-block mb-1"><i class="ri-mail-line me-2 align-middle fs-14 text-muted"></i>{{$user->email}}</span>
+                                                    <span class="d-block mb-1"><i class="ri-mail-line me-2 align-middle fs-14 text-muted"></i>{{$tempUser->email}}</span>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center flex-wrap gap-1">
-                                                    @if($user->getRoleNames()->isNotEmpty())
-                                                        <span class="badge bg-primary-transparent">{{ implode(', ', $user->getRoleNames()->toArray()) }}</span>
+                                                    @if($tempUser->getRoleNames()->isNotEmpty())
+                                                        <span class="badge bg-primary-transparent">{{ implode(', ', $tempUser->getRoleNames()->toArray()) }}</span>
                                                     @endif
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="btn-list">
                                                     <a data-bs-toggle="offcanvas"
-                                                    role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning" href="{{ route('users.show', ['uuid' => $user->uuid]) }}">
+                                                    role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning" href="{{ route('users.show', ['uuid' => $tempUser->uuid]) }}">
                                                         <svg width="15px" height="15px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff">
                                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -154,7 +154,7 @@
                                                             </g>
                                                         </svg>
                                                     </a>
-                                                    <button class="btn btn-sm btn-danger removeBtn" onclick="removeUser('{{$user->uuid}}', '{{$user->name}}')">
+                                                    <button class="btn btn-sm btn-danger removeBtn" onclick="removeUser('{{$tempUser->uuid}}', '{{$tempUser->name}}')">
                                                         <svg fill="#fff" width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
                                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

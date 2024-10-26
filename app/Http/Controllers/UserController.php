@@ -25,9 +25,12 @@ class UserController extends Controller
         }
 
         $users = User::paginate(5);
+        $user = auth()->user();
 
         return $this->viewWithAuthName('users.view_users', [
             'users' => $users,
+            'user' => $user,
+            'user' => $user,
             'count' => User::count()
         ]);
     }
