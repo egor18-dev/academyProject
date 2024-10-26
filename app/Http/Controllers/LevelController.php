@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class LevelController extends Controller
@@ -17,10 +18,13 @@ class LevelController extends Controller
 
     public function index()
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $levels = Level::paginate(5);
 
-        foreach($levels as $level)
-        {
+        foreach ($levels as $level) {
             $level->description = Str::limit($level->description, 50, '...');
         }
 
@@ -32,11 +36,19 @@ class LevelController extends Controller
 
     public function create()
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         return $this->viewWithAuthName('levels.add_level');
     }
 
     public function store(Request $request)
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
@@ -59,6 +71,10 @@ class LevelController extends Controller
 
     public function show($uuid)
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $level = Level::where('uuid', $uuid)->first();
         if (!$level) {
             return redirect()->to('dashboard');
@@ -69,6 +85,10 @@ class LevelController extends Controller
 
     public function update(Request $request, $uuid)
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
@@ -95,6 +115,10 @@ class LevelController extends Controller
 
     public function delete($uuid)
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $level = Level::where('uuid', $uuid)->firstOrFail();
 
         if ($level) {

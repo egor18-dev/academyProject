@@ -53,12 +53,12 @@ Route::group(['prefix' => 'profile'], function () {
 });
 
 Route::group(['prefix' => 'levels'], function () {
-    Route::get('/', [LevelController::class, 'index'])->name('levels.index');
-    Route::get('/create', [LevelController::class, 'create'])->name('levels.create');
-    Route::post('/', [LevelController::class, 'store'])->name('levels.store');
-    Route::get('/{uuid}', [LevelController::class, 'show'])->name('levels.show');
-    Route::put('/{uuid}', [LevelController::class, 'update'])->name('levels.update');
-    Route::delete('/{uuid}', [LevelController::class, 'delete'])->name('levels.delete');
+    Route::get('/', [LevelController::class, 'index'])->name('levels.index')->middleware('admin_or_editor');
+    Route::get('/create', [LevelController::class, 'create'])->name('levels.create')->middleware('admin_or_editor');
+    Route::post('/', [LevelController::class, 'store'])->name('levels.store')->middleware('admin_or_editor');
+    Route::get('/{uuid}', [LevelController::class, 'show'])->name('levels.show')->middleware('admin_or_editor');
+    Route::put('/{uuid}', [LevelController::class, 'update'])->name('levels.update')->middleware('admin_or_editor');
+    Route::delete('/{uuid}', [LevelController::class, 'delete'])->name('levels.delete')->middleware('admin_or_editor');
 });
 
 Route::group(['prefix' => 'classes'], function () {

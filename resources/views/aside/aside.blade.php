@@ -35,12 +35,9 @@
                             <i class="ri-arrow-right-s-line side-menu__angle"></i>
                         </a>
                     </li>
-                    @endrole
-                    
-                <li class="slide__category"><span class="category-name">Clases</span></li>
-                <!-- End::slide__category -->
+                @endrole
 
-                <!-- Start::slide -->
+                <li class="slide__category"><span class="category-name">Clases</span></li>
                 <li class="slide has-sub">
                     <a href="{{ route('classes.index') }}" class="side-menu__item {{ Route::is('classes.*') ? 'active' : '' }}">
                         <svg version="1.1" id="Uploaded to svgrepo.com" class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="#000000">
@@ -51,25 +48,24 @@
                     </a>
                 </li>
 
-                <li class="slide__category"><span class="category-name">Niveles</span></li>
-                <!-- End::slide__category -->
-
-                <!-- Start::slide -->
-                <li class="slide has-sub">
-                    <a href="{{route('levels.index')}}" class="side-menu__item {{ Route::is('levels.*') ? 'active' : '' }}">
-                        <svg fill="#fff" version="1.1" class="side-menu__icon" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" xml:space="preserve" stroke="#fff">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
-                                <g>
-                                    <rect x="16" y="4" width="2" height="16"></rect>
-                                    <rect x="11" y="10" width="2" height="10"></rect>
-                                    <rect x="6" y="14" width="2" height="6"></rect>
+                @role('admin|editor')
+                    <li class="slide__category"><span class="category-name">Niveles</span></li>
+                    <li class="slide has-sub">
+                        <a href="{{route('levels.index')}}" class="side-menu__item {{ Route::is('levels.*') ? 'active' : '' }}">
+                            <svg fill="#fff" version="1.1" class="side-menu__icon" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" xml:space="preserve" stroke="#fff">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+                                    <g>
+                                        <rect x="16" y="4" width="2" height="16"></rect>
+                                        <rect x="11" y="10" width="2" height="10"></rect>
+                                        <rect x="6" y="14" width="2" height="6"></rect>
+                                    </g>
                                 </g>
-                            </g>
-                        </svg>
-                        <span class="side-menu__label">Niveles</span>
-                        <i class="ri-arrow-right-s-line side-menu__angle"></i>
-                    </a>
-                </li>
+                            </svg>
+                            <span class="side-menu__label">Niveles</span>
+                            <i class="ri-arrow-right-s-line side-menu__angle"></i>
+                        </a>
+                    </li>
+                @endrole
 
                 <li class="slide__category"><span class="category-name">Examenes</span></li>
                 <!-- End::slide__category -->
