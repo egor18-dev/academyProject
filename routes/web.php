@@ -8,6 +8,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\LegalController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -99,6 +100,11 @@ Route::group(['prefix' => 'comments'], function () {
     Route::post('/', [CommentController::class, 'store'])->name('comments.store');
 });
 
-Route::get('terms', function () {
-    return view('templates.terms');
-});
+Route::get('/terms', [LegalController::class, 'terms'])->name('terms');
+Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy');
+// Route::get('terms', function () {
+//     return view('templates.terms')->name('terms');
+// });
+// Route::get('privacity', function () {
+//     return view('templates.privacity')->name;
+// });
