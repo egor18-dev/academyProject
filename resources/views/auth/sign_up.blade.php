@@ -7,14 +7,6 @@
           <div class="card custom-card my-4 border z-3 position-relative">
               <div class="card-body p-0">
                   <div class="p-5">
-                      <div class="d-flex align-items-center justify-content-center mb-3">
-                          <span class="auth-icon">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="password">
-                                  <path fill="#6446fe" d="M59,8H5A1,1,0,0,0,4,9V55a1,1,0,0,0,1,1H59a1,1,0,0,0,1-1V9A1,1,0,0,0,59,8ZM58,54H6V10H58Z" class="color1d1f47 svgShape"></path>
-                                  <!-- SVG paths omitted for brevity -->
-                              </svg>
-                          </span>
-                      </div>
                       <p class="h4 fw-semibold mb-0 text-center">Crear Cuenta</p>
                       <p class="mb-3 text-muted fw-normal text-center">¡Únete creando una cuenta gratuita!</p>
                       <form action="{{ route('users.store') }}" method="POST">
@@ -47,7 +39,7 @@
                               <div class="col-xl-12">
                                   <div class="form-check">
                                       <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
-                                      <label class="form-check-label text-secondary" for="iAgree">
+                                      <label class="form-check-label text-primary" for="iAgree">
                                           Yo acepto los <a href="#!" class="link-primary text-decoration-none">términos y condiciones</a>
                                       </label>
                                   </div>

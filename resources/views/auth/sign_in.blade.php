@@ -6,15 +6,6 @@
             <div class="card custom-card my-4 border z-3 position-relative">
                 <div class="card-body p-0">
                     <div class="p-5">
-                        <div class="d-flex align-items-center justify-content-center mb-3">
-                            <span class="auth-icon">
-                                <!-- Icon for login -->
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="login-icon">
-                                    <path fill="#6446fe" d="M59,8H5A1,1,0,0,0,4,9V55a1,1,0,0,0,1,1H59a1,1,0,0,0,1-1V9A1,1,0,0,0,59,8ZM58,54H6V10H58Z"></path>
-                                    <!-- More paths if needed -->
-                                </svg>
-                            </span>
-                        </div>
                         <p class="h4 fw-semibold mb-0 text-center">Iniciar Sesión</p>
                         <p class="mb-3 text-muted fw-normal text-center">Introduce tus credenciales para acceder</p>
                         <form action="{{ route('users.enter') }}" method="POST">
