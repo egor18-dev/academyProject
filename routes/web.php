@@ -62,18 +62,18 @@ Route::group(['prefix' => 'levels'], function () {
 });
 
 Route::group(['prefix' => 'classes'], function () {
-    Route::get('/', [ClassController::class, 'index'])->name('classes.index');
-    Route::get('/videos', [ClassController::class, 'videos'])->name('userClasses.videos');
-    Route::get('/video/{uuid}', [ClassController::class, 'serveImage'])->name('userClasses.image');
-    Route::get('/view/{uuid}', [ClassController::class, 'view'])->name('userClasses.view');
-    Route::get('/{id}/stream', [ClassController::class, 'streamVideo'])->name('classes.stream');
-    Route::get('/create', [ClassController::class, 'create'])->name('classes.create');
-    Route::post('/', [ClassController::class, 'store'])->name('classes.store');
-    Route::get('/{uuid}', [ClassController::class, 'show'])->name('classes.show');
-    Route::put('/{uuid}', [ClassController::class, 'update'])->name('classes.update');
-    Route::delete('/{uuid}', [ClassController::class, 'delete'])->name('classes.delete');
+    Route::get('/', [ClassController::class, 'index'])->name('classes.index')->middleware('admin_or_editor');
+    Route::get('/videos', [ClassController::class, 'videos'])->name('userClasses.videos')->middleware('student');
+    Route::get('/video/{uuid}', [ClassController::class, 'serveImage'])->name('userClasses.image')->middleware('student');
+    Route::get('/view/{uuid}', [ClassController::class, 'view'])->name('userClasses.view')->middleware('student');
+    Route::get('/{id}/stream', [ClassController::class, 'streamVideo'])->name('classes.stream')->middleware('student');
+    Route::get('/create', [ClassController::class, 'create'])->name('classes.create')->middleware('admin_or_editor');
+    Route::post('/', [ClassController::class, 'store'])->name('classes.store')->middleware('admin_or_editor');
+    Route::get('/{uuid}', [ClassController::class, 'show'])->name('classes.show')->middleware('admin_or_edtor');
+    Route::put('/{uuid}', [ClassController::class, 'update'])->name('classes.update')->middleware('admin_or_editor');
+    Route::delete('/{uuid}', [ClassController::class, 'delete'])->name('classes.delete')->middleware('admin_or_editor');
     Route::post('/mark-video-watched/{userUuid}/{classUuid}', [ClassController::class, 'markVideoAsWatched'])
-        ->name('classes.mark');
+        ->name('classes.mark')->middleware('student');
 });
 
 Route::group(['prefix' => 'exams'], function () {
