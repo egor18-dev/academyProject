@@ -61,7 +61,7 @@
 
                         <li>
                             <p class="mb-1"><strong>Propiedad Intelectual:</strong></p> Todo el contenido,
-                            las marcas comerciales y la propiedad intelectual en nuestro sitio web son propiedad de [Nombre de Su Compañía]. No puede usar, reproducir o distribuir ningún contenido de nuestros servicios
+                            las marcas comerciales y la propiedad intelectual en nuestro sitio web son propiedad de Eselmind. No puede usar, reproducir o distribuir ningún contenido de nuestros servicios
                             sin nuestro consentimiento previo por escrito.
                         </li>
 
@@ -106,16 +106,10 @@
 
                         <li>
                             <p class="mb-1"><strong>Contacto:</strong></p> Si tiene alguna pregunta o
-                            inquietud sobre estos términos, por favor contáctenos en [Su Correo Electrónico de Contacto].
+                            inquietud sobre estos términos, por favor contáctenos en info@eselmind.com.
                         </li>
                     </ul>
                 </div>
-                <div class="card-footer">
-                    <div class="d-flex gap-2 align-items-center justify-content-end">
-                        <button class="btn btn-outline-danger">Rechazar</button>
-                        <button class="btn btn-primary">Aceptar</button>
-                    </div>
-                   </div>
             </div>
         </div>
     </div>
