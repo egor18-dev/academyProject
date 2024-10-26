@@ -38,7 +38,13 @@
                           <select class="form-select {{ $errors->has('role') ? 'is-invalid' : '' }}" name="role" id="role" required>
                               <option value="" selected disabled>Selecciona un rol...</option>
                               @foreach ($roles as $role)
-                                  <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                @if($role->name == 'Administrador')
+                                    @can('create-admins')
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                    @endcan
+                                @else
+                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                @endif
                               @endforeach
                           </select>
                           <div class="invalid-feedback">

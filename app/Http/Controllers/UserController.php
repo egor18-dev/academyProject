@@ -32,6 +32,27 @@ class UserController extends Controller
         ]);
     }
 
+    public function enter(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ], [
+            'email.required' => 'El campo de correo electrónico es obligatorio.',
+            'email.email' => 'Por favor, introduce un correo electrónico válido.',
+            'password.required' => 'El campo de contraseña es obligatorio.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+        ]);
+
+        $credentials = $request->only(['email', 'password']);
+
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+            return redirect()->route('profile.index');
+        }
+
+        return redirect()->back()->withErrors(['error' => 'Las credenciales no coinciden con nuestros registros.']);
+    }
+
     public function create()
     {
         if (!Auth::check() || !Auth::user()->hasAnyRole(['Administrador', 'Editor'])) {
@@ -40,6 +61,51 @@ class UserController extends Controller
 
         $roles = Role::all();
         return $this->viewWithAuthName('users.add_user', ['roles' => $roles]);
+    }
+
+    public function showEnterForm()
+    {
+        return view('auth.sign_in');
+    }
+
+    public function showCreateForm()
+    {
+        return view('auth.sign_up');
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'surnames' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'surnames.required' => 'Los apellidos son obligatorios.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'Debes ingresar un correo electrónico válido.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos :min caracteres.'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'surnames' => $request->surnames,
+            'email' => $request->email,
+            'password' => Hash::make($request->password, ['rounds' => 12])
+        ]);
+
+        $roleName = $request->role;
+        $role = $roleName ? Role::where('name', $roleName)->first() : null;
+        
+        $user->assignRole($role ? $role->name : 'Estudiante');
+
+        return redirect()->route('users.showEnterForm');
     }
 
     public function show($uuid)
@@ -61,6 +127,56 @@ class UserController extends Controller
             'roles' => $roles,
             'actualUserRole' => $actualUserRole
         ]);
+    }
+
+    public function update(Request $request, $uuid)
+    {
+        if (!Auth::check()) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'surnames' => 'required',
+            'email' => 'required|email',
+            'profile_image' => 'nullable|image|max:2048'
+        ], [
+            'name.required' => 'El nombre es obligatorio.',
+            'surnames.required' => 'Los apellidos son obligatorios.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'Debes ingresar un correo electrónico válido.',
+            'profile_image.image' => 'El archivo debe ser una imagen.',
+            'profile_image.max' => 'El tamaño de la imagen no debe exceder los 2MB.',
+        ]);
+
+        $firstPart = explode('.', $request->route()->getName())[0];
+
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+
+        $user = User::where('uuid', $uuid)->first();
+
+        if (!$user) {
+            return redirect()->to('users')->withErrors(['error' => 'Usuario no encontrado']);
+        }
+
+        $user->fill($request->only(['name', 'surnames', 'email']));
+        $user->save();
+
+        if ($request->role) {
+            $user->syncRoles([$request->role]);
+        }
+
+        if($request->hasFile('profile_image')){
+            if($user->hasMedia('profile_image')){
+                $user->clearMediaCollection('profile_image');
+            }
+
+            $user->addMediaFromRequest('profile_image')->toMediaCollection('profile_image', 'media');
+        }
+
+        return redirect()->to($firstPart)->with('success', 'Usuario actualizado con éxito.');
     }
 
     public function delete($uuid)

@@ -11,11 +11,8 @@
                 </svg>
             </div>
             <ul class="main-menu">
-                <!-- Start::slide__category -->
                 <li class="slide__category"><span class="category-name">Dashboard</span></li>
-                <!-- End::slide__category -->
 
-                <!-- Start::slide -->
                 <li class="slide has-sub">
                     <a href="javascript:void(0);" class="side-menu__item {{ Route::is('home') ? 'active' : '' }}">
                         <i class="ri-arrow-right-s-line side-menu__angle"></i>
