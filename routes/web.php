@@ -25,10 +25,6 @@ Route::get('/', function () {
     return view('main');
 });
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
-
 Route::get('/dashboard', function () {
     return redirect()->to('/users');
 });
@@ -101,4 +97,8 @@ Route::group(['prefix' => 'home'], function () {
 
 Route::group(['prefix' => 'comments'], function () {
     Route::post('/', [CommentController::class, 'store'])->name('comments.store');
+});
+
+Route::get('terms', function () {
+    return view('templates.terms');
 });
