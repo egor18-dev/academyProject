@@ -71,7 +71,7 @@ class UserController extends Controller
             'surnames' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8',
-            'role' => 'required' // Se añade la validación para que el rol sea obligatorio
+            'role' => 'required' 
         ], [
             'name.required' => 'El nombre es obligatorio.',
             'surnames.required' => 'Los apellidos son obligatorios.',

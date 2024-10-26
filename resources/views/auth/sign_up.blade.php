@@ -1,72 +1,69 @@
-<style>
- 
-    .left{
-        background-image: linear-gradient(hsla(0, 0%, 0%, 0.500
-        ), hsla(0, 0%, 0%, 0.500)),url('https://image.cnbcfm.com/api/v1/image/106918576-1627532474886-gettyimages-871203832-pi-1589476.jpeg?v=1627532520');
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        display: flex;
-        flex-direction: column;
-        padding: 50px !important;
-    }
-
-    label{
-        font-weight: 300;
-    }
-
-    button[type="submit"]
-    {
-        color: #fff;
-        border: none;
-        outline: none;
-        padding: 7px 15px;
-        background: #7247f0 !important;
-    }
-
-</style>
 
 @extends('welcome')
 @section('content')
-    <section class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
-        <div class="row w-100 justify-content-center">
-            <div class="col-lg-3 left"></div>
-            <div class="col-lg-4 bg-white p-5">
-                <form action="{{ route('users.store') }}" method="POST">
-                    @csrf 
-                    <div class="row gy-3 gy-md-4 overflow-hidden">
-                      <div class="col-12">
-                        <label for="name" class="form-label">Nombre <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" id="name" value="{{ old('name') }}" placeholder="Nombre del usuario">
+<div class="container-lg">
+  <div class="row justify-content-center authentication authentication-basic align-items-center h-100">
+      <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-6 col-sm-8 col-12">
+          <div class="card custom-card my-4 border z-3 position-relative">
+              <div class="card-body p-0">
+                  <div class="p-5">
+                      <div class="d-flex align-items-center justify-content-center mb-3">
+                          <span class="auth-icon">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" id="password">
+                                  <path fill="#6446fe" d="M59,8H5A1,1,0,0,0,4,9V55a1,1,0,0,0,1,1H59a1,1,0,0,0,1-1V9A1,1,0,0,0,59,8ZM58,54H6V10H58Z" class="color1d1f47 svgShape"></path>
+                                  <!-- SVG paths omitted for brevity -->
+                              </svg>
+                          </span>
                       </div>
-                      <div class="col-12">
-                        <label for="surnames" class="form-label">Apellidos <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control {{ $errors->has('surnames') ? 'is-invalid' : '' }}" name="surnames" id="surnames" value="{{ old('surnames') }}" placeholder="Apellido del usuario">
-                      </div>
-                      <div class="col-12">
-                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" id="email" placeholder="name@example.com" value=" {{old('email')}} ">
-                      </div>
-                      <div class="col-12">
-                        <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
-                        <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : ''  }}" name="password" id="password" value="{{ old('password') }}">
-                      </div>
-                      <div class="col-12">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
-                          <label class="form-check-label text-secondary" for="iAgree">
-                            Yo acepto los <a href="#!" class="link-primary text-decoration-none">terminos y condiciones</a>
-                          </label>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <div class="d-grid">
-                          <button type="submit">Crear cuenta</button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-            </div>
-        </div>
-    </section>
+                      <p class="h4 fw-semibold mb-0 text-center">Crear Cuenta</p>
+                      <p class="mb-3 text-muted fw-normal text-center">¡Únete creando una cuenta gratuita!</p>
+                      <form action="{{ route('users.store') }}" method="POST">
+                          @csrf
+                          <div class="row gy-3">
+                              <div class="col-xl-12">
+                                  <label for="name" class="form-label text-default">Nombre <span class="text-danger">*</span></label>
+                                  <div class="position-relative">
+                                      <input type="text" class="form-control form-control-lg {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" id="name" placeholder="Nombre del usuario" value="{{ old('name') }}">
+                                  </div>
+                              </div>
+                              <div class="col-xl-12">
+                                  <label for="surnames" class="form-label text-default">Apellidos <span class="text-danger">*</span></label>
+                                  <div class="position-relative">
+                                      <input type="text" class="form-control form-control-lg {{ $errors->has('surnames') ? 'is-invalid' : '' }}" name="surnames" id="surnames" placeholder="Apellidos del usuario" value="{{ old('surnames') }}">
+                                  </div>
+                              </div>
+                              <div class="col-xl-12">
+                                  <label for="email" class="form-label text-default">Email <span class="text-danger">*</span></label>
+                                  <div class="position-relative">
+                                      <input type="email" class="form-control form-control-lg {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" id="email" placeholder="name@example.com" value="{{ old('email') }}">
+                                  </div>
+                              </div>
+                              <div class="col-xl-12">
+                                  <label for="password" class="form-label text-default">Contraseña <span class="text-danger">*</span></label>
+                                  <div class="position-relative">
+                                      <input type="password" class="form-control form-control-lg {{ $errors->has('password') ? 'is-invalid' : '' }}" name="password" id="password" placeholder="Contraseña">
+                                  </div>
+                              </div>
+                              <div class="col-xl-12">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
+                                      <label class="form-check-label text-secondary" for="iAgree">
+                                          Yo acepto los <a href="#!" class="link-primary text-decoration-none">términos y condiciones</a>
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="d-grid mt-4">
+                                  <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+                              </div>
+                              <div class="text-center mb-3">
+                                  <p class="text-muted mt-3 mb-0">¿Ya tienes una cuenta? <a href="{{ route('users.showEnterForm') }}" class="text-primary">Inicia Sesión</a></p>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
 @endsection
