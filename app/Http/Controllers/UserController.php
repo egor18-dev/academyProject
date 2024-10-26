@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -19,8 +20,12 @@ class UserController extends Controller
 
     public function index() 
     {
+        if (!Auth::check() || Str::lower(Auth::user()->role) !== 'editor') {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $users = User::paginate(5);
-        
+
         return $this->viewWithAuthName('users.view_users', [
             'users' => $users,
             'count' => User::count()
@@ -50,6 +55,10 @@ class UserController extends Controller
 
     public function create()
     {
+        if (!Auth::check() || Str::lower(Auth::user()->role) !== 'editor') {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $roles = Role::all();
         return $this->viewWithAuthName('users.add_user', ['roles' => $roles]);
     }
@@ -79,28 +88,32 @@ class UserController extends Controller
             'password.required' => 'La contraseña es obligatoria.',
             'password.min' => 'La contraseña debe tener al menos :min caracteres.'
         ]);
-    
+
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
-    
+
         $user = User::create([
             'name' => $request->name,
             'surnames' => $request->surnames,
             'email' => $request->email,
             'password' => Hash::make($request->password, ['rounds' => 12])
         ]);
-    
+
         $roleName = $request->role;
         $role = $roleName ? Role::where('name', $roleName)->first() : null;
         
         $user->assignRole($role ? $role->name : 'Estudiante');
-    
+
         return redirect()->route('users.showEnterForm');
     }
 
     public function show($uuid)
     {
+        if (!Auth::check() || Str::lower(Auth::user()->role) !== 'editor') {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $user = User::where('uuid', $uuid)->first();
         if (!$user) {
             return redirect()->to('users.enter');
@@ -118,6 +131,10 @@ class UserController extends Controller
 
     public function update(Request $request, $uuid)
     {
+        if (!Auth::check() || Str::lower(Auth::user()->role) !== 'editor') {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'surnames' => 'required',
@@ -152,7 +169,6 @@ class UserController extends Controller
         }
 
         if($request->hasFile('profile_image')){
-
             if($user->hasMedia('profile_image')){
                 $user->clearMediaCollection('profile_image');
             }
@@ -165,6 +181,10 @@ class UserController extends Controller
 
     public function delete($uuid)
     {
+        if (!Auth::check() || Str::lower(Auth::user()->role) !== 'editor') {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $user = User::where('uuid', $uuid)->firstOrFail();
 
         if ($user) {

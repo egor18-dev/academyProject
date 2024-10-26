@@ -34,15 +34,15 @@ Route::get('/dashboard', function () {
 });
 
 Route::group(['prefix' => 'users'], function () {
-    Route::get('/', [UserController::class, 'index'])->name('users.index')->middleware('role');
-    Route::get('/sign-up', [UserController::class, 'create'])->name('users.create')->middleware('role');
+    Route::get('/', [UserController::class, 'index'])->name('users.index')->middleware('editor');
+    Route::get('/sign-up', [UserController::class, 'create'])->name('users.create')->middleware('editor');
     Route::get('/add', [UserController::class, 'showCreateForm'])->name('users.showCreateForm');
     Route::get('/enter', [UserController::class, 'showEnterForm'])->name('users.showEnterForm');
     Route::post('/', [UserController::class, 'store'])->name('users.store');
     Route::post('/enter', [UserController::class, 'enter'])->name('users.enter');
-    Route::get('/{uuid}', [UserController::class, 'show'])->name('users.show')->middleware('role');
-    Route::put('/{uuid}', [UserController::class, 'update'])->name('users.update')->middleware('role');
-    Route::delete('/{uuid}', [UserController::class, 'delete'])->name('users.delete')->middleware('role');
+    Route::get('/{uuid}', [UserController::class, 'show'])->name('users.show')->middleware('editor');
+    Route::put('/{uuid}', [UserController::class, 'update'])->name('users.update')->middleware('editor');
+    Route::delete('/{uuid}', [UserController::class, 'delete'])->name('users.delete')->middleware('editor');
 });
 
 Route::group(['prefix' => 'profile'], function () {
