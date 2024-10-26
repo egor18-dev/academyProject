@@ -19,14 +19,13 @@ class AdminEditorMiddleware
         if (!Auth::check()) {
             return redirect()->route('users.showEnterForm'); 
         }
-
+    
         $user = Auth::user();
-        $userRole = Str::lower($user->role);
-
-        if (!in_array($userRole, ['Administrador', 'Editor'])) {
+    
+        if (!$user->hasAnyRole(['Administrador', 'Editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
-
+    
         return $next($request);
     }
 }

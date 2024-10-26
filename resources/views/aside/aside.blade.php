@@ -24,7 +24,7 @@
                     </a>
                 </li>
 
-                @role('admin|editor')
+                @role('Administrador|Editor')
                     <li class="slide__category"><span class="category-name">Usuarios</span></li>
                     <li class="slide has-sub">
                         <a href="{{ route('users.index') }}" class="side-menu__item {{ Route::is('users.*') ? 'active' : '' }}">
@@ -37,7 +37,7 @@
                     </li>
                 @endrole
 
-                @role('admin|editor')
+                @role('Administrador|Editor')
                 <li class="slide__category"><span class="category-name">Clases</span></li>
                 <li class="slide has-sub">
                     <a href="{{ route('classes.index') }}" class="side-menu__item {{ Route::is('classes.*') ? 'active' : '' }}">
@@ -50,7 +50,7 @@
                 </li>
                 @endrole
 
-                @role('admin|editor')
+                @role('Administrador|Editor')
                     <li class="slide__category"><span class="category-name">Niveles</span></li>
                     <li class="slide has-sub">
                         <a href="{{route('levels.index')}}" class="side-menu__item {{ Route::is('levels.*') ? 'active' : '' }}">
@@ -69,7 +69,7 @@
                     </li>
                 @endrole
 
-                @role('admin|editor')
+                @role('Administrador|Editor')
                     <li class="slide__category"><span class="category-name">Examenes</span></li>
                     <li class="slide has-sub">
                         <a href="{{route('exams.index')}}" class="side-menu__item {{ Route::is('exams.*') || Route::is('questions.*') ? 'active' : '' }}">
