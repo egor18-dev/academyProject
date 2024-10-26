@@ -19,7 +19,7 @@ class ExamController extends Controller
 
     public function index()
     {
-        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['Administrador', 'Editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
@@ -37,7 +37,7 @@ class ExamController extends Controller
 
     public function create()
     {
-        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['Administrador', 'Editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
@@ -47,7 +47,7 @@ class ExamController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['Administrador', 'Editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
@@ -77,7 +77,7 @@ class ExamController extends Controller
 
     public function show($uuid)
     {
-        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['Administrador', 'Editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
@@ -92,7 +92,7 @@ class ExamController extends Controller
 
     public function update(Request $request, $uuid)
     {
-        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['Administrador', 'Editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
@@ -125,7 +125,7 @@ class ExamController extends Controller
 
     public function delete($uuid)
     {
-        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['Administrador', 'Editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
