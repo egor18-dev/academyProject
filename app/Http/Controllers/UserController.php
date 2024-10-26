@@ -131,7 +131,7 @@ class UserController extends Controller
 
     public function update(Request $request, $uuid)
     {
-        if (!Auth::check() || !in_array(Str::lower(Auth::user()->role), ['admin', 'editor'])) {
+        if (!Auth::check()) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 

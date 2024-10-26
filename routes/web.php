@@ -41,7 +41,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::post('/', [UserController::class, 'store'])->name('users.store');
     Route::post('/enter', [UserController::class, 'enter'])->name('users.enter');
     Route::get('/{uuid}', [UserController::class, 'show'])->name('users.show')->middleware('admin_or_editor');
-    Route::put('/{uuid}', [UserController::class, 'update'])->name('users.update')->middleware('admin_or_editor');
+    Route::put('/{uuid}', [UserController::class, 'update'])->name('users.update')->middleware('auth');
     Route::delete('/{uuid}', [UserController::class, 'delete'])->name('users.delete')->middleware('admin_or_editor');
 });
 
@@ -77,12 +77,12 @@ Route::group(['prefix' => 'classes'], function () {
 });
 
 Route::group(['prefix' => 'exams'], function () {
-    Route::get('/', [ExamController::class, 'index'])->name('exams.index');
-    Route::get('/create', [ExamController::class, 'create'])->name('exams.create');
-    Route::post('/', [ExamController::class, 'store'])->name('exams.store');
-    Route::get('/{uuid}', [ExamController::class, 'show'])->name('exams.show');
-    Route::put('/{uuid}', [ExamController::class, 'update'])->name('exams.update');
-    Route::delete('/{uuid}', [ExamController::class, 'delete'])->name('exams.delete');
+    Route::get('/', [ExamController::class, 'index'])->name('exams.index')->middleware('admin_or_editor');
+    Route::get('/create', [ExamController::class, 'create'])->name('exams.create')->middleware('admin_or_editor');
+    Route::post('/', [ExamController::class, 'store'])->name('exams.store')->middleware('admin_or_editor');
+    Route::get('/{uuid}', [ExamController::class, 'show'])->name('exams.show')->middleware('admin_or_editor');
+    Route::put('/{uuid}', [ExamController::class, 'update'])->name('exams.update')->middleware('admin_or_editor');
+    Route::delete('/{uuid}', [ExamController::class, 'delete'])->name('exams.delete')->middleware('admin_or_editor');
     Route::get('/{uuid}/showExam', [ExamController::class, 'showExam'])->name('exams.showExam');
 });
 

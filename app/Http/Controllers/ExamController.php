@@ -7,6 +7,7 @@ use App\Models\Exam;
 use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ExamController extends Controller
@@ -18,10 +19,13 @@ class ExamController extends Controller
 
     public function index()
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $exams = Exam::paginate(5);
 
-        foreach($exams as $exam)
-        {
+        foreach ($exams as $exam) {
             $exam->description = Str::limit($exam->description, 50, '...');
         }
 
@@ -33,12 +37,20 @@ class ExamController extends Controller
 
     public function create()
     {
-        $levels = Level::all(); // Obtener todos los niveles para que el usuario pueda seleccionar uno
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
+        $levels = Level::all();
         return $this->viewWithAuthName('exams.add_exam', ['levels' => $levels]);
     }
 
     public function store(Request $request)
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
@@ -65,6 +77,10 @@ class ExamController extends Controller
 
     public function show($uuid)
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $exam = Exam::where('uuid', $uuid)->first();
         if (!$exam) {
             return redirect()->to('dashboard');
@@ -76,6 +92,10 @@ class ExamController extends Controller
 
     public function update(Request $request, $uuid)
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
@@ -105,6 +125,10 @@ class ExamController extends Controller
 
     public function delete($uuid)
     {
+        if (!Auth::check() || !Auth::user()->hasAnyRole(['admin', 'editor'])) {
+            abort(403, 'No tienes permiso para acceder a esta página.');
+        }
+
         $exam = Exam::where('uuid', $uuid)->firstOrFail();
 
         if ($exam) {
@@ -120,6 +144,6 @@ class ExamController extends Controller
 
     public function showExam($uuid)
     {
-       
+
     }
 }
