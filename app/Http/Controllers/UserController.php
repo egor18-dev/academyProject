@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function index() 
     {
-        if (!Auth::check() || Str::lower(Auth::user()->role) !== 'editor') {
+        if (!Auth::check() || !in_array(Str::lower(Auth::user()->role), ['admin', 'editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
@@ -55,7 +55,7 @@ class UserController extends Controller
 
     public function create()
     {
-        if (!Auth::check() || Str::lower(Auth::user()->role) !== 'editor') {
+        if (!Auth::check() || !in_array(Str::lower(Auth::user()->role), ['admin', 'editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
@@ -110,7 +110,7 @@ class UserController extends Controller
 
     public function show($uuid)
     {
-        if (!Auth::check() || Str::lower(Auth::user()->role) !== 'editor') {
+        if (!Auth::check() || !in_array(Str::lower(Auth::user()->role), ['admin', 'editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
@@ -131,7 +131,7 @@ class UserController extends Controller
 
     public function update(Request $request, $uuid)
     {
-        if (!Auth::check() || Str::lower(Auth::user()->role) !== 'editor') {
+        if (!Auth::check() || !in_array(Str::lower(Auth::user()->role), ['admin', 'editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
@@ -181,7 +181,7 @@ class UserController extends Controller
 
     public function delete($uuid)
     {
-        if (!Auth::check() || Str::lower(Auth::user()->role) !== 'editor') {
+        if (!Auth::check() || !in_array(Str::lower(Auth::user()->role), ['admin', 'editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-class EditorMiddleware
+class AdminEditorMiddleware
 {
     /**
      * Handle an incoming request.
@@ -21,8 +21,9 @@ class EditorMiddleware
         }
 
         $user = Auth::user();
+        $userRole = Str::lower($user->role);
 
-        if (Str::lower($user->role) !== "editor") {
+        if (!in_array($userRole, ['Administrador', 'Editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
 
