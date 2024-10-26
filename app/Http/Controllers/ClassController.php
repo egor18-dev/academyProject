@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\ClassModel;
 use App\Models\Comments;
+use App\Models\Exam;
 use App\Models\Level;
 use App\Models\User;
 use App\Models\UserVideoProgress;
@@ -64,34 +65,57 @@ class ClassController extends Controller
     }
 
     public function videos()
-    {
-        if (!auth()->check()) {
-            abort(403);
-        }
+{
+    if (!auth()->check()) {
+        abort(403);
+    }
 
-        $user = auth()->user();
+    $user = auth()->user();
+
+    if ($user->hasRole(['Administrador', 'Editor'])) {
         $classes = ClassModel::with('media:id,model_id,collection_name')
             ->orderByDesc('level_id')
             ->get();
 
-        $watchedVideos = UserVideoProgress::where('user_id', $user->uuid)
-            ->pluck('class_id')
-            ->toArray();
+        foreach ($classes as $class) {
+            $class->description = Str::limit($class->description, 50, '...');
+            $class->isAccessible = true;
+        }
 
-        $levels = $classes->groupBy('level_id')->sortKeysDesc();
+        return $this->viewWithAuthName('classes.videos', [
+            'classes' => $classes,
+            'pendingExams' => [],
+            'count' => $classes->count(),
+            'totalUsers' => User::count(),
+        ]);
+    }
 
-        $pendingExams = [];
-        $currentLevel = null;
+    $classes = ClassModel::with('media:id,model_id,collection_name')
+        ->orderByDesc('level_id')
+        ->get();
 
-        foreach ($levels as $levelId => $levelClasses) {
-            $allWatched = $levelClasses->every(function ($class) use ($watchedVideos) {
-                return in_array($class->uuid, $watchedVideos);
-            });
+    $watchedVideos = UserVideoProgress::where('user_id', $user->uuid)
+        ->pluck('class_id')
+        ->toArray();
 
-            if (!$allWatched) {
-                $currentLevel = $levelId;
-                break;
-            }
+    $levels = $classes->groupBy('level_id')->sortKeysDesc();
+
+    $pendingExams = [];
+    $currentLevel = null;
+
+    foreach ($levels as $levelId => $levelClasses) {
+        $allWatched = $levelClasses->every(function ($class) use ($watchedVideos) {
+            return in_array($class->uuid, $watchedVideos);
+        });
+
+        if (!$allWatched) {
+            $currentLevel = $levelId;
+            break;
+        }
+
+        $examExists = Exam::where('level_id', $levelId)->exists();
+        
+        if ($examExists) {
 
             $examTaken = UserExam::where('user_id', $user->uuid)
                 ->whereHas('class', function ($query) use ($levelId) {
@@ -99,24 +123,30 @@ class ClassController extends Controller
                 })
                 ->exists();
 
+
             if (!$examTaken) {
                 $pendingExams[] = $levelId;
+                $currentLevel = $levelId;
+                break;
             }
         }
-
-        foreach ($classes as $class) {
-            $class->description = Str::limit($class->description, 50, '...');
-            $class->isAccessible = $class->level_id >= $currentLevel && (in_array($class->uuid, $watchedVideos) || $class->level_id == $currentLevel);
-            $class->isWatched = in_array($class->uuid, $watchedVideos);
-        }
-
-        return $this->viewWithAuthName('classes.videos', [
-            'classes' => $classes,
-            'pendingExams' => $pendingExams,
-            'count' => $classes->count(),
-            'totalUsers' => User::count(),
-        ]);
     }
+
+    foreach ($classes as $class) {
+        $class->description = Str::limit($class->description, 50, '...');
+        $class->isAccessible = ($class->level_id >= $currentLevel) &&
+            (in_array($class->uuid, $watchedVideos) || $class->level_id == $currentLevel);
+        $class->isWatched = in_array($class->uuid, $watchedVideos);
+    }
+
+    return $this->viewWithAuthName('classes.videos', [
+        'classes' => $classes,
+        'pendingExams' => $pendingExams,
+        'count' => $classes->count(),
+        'totalUsers' => User::count(),
+    ]);
+}
+
 
     public function streamVideo($id)
     {

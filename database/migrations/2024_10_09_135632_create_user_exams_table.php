@@ -12,9 +12,9 @@ return new class extends Migration
             $table->id();
             $table->uuid()->unique();
             $table->uuid('user_id');
-            $table->uuid('class_id');
+            $table->uuid('level_id');
             $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade');
-            $table->foreign('class_id')->references('uuid')->on('classes')->onDelete('cascade');
+            $table->foreign('level_id')->references('uuid')->on('levels')->onDelete('cascade');
             $table->timestamps();
         });
     }

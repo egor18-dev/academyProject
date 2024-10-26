@@ -48,6 +48,11 @@ class User extends Authenticatable implements HasMedia
         'password' => 'hashed',
     ];
 
+    public function userExams()
+    {
+        return $this->hasMany(UserExam::class, 'user_id', 'uuid');
+    }
+
     protected static function boot()
     {
         parent::boot();

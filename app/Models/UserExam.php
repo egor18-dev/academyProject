@@ -10,21 +10,21 @@ class UserExam extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'class_id', 'passed'];
+    protected $fillable = ['user_id', 'level_id', 'passed'];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'uuid');
     }
 
-    public function exam()
+    public function level()
     {
-        return $this->belongsTo(Exam::class);
+        return $this->belongsTo(Level::class, 'level_id', 'uuid');
     }
 
     public function class()
     {
-        return $this->belongsTo(ClassModel::class, 'uuid', 'uuid');  
+        return $this->belongsTo(ClassModel::class, 'level_id', 'level_id');
     }
 
     protected static function boot()

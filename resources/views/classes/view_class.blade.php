@@ -79,49 +79,6 @@
                  </div>
              </div>
              <div class="col-xxl-4">
-                 <div class="row">
-                     <div class="col-xl-12">
-                        @foreach ($levels as $level)
-                        <div class="card custom-card overflow-hidden">
-                          <div class="card-header justify-content-between">
-                              <div class="card-title">
-                                  Siguientes videos
-                              </div>
-                              <a class="fs-12 text-muted">{{$class->count() - 1}} videos<i class="ti ti-arrow-narrow-right ms-1"></i> </a>
-                          </div>
-                          <div class="card-body p-0">
-                              @if ($level->classes->isNotEmpty())
-                                @foreach ($level->classes as $futureClass)
-                                  @if ($class->uuid !== $futureClass->uuid && $class->id < $futureClass->id)
-                                    <ul class="list-group list-group-flush">
-                                      <li class="list-group-item">
-                                          <div class="d-flex gap-3 flex-wrap align-items-center">
-                                              <span class="avatar avatar-xl">
-                                                  <img src="{{ route('userClasses.image', ['uuid' => $futureClass->uuid]) }}" class="img-fluid" alt="img-class-{{$class->title}}">
-                                              </span>
-                                              <div class="flex-fill">
-                                                  <a href="javascript:void(0);" class="mb-0 badge bg-primary-transparent">{{$level->name}}</a>
-                                                  <p class="mb-1 popular-blog-content text-truncate fw-medium">
-                                                    {{$futureClass->title}}
-                                                  </p>
-                                                  <span class="text-muted fs-12">{{$futureClass->created_at}}</span>
-                                              </div>
-                                              <div>
-                                          <a href="javascript:void(0);" class="text-primary text-decoration-underline">Ver
-                                                          ahora</a>
-                                              </div>
-                                          </div>
-                                      </li>
-                                  </ul>
-                                  @endif
-                                @endforeach
-                              @endif
-                          </div>
-                      </div>
-                        @endforeach
-                     </div>
-                     <div class="col-xl-12">
-                      <div class="card custom-card p-3">
                         <div class="card-body p-4 bg-light border">
                             <div class="text-center">
                                 <label class="form-check-label mb-3">
@@ -132,8 +89,6 @@
                                     <button class="btn btn-primary btn-wave" type="button" id="blog-subscribe">Suscribirse</button>
                                 </div>
                             </div>
-                        </div>
-                     </div>
                  </div>
              </div>
          </div>

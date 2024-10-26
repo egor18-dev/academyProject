@@ -17,6 +17,11 @@ class Level extends Model
         return $this->hasMany(ClassModel::class, 'level_id', 'uuid');
     }
 
+    public function userExams()
+    {
+        return $this->hasMany(UserExam::class, 'level_id', 'uuid');
+    }
+
     protected static function boot()
     {
         parent::boot();

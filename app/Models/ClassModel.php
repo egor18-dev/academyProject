@@ -12,23 +12,18 @@ use Illuminate\Support\Str;
 class ClassModel extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
-    
+
     protected $table = 'classes';
     protected $fillable = ['level_id', 'title', 'description', 'video_url'];
 
     public function level()
     {
-        return $this->belongsTo(Level::class);
+        return $this->belongsTo(Level::class, 'level_id', 'uuid');
     }
 
-    public function questions()
+    public function userExams()
     {
-        return $this->hasMany(Question::class);
-    }
-
-    public function exams()
-    {
-        return $this->hasMany(Exam::class);
+        return $this->hasMany(UserExam::class, 'level_id', 'level_id');
     }
 
     protected static function boot()

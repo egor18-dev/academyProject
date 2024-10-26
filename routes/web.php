@@ -84,16 +84,16 @@ Route::group(['prefix' => 'exams'], function () {
 });
 
 Route::group(['prefix' => 'exams/{examUuid}/questions'], function () {
-    Route::get('/', [QuestionController::class, 'index'])->name('questions.index')->name('admin_or_editor');
-    Route::get('/create', [QuestionController::class, 'create'])->name('questions.create')->name('admin_or_editor');
-    Route::post('/', [QuestionController::class, 'store'])->name('questions.store')->name('admin_or_editor');
-    Route::get('/{questionUuid}', [QuestionController::class, 'show'])->name('questions.show')->name('admin_or_editor');
-    Route::put('/{questionUuid}', [QuestionController::class, 'update'])->name('questions.update')->name('admin_or_editor');
-    Route::delete('/{questionUuid}', [QuestionController::class, 'delete'])->name('questions.delete')->name('admin_or_editor');
+    Route::get('/', [QuestionController::class, 'index'])->name('questions.index')->middleware('admin_or_editor');
+    Route::get('/create', [QuestionController::class, 'create'])->name('questions.create')->middleware('admin_or_editor');
+    Route::post('/', [QuestionController::class, 'store'])->name('questions.store')->middleware('admin_or_editor');
+    Route::get('/{questionUuid}', [QuestionController::class, 'show'])->name('questions.show')->middleware('admin_or_editor');
+    Route::put('/{questionUuid}', [QuestionController::class, 'update'])->name('questions.update')->middleware('admin_or_editor');
+    Route::delete('/{questionUuid}', [QuestionController::class, 'delete'])->name('questions.delete')->middleware('admin_or_editor');
 });
 
 Route::group(['prefix' => 'comments'], function () {
-    Route::post('/', [CommentController::class, 'store'])->name('comments.store')->name('auth');
+    Route::post('/', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
 });
 
 Route::get('/terms', [LegalController::class, 'terms'])->name('terms')->middleware('auth');
