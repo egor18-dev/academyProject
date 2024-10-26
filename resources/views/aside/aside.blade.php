@@ -67,25 +67,24 @@
                     </li>
                 @endrole
 
-                <li class="slide__category"><span class="category-name">Examenes</span></li>
-                <li class="slide has-sub">
-                    <a href="{{route('exams.index')}}" class="side-menu__item {{ Route::is('exams.*') || Route::is('questions.*') ? 'active' : '' }}">
-                        <svg fill="#fff" height="200px" class="side-menu__icon" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 204 204" xml:space="preserve" stroke="#fff">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier"> 
-                                <path d="M139.185,157.339h25.175l-27.222,29.022v-26.974C137.137,158.257,138.056,157.339,139.185,157.339z M127.137,204H29.482 c-2.761,0-5-2.239-5-5V5c0-2.761,2.239-5,5-5h145.036c2.761,0,5,2.239,5,5v142.339h-40.333c-6.643,0-12.047,5.405-12.047,12.048V204 z M48.25,29c0,2.761,2.239,5,5,5h87.5c2.761,0,5-2.239,5-5s-2.239-5-5-5h-87.5C50.489,24,48.25,26.239,48.25,29z M48.25,59.5 c0,2.761,2.239,5,5,5h87.5c2.761,0,5-2.239,5-5s-2.239-5-5-5h-87.5C50.489,54.5,48.25,56.739,48.25,59.5z M48.25,90 c0,2.761,2.239,5,5,5h71.907c2.761,0,5-2.239,5-5s-2.239-5-5-5H53.25C50.489,85,48.25,87.239,48.25,90z M53.25,125.5h99.625 c2.761,0,5-2.239,5-5s-2.239-5-5-5H53.25c-2.761,0-5,2.239-5,5S50.489,125.5,53.25,125.5z"></path>
-                            </g>
-                        </svg>
-                        <span class="side-menu__label">Exámenes</span>
-                        <i class="ri-arrow-right-s-line side-menu__angle"></i>
-                    </a>
-                </li>
-
+                @role('admin|editor')
+                    <li class="slide__category"><span class="category-name">Examenes</span></li>
+                    <li class="slide has-sub">
+                        <a href="{{route('exams.index')}}" class="side-menu__item {{ Route::is('exams.*') || Route::is('questions.*') ? 'active' : '' }}">
+                            <svg fill="#fff" height="200px" class="side-menu__icon" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 204 204" xml:space="preserve" stroke="#fff">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier"> 
+                                    <path d="M139.185,157.339h25.175l-27.222,29.022v-26.974C137.137,158.257,138.056,157.339,139.185,157.339z M127.137,204H29.482 c-2.761,0-5-2.239-5-5V5c0-2.761,2.239-5,5-5h145.036c2.761,0,5,2.239,5,5v142.339h-40.333c-6.643,0-12.047,5.405-12.047,12.048V204 z M48.25,29c0,2.761,2.239,5,5,5h87.5c2.761,0,5-2.239,5-5s-2.239-5-5-5h-87.5C50.489,24,48.25,26.239,48.25,29z M48.25,59.5 c0,2.761,2.239,5,5,5h87.5c2.761,0,5-2.239,5-5s-2.239-5-5-5h-87.5C50.489,54.5,48.25,56.739,48.25,59.5z M48.25,90 c0,2.761,2.239,5,5,5h71.907c2.761,0,5-2.239,5-5s-2.239-5-5-5H53.25C50.489,85,48.25,87.239,48.25,90z M53.25,125.5h99.625 c2.761,0,5-2.239,5-5s-2.239-5-5-5H53.25c-2.761,0-5,2.239-5,5S50.489,125.5,53.25,125.5z"></path>
+                                </g>
+                            </svg>
+                            <span class="side-menu__label">Exámenes</span>
+                            <i class="ri-arrow-right-s-line side-menu__angle"></i>
+                        </a>
+                    </li>
+                @endrole
+                
                 <li class="slide__category"><span class="category-name">Estudiar</span></li>
-                <!-- End::slide__category -->
-
-                <!-- Start::slide -->
                 <li class="slide has-sub">
                     <a href="{{route('userClasses.videos')}}" class="side-menu__item {{ Route::is('userClasses*') ? 'active' : '' }}">
                         <svg version="1.1" id="Uploaded to svgrepo.com" class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .feather_een{fill:#ffff;} .st0{fill:#ff;} </style> <path class="feather_een" d="M27,21V7c0-0.552-0.448-1-1-1H6C5.448,6,5,6.448,5,7v14c0,0.552,0.448,1,1,1h20 C26.552,22,27,21.552,27,21z M6,7h20v14H6V7z M29,23V7c0-1.657-1.343-3-3-3H6C4.343,4,3,5.343,3,7v16c-1.105,0-2,0.895-2,2 c0,1.105,0.895,2,2,2h26c1.105,0,2-0.895,2-2C31,23.895,30.105,23,29,23z M4,7c0-1.103,0.897-2,2-2h20c1.103,0,2,0.897,2,2v16H4V7z M29,26H3c-0.551,0-1-0.449-1-1s0.449-1,1-1h10c0,0.552,0.448,1,1,1h4c0.552,0,1-0.448,1-1h10c0.551,0,1,0.449,1,1S29.551,26,29,26z "></path> </g></svg>
