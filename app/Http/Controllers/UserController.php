@@ -96,6 +96,14 @@ class UserController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
+        $roleName = $request->role;
+
+        if ($roleName === 'Administrador') {
+            if (!auth()->user()->hasRole('Administrador')) {
+                return redirect()->route('users.index')->withErrors(['error' => 'No tienes permiso para asignar el rol de Administrador.']);
+            }
+        }
+
         $user = User::create([
             'name' => $request->name,
             'surnames' => $request->surnames,
@@ -103,9 +111,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password, ['rounds' => 12])
         ]);
 
-        $roleName = $request->role;
         $role = $roleName ? Role::where('name', $roleName)->first() : null;
-        
         $user->assignRole($role ? $role->name : 'Estudiante');
 
         return redirect()->route('users.showEnterForm');
