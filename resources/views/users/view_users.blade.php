@@ -54,6 +54,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $user)
+                                    @if(!$user->hasRole('Administrador'))
                                         <tr class="crm-contact">
                                             <td>
                                                 <input class="form-check-input" type="checkbox" id="checkboxNoLabel1" value="" aria-label="...">
@@ -108,6 +109,65 @@
                                                 </div>
                                             </td>
                                         </tr> 
+                                    @endif    
+                                    @role('Administrador')
+                                        @if($user->hasRole('Administrador'))
+                                        <tr class="crm-contact">
+                                            <td>
+                                                <input class="form-check-input" type="checkbox" id="checkboxNoLabel1" value="" aria-label="...">
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="lh-1">
+                                                        <span class="avatar avatar-rounded avatar-sm">
+                                                            <img src="{{ route('profile.image', ['uuid' => $user->uuid]) }}" alt="img profile {{$user->name}}">
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <a data-bs-toggle="offcanvas" href="#offcanvasExample"
+                                                        role="button" aria-controls="offcanvasExample"><span class="d-block fw-medium">{{$user->name}}</span></a>
+                                                        <span class="d-block text-muted fs-11" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-primary" title="Last Contacted"><i class="ri-account-circle-line me-1 fs-13 align-middle"></i>{{$user->updated_at}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <span class="d-block mb-1"><i class="ri-mail-line me-2 align-middle fs-14 text-muted"></i>{{$user->email}}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center flex-wrap gap-1">
+                                                    @if($user->getRoleNames()->isNotEmpty())
+                                                        <span class="badge bg-primary-transparent">{{ implode(', ', $user->getRoleNames()->toArray()) }}</span>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-list">
+                                                    <a data-bs-toggle="offcanvas"
+                                                    role="button" aria-controls="offcanvasExample" class="btn btn-sm btn-warning" href="{{ route('users.show', ['uuid' => $user->uuid]) }}">
+                                                        <svg width="15px" height="15px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff">
+                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                            <g id="SVGRepo_iconCarrier"> 
+                                                                <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.8 12.963L2 18l4.8-.63L18.11 6.58a2.612 2.612 0 00-3.601-3.785L3.8 12.963z"></path> 
+                                                            </g>
+                                                        </svg>
+                                                    </a>
+                                                    <button class="btn btn-sm btn-danger removeBtn" onclick="removeUser('{{$user->uuid}}', '{{$user->name}}')">
+                                                        <svg fill="#fff" width="15px" height="15px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                            <g id="SVGRepo_iconCarrier"> 
+                                                                <path d="M0 14.545L1.455 16 8 9.455 14.545 16 16 14.545 9.455 8 16 1.455 14.545 0 8 6.545 1.455 0 0 1.455 6.545 8z" fill-rule="evenodd"></path> 
+                                                            </g>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr> 
+                                        @endif
+                                    @endrole
                                     @endforeach
                                 </tbody>
                             </table>
