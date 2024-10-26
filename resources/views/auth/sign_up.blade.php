@@ -40,7 +40,7 @@
                                   <div class="form-check">
                                       <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
                                       <label class="form-check-label text-primary" for="iAgree">
-                                          Yo acepto los <a href="#!" class="link-primary text-decoration-none">términos y condiciones</a>
+                                          Yo acepto los <a href="" class="link-primary text-decoration-none">términos y condiciones</a>
                                       </label>
                                   </div>
                               </div>

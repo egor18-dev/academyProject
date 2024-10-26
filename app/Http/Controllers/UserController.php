@@ -42,7 +42,7 @@ class UserController extends Controller
         $creadentials = $request->only(['email', 'password']);
 
         if (Auth::attempt($creadentials, $request->has('remember'))) {
-            return redirect()->route('home.index');
+            return redirect()->route('profile.index');
         }
 
         return redirect()->back()->withErrors(['error' => 'Las credenciales no coinciden con nuestros registros.']);
@@ -70,16 +70,14 @@ class UserController extends Controller
             'name' => 'required',
             'surnames' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8',
-            'role' => 'required' 
+            'password' => 'required|min:8'
         ], [
             'name.required' => 'El nombre es obligatorio.',
             'surnames.required' => 'Los apellidos son obligatorios.',
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'Debes ingresar un correo electrónico válido.',
             'password.required' => 'La contraseña es obligatoria.',
-            'password.min' => 'La contraseña debe tener al menos :min caracteres.',
-            'role.required' => 'El rol es obligatorio.' 
+            'password.min' => 'La contraseña debe tener al menos :min caracteres.'
         ]);
     
         if ($validator->fails()) {
@@ -93,9 +91,12 @@ class UserController extends Controller
             'password' => Hash::make($request->password, ['rounds' => 12])
         ]);
     
-        $user->assignRole($request->role);
+        $roleName = $request->role;
+        $role = $roleName ? Role::where('name', $roleName)->first() : null;
+        
+        $user->assignRole($role ? $role->name : 'Estudiante');
     
-        return redirect()->route('users.index');
+        return redirect()->route('users.showEnterForm');
     }
 
     public function show($uuid)

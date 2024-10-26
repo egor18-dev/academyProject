@@ -14,7 +14,7 @@
                                 <div class="col-xl-12">
                                     <label for="email" class="form-label text-default">Email <span class="text-danger">*</span></label>
                                     <div class="position-relative">
-                                        <input type="email" class="form-control form-control-lg {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" id="email" placeholder="name@example.com" value="{{ old('email') }}">
+                                        <input type="email" class="form-control form-control-lg {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" id="email" placeholder="email@example.com" value="{{ old('email') }}">
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
