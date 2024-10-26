@@ -37,6 +37,7 @@
                     </li>
                 @endrole
 
+                @role('admin|editor')
                 <li class="slide__category"><span class="category-name">Clases</span></li>
                 <li class="slide has-sub">
                     <a href="{{ route('classes.index') }}" class="side-menu__item {{ Route::is('classes.*') ? 'active' : '' }}">
@@ -47,6 +48,7 @@
                         <i class="ri-arrow-right-s-line side-menu__angle"></i>
                     </a>
                 </li>
+                @endrole
 
                 @role('admin|editor')
                     <li class="slide__category"><span class="category-name">Niveles</span></li>
