@@ -102,6 +102,7 @@ Route::group(['prefix' => 'comments'], function () {
 
 Route::get('/terms', [LegalController::class, 'terms'])->name('terms');
 Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy');
+Route::get('/legal', [LegalController::class, 'legal'])->name('legal');
 // Route::get('terms', function () {
 //     return view('templates.terms')->name('terms');
 // });

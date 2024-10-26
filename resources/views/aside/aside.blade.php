@@ -107,6 +107,11 @@
                         <span class="side-menu__label">Politica de privacidad</span>
                         <i class="ri-arrow-right-s-line side-menu__angle"></i>
                     </a>
+                    <a href="{{route('legal')}}" class="side-menu__item {{ Route::is('legal*') ? 'active' : '' }}">
+                        <svg fill="#fff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,22A17.5,17.5,0,0,0,21,6.7V6L12,2,3,6v.7A17.5,17.5,0,0,0,12,22ZM11,6h2V8H11Zm0,4h2v8H11Z"></path></g></svg>
+                        <span class="side-menu__label">Aviso legal</span>
+                        <i class="ri-arrow-right-s-line side-menu__angle"></i>
+                    </a>
                 </li>  
 
                 <li class="slide__category"><span class="category-name">Perfil</span></li>
