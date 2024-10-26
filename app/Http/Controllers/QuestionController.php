@@ -7,7 +7,6 @@ use App\Models\Question;
 use App\Models\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class QuestionController extends Controller
 {
@@ -18,6 +17,11 @@ class QuestionController extends Controller
 
     public function index($examUuid)
     {
+        // Verificación de permisos
+        if (!auth()->user()->hasAnyRole(['Administrador', 'Editor'])) {
+            abort(403, 'No tienes permisos para acceder a esta sección.');
+        }
+
         $exam = Exam::where('uuid', $examUuid)->firstOrFail();
         $questions = $exam->questions()->paginate(5);
 
@@ -30,12 +34,20 @@ class QuestionController extends Controller
 
     public function create($examUuid)
     {
+        if (!auth()->user()->hasAnyRole(['Administrador', 'Editor'])) {
+            abort(403, 'No tienes permisos para crear preguntas.');
+        }
+
         $exam = Exam::where('uuid', $examUuid)->firstOrFail();
         return $this->viewWithAuthName('questions.add_question', ['exam' => $exam]);
     }
 
     public function store(Request $request, $examUuid)
     {
+        if (!auth()->user()->hasAnyRole(['Administrador', 'Editor'])) {
+            abort(403, 'No tienes permisos para almacenar preguntas.');
+        }
+
         $exam = Exam::where('uuid', $examUuid)->firstOrFail();
 
         $validator = Validator::make($request->all(), [
@@ -66,6 +78,10 @@ class QuestionController extends Controller
 
     public function show($examUuid, $questionUuid)
     {
+        if (!auth()->user()->hasAnyRole(['Administrador', 'Editor'])) {
+            abort(403, 'No tienes permisos para ver esta pregunta.');
+        }
+
         $exam = Exam::where('uuid', $examUuid)->firstOrFail();
         $question = Question::where('uuid', $questionUuid)->firstOrFail();
 
@@ -77,6 +93,10 @@ class QuestionController extends Controller
 
     public function update(Request $request, $examUuid, $questionUuid)
     {
+        if (!auth()->user()->hasAnyRole(['Administrador', 'Editor'])) {
+            abort(403, 'No tienes permisos para actualizar esta pregunta.');
+        }
+
         $exam = Exam::where('uuid', $examUuid)->firstOrFail();
         $question = Question::where('uuid', $questionUuid)->firstOrFail();
 
@@ -103,6 +123,10 @@ class QuestionController extends Controller
 
     public function delete($examUuid, $questionUuid)
     {
+        if (!auth()->user()->hasAnyRole(['Administrador', 'Editor'])) {
+            abort(403, 'No tienes permisos para eliminar esta pregunta.');
+        }
+
         $exam = Exam::where('uuid', $examUuid)->firstOrFail();
         $question = Question::where('uuid', $questionUuid)->firstOrFail();
 

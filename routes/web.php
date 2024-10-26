@@ -60,17 +60,17 @@ Route::group(['prefix' => 'levels'], function () {
 
 Route::group(['prefix' => 'classes'], function () {
     Route::get('/', [ClassController::class, 'index'])->name('classes.index')->middleware('admin_or_editor');
-    Route::get('/videos', [ClassController::class, 'videos'])->name('userClasses.videos')->middleware('student');
-    Route::get('/video/{uuid}', [ClassController::class, 'serveImage'])->name('userClasses.image')->middleware('student');
-    Route::get('/view/{uuid}', [ClassController::class, 'view'])->name('userClasses.view')->middleware('student');
-    Route::get('/{id}/stream', [ClassController::class, 'streamVideo'])->name('classes.stream')->middleware('student');
+    Route::get('/videos', [ClassController::class, 'videos'])->name('userClasses.videos')->middleware('auth');
+    Route::get('/video/{uuid}', [ClassController::class, 'serveImage'])->name('userClasses.image')->middleware('auth');
+    Route::get('/view/{uuid}', [ClassController::class, 'view'])->name('userClasses.view')->middleware('auth');
+    Route::get('/{id}/stream', [ClassController::class, 'streamVideo'])->name('classes.stream')->middleware('auth');
     Route::get('/create', [ClassController::class, 'create'])->name('classes.create')->middleware('admin_or_editor');
     Route::post('/', [ClassController::class, 'store'])->name('classes.store')->middleware('admin_or_editor');
-    Route::get('/{uuid}', [ClassController::class, 'show'])->name('classes.show')->middleware('admin_or_edtor');
+    Route::get('/{uuid}', [ClassController::class, 'show'])->name('classes.show')->middleware('admin_or_editor');
     Route::put('/{uuid}', [ClassController::class, 'update'])->name('classes.update')->middleware('admin_or_editor');
     Route::delete('/{uuid}', [ClassController::class, 'delete'])->name('classes.delete')->middleware('admin_or_editor');
     Route::post('/mark-video-watched/{userUuid}/{classUuid}', [ClassController::class, 'markVideoAsWatched'])
-        ->name('classes.mark')->middleware('student');
+        ->name('classes.mark')->middleware('auth');
 });
 
 Route::group(['prefix' => 'exams'], function () {
@@ -84,28 +84,18 @@ Route::group(['prefix' => 'exams'], function () {
 });
 
 Route::group(['prefix' => 'exams/{examUuid}/questions'], function () {
-    Route::get('/', [QuestionController::class, 'index'])->name('questions.index');
-    Route::get('/create', [QuestionController::class, 'create'])->name('questions.create');
-    Route::post('/', [QuestionController::class, 'store'])->name('questions.store');
-    Route::get('/{questionUuid}', [QuestionController::class, 'show'])->name('questions.show');
-    Route::put('/{questionUuid}', [QuestionController::class, 'update'])->name('questions.update');
-    Route::delete('/{questionUuid}', [QuestionController::class, 'delete'])->name('questions.delete');
-});
-
-Route::group(['prefix' => 'home'], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home.index');
+    Route::get('/', [QuestionController::class, 'index'])->name('questions.index')->name('admin_or_editor');
+    Route::get('/create', [QuestionController::class, 'create'])->name('questions.create')->name('admin_or_editor');
+    Route::post('/', [QuestionController::class, 'store'])->name('questions.store')->name('admin_or_editor');
+    Route::get('/{questionUuid}', [QuestionController::class, 'show'])->name('questions.show')->name('admin_or_editor');
+    Route::put('/{questionUuid}', [QuestionController::class, 'update'])->name('questions.update')->name('admin_or_editor');
+    Route::delete('/{questionUuid}', [QuestionController::class, 'delete'])->name('questions.delete')->name('admin_or_editor');
 });
 
 Route::group(['prefix' => 'comments'], function () {
-    Route::post('/', [CommentController::class, 'store'])->name('comments.store');
+    Route::post('/', [CommentController::class, 'store'])->name('comments.store')->name('auth');
 });
 
-Route::get('/terms', [LegalController::class, 'terms'])->name('terms');
-Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy');
-Route::get('/legal', [LegalController::class, 'legal'])->name('legal');
-// Route::get('terms', function () {
-//     return view('templates.terms')->name('terms');
-// });
-// Route::get('privacity', function () {
-//     return view('templates.privacity')->name;
-// });
+Route::get('/terms', [LegalController::class, 'terms'])->name('terms')->middleware('auth');
+Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy')->middleware('auth');
+Route::get('/legal', [LegalController::class, 'legal'])->name('legal')->middleware('auth');

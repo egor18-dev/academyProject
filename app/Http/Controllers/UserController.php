@@ -44,9 +44,9 @@ class UserController extends Controller
             'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
         ]);
 
-        $creadentials = $request->only(['email', 'password']);
+        $credentials = $request->only(['email', 'password']);
 
-        if (Auth::attempt($creadentials, $request->has('remember'))) {
+        if (Auth::attempt($credentials, $request->has('remember'))) {
             return redirect()->route('profile.index');
         }
 

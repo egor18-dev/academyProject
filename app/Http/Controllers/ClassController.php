@@ -23,6 +23,10 @@ class ClassController extends Controller
 
     public function index()
     {
+        if (!auth()->user()->hasRole('Administrador|Editor')) {
+            abort(403);
+        }
+        
         $classes = ClassModel::with('media:id,model_id,collection_name')->get();
         $count = $classes->count();
 
@@ -37,13 +41,16 @@ class ClassController extends Controller
 
     public function serveImage($uuid)
     {
+        if (!auth()->check()) {
+            abort(403);
+        }
+
         $classModel = ClassModel::where('uuid', $uuid)->first();
 
-        if($classModel && auth()->check()){
-
+        if ($classModel) {
             $image = $classModel->getFirstMedia('video_img');
 
-            if($image && auth()->check()){
+            if ($image) {
                 return response()->file($image->getPath(), [
                     'Content-Type' => $image->mime_type,
                     'Cache-Control' => 'no-store, no-cache, must-revalidate',
@@ -58,58 +65,65 @@ class ClassController extends Controller
 
     public function videos()
     {
+        if (!auth()->check()) {
+            abort(403);
+        }
+
         $user = auth()->user();
         $classes = ClassModel::with('media:id,model_id,collection_name')
-                    ->orderByDesc('level_id') 
-                    ->get();
-        
+            ->orderByDesc('level_id')
+            ->get();
+
         $watchedVideos = UserVideoProgress::where('user_id', $user->uuid)
             ->pluck('class_id')
             ->toArray();
-        
+
         $levels = $classes->groupBy('level_id')->sortKeysDesc();
-        
+
         $pendingExams = [];
         $currentLevel = null;
-        
+
         foreach ($levels as $levelId => $levelClasses) {
             $allWatched = $levelClasses->every(function ($class) use ($watchedVideos) {
                 return in_array($class->uuid, $watchedVideos);
             });
-        
+
             if (!$allWatched) {
-                $currentLevel = $levelId; 
+                $currentLevel = $levelId;
                 break;
             }
-        
+
             $examTaken = UserExam::where('user_id', $user->uuid)
                 ->whereHas('class', function ($query) use ($levelId) {
                     $query->where('level_id', $levelId);
                 })
                 ->exists();
-        
+
             if (!$examTaken) {
                 $pendingExams[] = $levelId;
             }
         }
-        
+
         foreach ($classes as $class) {
             $class->description = Str::limit($class->description, 50, '...');
             $class->isAccessible = $class->level_id >= $currentLevel && (in_array($class->uuid, $watchedVideos) || $class->level_id == $currentLevel);
             $class->isWatched = in_array($class->uuid, $watchedVideos);
         }
-        
+
         return $this->viewWithAuthName('classes.videos', [
             'classes' => $classes,
             'pendingExams' => $pendingExams,
             'count' => $classes->count(),
             'totalUsers' => User::count(),
         ]);
-        
     }
 
     public function streamVideo($id)
     {
+        if (!auth()->check()) {
+            abort(403);
+        }
+
         $class = ClassModel::findOrFail($id);
         $video = $class->getFirstMedia('videos');
 
@@ -122,14 +136,15 @@ class ClassController extends Controller
 
     public function view($uuid)
     {
+        if (!auth()->check()) {
+            abort(403);
+        }
+
         $user = auth()->user();
-
         $class = ClassModel::with('media')->where('uuid', $uuid)->firstOrFail();
-
         $levels = Level::with(['classes' => function ($query) {
             $query->with('media');
         }])->orderBy('id', 'asc')->get();
-
         $comments = Comments::where('class_id', $class->uuid)->with('user')->get();
 
         return view('classes.view_class', ['class' => $class, 'levels' => $levels, 'user' => $user, 'comments' => $comments]);
@@ -137,17 +152,26 @@ class ClassController extends Controller
 
     public function show($uuid)
     {
+        if (!auth()->user()->hasRole('Administrador|Editor')) {
+            abort(403);
+        }
+
         $class = ClassModel::where('uuid', $uuid)->first();
         $levels = Level::all();
 
-        if(!$class)
-            return redirect()->to('classes')->withErrors(['error' => 'Classe no encontrada']);
+        if (!$class) {
+            return redirect()->to('classes')->withErrors(['error' => 'Clase no encontrada']);
+        }
 
         return view('classes.update_class', ['class' => $class, 'levels' => $levels]);
     }
 
     public function update(Request $request, $uuid)
     {
+        if (!auth()->user()->hasRole('Administrador|Editor')) {
+            abort(403);
+        }
+
         $request->validate([
             'level_id' => 'required',
             'title' => 'required',
@@ -167,7 +191,7 @@ class ClassController extends Controller
 
         $class = ClassModel::where('uuid', $uuid)->first();
 
-        if(!$class){
+        if (!$class) {
             return redirect()->to('classes')->withErrors(['error' => 'Clase no encontrada']);
         }
 
@@ -183,7 +207,7 @@ class ClassController extends Controller
                 $class->addMediaFromRequest('video')->toMediaCollection('videos', 'media');
             }
 
-            if($request->hasFile('video_img')){
+            if ($request->hasFile('video_img')) {
                 $class->clearMediaCollection('video_img');
                 $class->addMediaFromRequest('video_img')->toMediaCollection('video_img', 'media');
             }
@@ -196,12 +220,20 @@ class ClassController extends Controller
 
     public function create()
     {
+        if (!auth()->user()->hasRole('Administrador|Editor')) {
+            abort(403);
+        }
+
         $levels = Level::all();
         return $this->viewWithAuthName('classes.add_class', compact('levels'));
     }
 
     public function store(Request $request)
     {
+        if (!auth()->user()->hasRole('Administrador|Editor')) {
+            abort(403);
+        }
+
         $request->validate([
             'level_id' => 'required',
             'title' => 'required',
@@ -219,39 +251,43 @@ class ClassController extends Controller
             'video.mimes' => 'El video debe ser un archivo de tipo: mp4, mov, avi.',
             'video.max' => 'El video no debe exceder los 20MB.'
         ]);
-    
+
         $class = ClassModel::create([
             'level_id' => $request->level_id,
             'title' => $request->title,
             'description' => $request->description,
         ]);
-    
+
         try {
             if ($request->hasFile('video')) {
                 $class->addMediaFromRequest('video')->toMediaCollection('videos', 'media');
             }
-    
-            if($request->hasFile('video_img')){
+
+            if ($request->hasFile('video_img')) {
                 $class->addMediaFromRequest('video_img')->toMediaCollection('video_img', 'media');
             }
-    
+
             return redirect()->to('classes')->with('success', 'Clase subida exitosamente!');
         } catch (\Exception $e) {
-            return redirect()->to('classes')->withErrors(['error' => 'Error al subir el video: ' . $e->getMessage()]);  
+            return redirect()->to('classes')->withErrors(['error' => 'Error al subir el video: ' . $e->getMessage()]);
         }
     }
 
     public function markVideoAsWatched(Request $request, $userUuid, $classUuid)
     {
+        if (!auth()->check()) {
+            abort(403);
+        }
+
         $user = User::where('uuid', $userUuid)->first();
 
-        if(!$user){
+        if (!$user) {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }
 
         $class = ClassModel::where('uuid', $classUuid)->first();
 
-        if(!$class){
+        if (!$class) {
             return response()->json(['error' => 'Clase no encontrada'], 404);
         }
 
@@ -259,8 +295,7 @@ class ClassController extends Controller
             ->where('class_id', $classUuid)
             ->first();
 
-        if(!$progress){
-            
+        if (!$progress) {
             try {
                 UserVideoProgress::create([
                     'user_id' => $userUuid,
@@ -272,11 +307,15 @@ class ClassController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Video completed'], 200);
+        return response()->json(['message' => 'Video completado'], 200);
     }
 
     public function delete($uuid)
     {
+        if (!auth()->user()->hasRole('Administrador|Editor')) {
+            abort(403);
+        }
+
         $class = ClassModel::where('uuid', $uuid)->firstOrFail();
         $removedClass = $class->delete();
 
