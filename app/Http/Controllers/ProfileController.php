@@ -16,8 +16,9 @@ class ProfileController extends Controller
         $userData = auth()->user();
         $totalClasses = ClassModel::count();
         $userVideoProgress = UserVideoProgress::where("user_id", $userData->uuid)->count();
+        $progressPercentage = ($userVideoProgress / $totalClasses) * 100;
 
-        return view('profile.view_profile', ['user' => $userData, 'totalClasses' => $totalClasses, 'userVideoProgress' => $userVideoProgress]);
+        return view('profile.view_profile', ['user' => $userData, 'totalClasses' => $totalClasses, 'userVideoProgress' => $userVideoProgress, 'progressPercentage' => $progressPercentage]);
     }
 
     public function serveImage($uuid)

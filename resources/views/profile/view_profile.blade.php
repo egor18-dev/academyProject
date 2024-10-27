@@ -61,6 +61,9 @@
                     </div>
                     </div>
                 </div>
+                <div class="progress mb-2">
+                    <div class="progress-bar" role="progressbar" style="width: {{ $progressPercentage }}%;" aria-valuenow="{{ $progressPercentage }}" aria-valuemin="0" aria-valuemax="100">{{ round($progressPercentage) }}%</div>
+                </div>
             </div>
         </div>
     </div>
