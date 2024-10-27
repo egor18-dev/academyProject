@@ -34,8 +34,8 @@
                             </div>
                         </div>
                         <div>
-                            <p class="fw-semibold h6 mb-0">75</p>
-                            <p class="mb-0 fs-12 text-muted fw-medium">Clases terminadas</p>
+                            <p class="fw-semibold h6 mb-0">{{$totalClasses - $userVideoProgress}}</p>
+                            <p class="mb-0 fs-12 text-muted fw-medium">Clases restantes</p>
                         </div>
                     </div>
                     <div
@@ -55,8 +55,8 @@
                             </div>
                         </div>
                         <div>
-                            <p class="fw-semibold h6 mb-0">85</p>
-                            <p class="mb-0 fs-12 text-muted fw-medium">horas estudiadas</p>
+                            <p class="fw-semibold h6 mb-0">{{$userVideoProgress}}</p>
+                            <p class="mb-0 fs-12 text-muted fw-medium">Clases terminadas</p>
                         </div>
                     </div>
                     </div>

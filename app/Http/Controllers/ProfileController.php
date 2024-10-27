@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\ClassModel;
+use App\Models\UserVideoProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,8 +14,10 @@ class ProfileController extends Controller
     public function index(){
 
         $userData = auth()->user();
+        $totalClasses = ClassModel::count();
+        $userVideoProgress = UserVideoProgress::where("user_id", $userData->uuid)->count();
 
-        return view('profile.view_profile', ['user' => $userData]);
+        return view('profile.view_profile', ['user' => $userData, 'totalClasses' => $totalClasses, 'userVideoProgress' => $userVideoProgress]);
     }
 
     public function serveImage($uuid)
