@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,9 +18,10 @@ class ProfileController extends Controller
 
     public function serveImage($uuid)
     {   
-        $user = auth()->user();
 
-        if($uuid === $user->uuid){
+        if($uuid){
+
+            $user = User::where('uuid', $uuid)->first();
 
             $image = $user->getFirstMedia('profile_image');
 
@@ -33,7 +35,6 @@ class ProfileController extends Controller
             }
         }
 
-        abort(403);
     }
 
     public function show ($uuid)

@@ -62,49 +62,6 @@
                     </div>
                 </div>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item p-3">
-                    <span class="fw-medium fs-15 d-block mb-3">Secciones terminadas :</span>
-                    <div class="w-75">
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Análisis Técnico</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Gestión de Riesgos</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Análisis Fundamental</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Psicología del Trading</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Tendencias del Mercado</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Gestión de Portafolios</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Interpretación de Datos</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Estrategias de Backtesting</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Patrones de Gráficos</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Ratios de Riesgo/Beneficio</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Gestión de Apalancamiento</span>
-                        </a>
-                        <a href="javascript:void(0);">
-                            <span class="badge bg-light text-muted m-1 border">Forex y Criptomonedas</span>
-                        </a>
-                    </div>
-                </li>
-            </ul>
         </div>
     </div>
     </div>
