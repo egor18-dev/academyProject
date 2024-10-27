@@ -11,6 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Models\Message;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -51,6 +52,16 @@ class User extends Authenticatable implements HasMedia
     public function userExams()
     {
         return $this->hasMany(UserExam::class, 'user_id', 'uuid');
+    }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'from_user_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'to_user_id');
     }
 
     protected static function boot()

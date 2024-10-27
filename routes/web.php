@@ -10,6 +10,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\LegalController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,15 @@ Route::group(['prefix' => 'exams/{examUuid}/questions'], function () {
 
 Route::group(['prefix' => 'comments'], function () {
     Route::post('/', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
+});
+
+Route::group(['prefix' => 'chats'], function () {
+    Route::get('/', [ChatController::class, 'index'])->name('chats.index')->middleware('auth');
+    Route::get('/create', [ChatController::class, 'create'])->name('chats.create')->middleware('auth');
+    Route::get('/{uuid}', [ChatController::class, 'show'])->name('chats.show')->middleware('auth');
+    Route::post('/', [ChatController::class, 'store'])->name('chats.store')->middleware('auth');
+    Route::put('/{uuid}', [ChatController::class, 'update'])->name('chats.update')->middleware('auth');
+    Route::delete('/{uuid}', [ChatController::class, 'delete'])->name('chats.delete')->middleware('auth');
 });
 
 Route::get('/terms', [LegalController::class, 'terms'])->name('terms')->middleware('auth');
