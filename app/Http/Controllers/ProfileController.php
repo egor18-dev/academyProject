@@ -35,6 +35,7 @@ class ProfileController extends Controller
             }
         }
 
+        return redirect('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXA-Uu5DzOUC3DEEh789elx46nvfe-0s-7xg&s');
     }
 
     public function show ($uuid)

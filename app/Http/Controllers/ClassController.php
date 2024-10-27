@@ -65,92 +65,83 @@ class ClassController extends Controller
     }
 
     public function videos()
-    {
-        if (!auth()->check()) {
-            abort(403);
-        }
-    
-        $user = auth()->user();
-    
-        if ($user->hasRole(['Administrador', 'Editor'])) {
-            $classes = ClassModel::with('media:id,model_id,collection_name')
-                ->orderByDesc('level_id')
-                ->get();
-    
-            foreach ($classes as $class) {
-                $class->description = Str::limit($class->description, 50, '...');
-                $class->isAccessible = true;
-            }
-    
-            return $this->viewWithAuthName('classes.videos', [
-                'classes' => $classes,
-                'pendingExams' => [],
-                'count' => $classes->count(),
-                'totalUsers' => User::count(),
-            ]);
-        }
-    
-        // Obtiene todas las clases y los videos vistos por el usuario
+{
+    if (!auth()->check()) {
+        abort(403);
+    }
+
+    $user = auth()->user();
+
+    if ($user->hasRole(['Administrador', 'Editor'])) {
         $classes = ClassModel::with('media:id,model_id,collection_name')
             ->orderByDesc('level_id')
             ->get();
-    
-        $watchedVideos = UserVideoProgress::where('user_id', $user->uuid)
-            ->pluck('class_id')
-            ->toArray();
-    
-        $levels = $classes->groupBy('level_id')->sortKeysDesc();
-    
-        $pendingExams = [];
-        $currentLevel = null;
-    
-        foreach ($levels as $levelId => $levelClasses) {
-            $allWatched = $levelClasses->every(function ($class) use ($watchedVideos) {
-                return in_array($class->uuid, $watchedVideos);
-            });
-    
-            // Si no ha visto todos los videos en el nivel actual
-            if (!$allWatched) {
-                $currentLevel = $levelId;
-                break;
-            }
-    
-            // Verifica si hay un examen pendiente en este nivel
-            $examExists = Exam::where('level_id', $levelId)->exists();
-            
-            if ($examExists) {
-                $examTaken = UserExam::where('user_id', $user->uuid)
-                    ->whereHas('class', function ($query) use ($levelId) {
-                        $query->where('level_id', $levelId);
-                    })
-                    ->exists();
-    
-                // Si el examen no ha sido tomado, agrega el nivel a los exámenes pendientes
-                if (!$examTaken) {
-                    $pendingExams[] = $levelId;
-                    $currentLevel = $levelId;
-                    break;
-                }
-            }
-        }
-    
-        foreach ($classes as $index => $class) {
+
+        foreach ($classes as $class) {
             $class->description = Str::limit($class->description, 50, '...');
-            
-            $class->isAccessible = $index == 0 || in_array($classes[$index - 1]->uuid, $watchedVideos);
-            
-            $class->isWatched = in_array($class->uuid, $watchedVideos);
+            $class->isAccessible = true;
         }
-        
-    
+
         return $this->viewWithAuthName('classes.videos', [
             'classes' => $classes,
-            'pendingExams' => $pendingExams,
+            'pendingExams' => [],
             'count' => $classes->count(),
             'totalUsers' => User::count(),
         ]);
     }
-    
+
+    // Obtiene todas las clases y los videos vistos por el usuario
+    $classes = ClassModel::with('media:id,model_id,collection_name')
+        ->orderByDesc('level_id')
+        ->get();
+
+    $watchedVideos = UserVideoProgress::where('user_id', $user->uuid)
+        ->pluck('class_id')
+        ->toArray();
+
+    $levels = $classes->groupBy('level_id')->sortKeysDesc();
+    $pendingExams = [];
+    $currentLevel = null;
+
+    foreach ($levels as $levelId => $levelClasses) {
+        $allWatched = $levelClasses->every(function ($class) use ($watchedVideos) {
+            return in_array($class->uuid, $watchedVideos);
+        });
+
+        if (!$allWatched) {
+            $currentLevel = $levelId;
+            break;
+        }
+
+        $examExists = Exam::where('level_id', $levelId)->exists();
+        if ($examExists) {
+            $examTaken = UserExam::where('user_id', $user->uuid)
+                ->whereHas('class', function ($query) use ($levelId) {
+                    $query->where('level_id', $levelId);
+                })
+                ->exists();
+
+            if (!$examTaken) {
+                $pendingExams[] = $levelId;
+                $currentLevel = $levelId;
+                break;
+            }
+        }
+    }
+
+    foreach ($classes as $index => $class) {
+        $class->description = Str::limit($class->description, 50, '...');
+        $class->isAccessible = $index == 0 || in_array($classes[$index - 1]->uuid, $watchedVideos);
+        $class->isWatched = in_array($class->uuid, $watchedVideos);
+    }
+
+    return $this->viewWithAuthName('classes.videos', [
+        'classes' => $classes,
+        'pendingExams' => $pendingExams,
+        'count' => $classes->count(),
+        'totalUsers' => User::count(),
+    ]);
+}
 
 
     public function streamVideo($id)
