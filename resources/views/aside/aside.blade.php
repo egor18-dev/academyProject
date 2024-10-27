@@ -1,16 +1,17 @@
 <aside class="app-sidebar sticky" id="sidebar">
 
-    <!-- Start::main-sidebar -->
+    <button class="close-btn" onclick="toggleSidebar()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </button>
+
     <div class="main-sidebar w-100" id="sidebar-scroll">
 
-        <!-- Start::nav -->
         <nav class="main-menu-container nav nav-pills flex-column sub-open w-100">
-            <div class="slide-left" id="slide-left">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> 
-                    <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path>
-                </svg>
-            </div>
             <ul class="main-menu">
+
                 <li class="slide__category"><span class="category-name">Dashboard</span></li>
 
                 <li class="slide has-sub">

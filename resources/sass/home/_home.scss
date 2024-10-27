@@ -74,3 +74,16 @@
         }
     }
 }
+
+@media only screen and (max-width: 900px) {
+
+    .main-home {
+        flex-direction: column;
+
+        .section {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+}
