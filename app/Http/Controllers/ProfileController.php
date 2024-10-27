@@ -16,7 +16,7 @@ class ProfileController extends Controller
         $userData = auth()->user();
         $totalClasses = ClassModel::count();
         $userVideoProgress = UserVideoProgress::where("user_id", $userData->uuid)->count();
-        $progressPercentage = ($userVideoProgress / $totalClasses) * 100;
+        $progressPercentage = $totalClasses > 0 ? ($userVideoProgress / $totalClasses) * 100 : 0;
 
         return view('profile.view_profile', ['user' => $userData, 'totalClasses' => $totalClasses, 'userVideoProgress' => $userVideoProgress, 'progressPercentage' => $progressPercentage]);
     }

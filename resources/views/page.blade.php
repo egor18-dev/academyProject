@@ -13,6 +13,7 @@
             @yield('page')
         </div>
     </section>
+   
 @endsection
 
 <script>
@@ -22,8 +23,6 @@ window.addEventListener('load', () => {
     const btnClose = document.querySelector('.close-btn');
     const aside = document.querySelector('aside');
 
-    console.log(btnClose);
-
     btn.addEventListener('click', () => {
         aside.classList.toggle('opened');
     });
@@ -31,8 +30,7 @@ window.addEventListener('load', () => {
     btnClose.addEventListener('click', () => {
         aside.classList.remove('opened'); 
     });
+
 });
-
-    
-
 </script>
+
