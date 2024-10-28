@@ -11,6 +11,7 @@ class Chat extends Model
     use HasFactory;
     
     protected $fillable = [
+        'uuid',
         'from_user_id',
         'to_user_id',
         'message',
@@ -18,12 +19,12 @@ class Chat extends Model
 
     public function sender()
     {
-        return $this->belongsTo(User::class, 'uuid');
+        return $this->belongsTo(User::class, 'from_user_id', 'uuid');
     }
 
     public function receiver()
     {
-        return $this->belongsTo(User::class, 'uuid');
+        return $this->belongsTo(User::class, 'to_user_id', 'uuid');
     }
 
     protected static function boot()

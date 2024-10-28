@@ -23,6 +23,7 @@ class User extends Authenticatable implements HasMedia
      * @var array<int, string>
      */
     protected $fillable = [
+        'uuid',
         'name',
         'surnames',
         'email',
@@ -56,12 +57,12 @@ class User extends Authenticatable implements HasMedia
 
     public function sentMessages()
     {
-        return $this->hasMany(Message::class, 'from_user_id');
+        return $this->hasMany(Message::class, 'from_user_id', 'uuid');
     }
 
     public function receivedMessages()
     {
-        return $this->hasMany(Message::class, 'to_user_id');
+        return $this->hasMany(Message::class, 'to_user_id', 'uuid');
     }
 
     protected static function boot()
