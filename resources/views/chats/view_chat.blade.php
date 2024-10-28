@@ -71,7 +71,7 @@
                        </div>
                    </div>
                    <div class="p-3 pt-0">
-                       <div class="chat-content border p-3 bg-light rounded" id="main-chat-content">
+                       <div class="chat-content border p-3 bg-light rounded overflow-auto" id="main-chat-content">
                             
                            <ul class="list-unstyled">
                                 @foreach ($chats as $chat)
