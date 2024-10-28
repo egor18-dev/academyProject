@@ -43,6 +43,7 @@ class ChatController extends Controller
     public function show($uuid)
     {
         $user = auth()->user();
+        $userUuid = $user->uuid;
         $userInfo = User::where('uuid', $uuid)->firstOrFail();
 
         $chats = Chat::where(function ($query) use ($uuid, $user) {
@@ -57,12 +58,24 @@ class ChatController extends Controller
 
         $users = $this->getUserRoleChatTargets();
 
-        return view('chats.view_chat', compact('users', 'userInfo', 'chats'));
+        return view('chats.view_chat', compact('users', 'userUuid', 'userInfo', 'chats'));
     }
 
     public function store(Request $request)
     {
-
+        $request->validate([
+            'message' => 'required|string|max:1000',
+            'from_user_id' => 'required|uuid|exists:users,uuid',
+            'to_user_id' => 'required|uuid|exists:users,uuid',
+        ]);
+    
+        Chat::create([
+            'message' => $request->input('message'),
+            'from_user_id' => $request->input('from_user_id'),
+            'to_user_id' => $request->input('to_user_id'),
+        ]);
+    
+        return redirect()->back()->with('success', 'Mensaje enviado con éxito.');
     }
 
     public function update(Request $request, $uuid)

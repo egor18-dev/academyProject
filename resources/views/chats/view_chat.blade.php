@@ -100,25 +100,20 @@
                            </ul>
                        </div>
                    </div>
-                   <div class="chat-footer">
-                    {{-- <form method="POST" action="{{ route('chats.store') }}">
+                    <form method="POST" action="{{ route('chats.store') }}">
                         @csrf
                         <div class="chat-footer">
-                            <a aria-label="anchor" class="btn btn-icon me-2 btn-success emoji-picker" href="javascript:void(0)">
-                                <i class="ri-emotion-line"></i>
-                            </a>
-                            <input class="form-control chat-message-space" name="mensaje" placeholder="Type your message here..." type="text">
+                            <input class="form-control chat-message-space" name="message" placeholder="Type your message here..." type="text">
                             
-                            <input type="hidden" name="from_user_id" value="{{}}">
-                            <input type="hidden" name="campo_oculto_2" value="valor2">
+                            <input type="hidden" name="from_user_id" value="{{$userUuid}}">
+                            <input type="hidden" name="to_user_id" value="{{$userInfo->uuid}}">
                     
-                            <a aria-label="anchor" class="btn btn-primary ms-2 btn-icon btn-send" href="javascript:void(0)" onclick="this.closest('form').submit()">
-                                <i class="ri-send-plane-2-line"></i>
-                            </a>
+                            <button aria-label="anchor" type="submit" class="btn btn-primary ms-2 btn-icon btn-send" style="width: fit-content">
+                                Enviar
+                            </button>
                         </div>
-                    </form> --}}
+                    </form>
                     
-                   </div>
                </div>
            </div>
        </div>
