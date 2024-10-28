@@ -19,7 +19,7 @@
                                    <p class="text-muted fs-11 fw-medium mb-2 op-7">Chats activos</p>
                                </li>
                                @foreach ($users as $user)
-                               <li class="checkforactive {{$user->uuid === $uuid ? 'active' : ''}}">
+                               <li class="checkforactive {{$user->uuid === $userInfo->uuid ? 'active' : ''}}">
                                 <a href="{{ route('chats.show', ['uuid' => $user->uuid]) }}"
                                     onclick="changeTheInfo(this,'JaneDoe','5','online')">
                                     <div class="d-flex align-items-top">
@@ -75,7 +75,7 @@
                             
                            <ul class="list-unstyled">
                                 @foreach ($chats as $chat)
-                                <li class="{{$chat->from_user_id == $chat->fromUser->uuid ? 'chat-item-end' : 'chat-item-start'}} ">
+                                <li class="{{$chat->from_user_id !== $userInfo->uuid ? 'chat-item-end' : 'chat-item-start'}} ">
                                     <div class="chat-list-inner">
                                         <div class="chat-user-profile">
                                             <span class="avatar avatar-md online avatar-rounded chatstatusperson">
@@ -101,16 +101,23 @@
                        </div>
                    </div>
                    <div class="chat-footer">
-                       <a aria-label="anchor" class="btn btn-icon me-2 btn-success emoji-picker"
-                           href="javascript:void(0)">
-                           <i class="ri-emotion-line"></i>
-                       </a>
-                       <input class="form-control chat-message-space" placeholder="Type your message here..."
-                           type="text">
-                       <a aria-label="anchor" class="btn btn-primary ms-2 btn-icon btn-send"
-                           href="javascript:void(0)">
-                           <i class="ri-send-plane-2-line"></i>
-                       </a>
+                    {{-- <form method="POST" action="{{ route('chats.store') }}">
+                        @csrf
+                        <div class="chat-footer">
+                            <a aria-label="anchor" class="btn btn-icon me-2 btn-success emoji-picker" href="javascript:void(0)">
+                                <i class="ri-emotion-line"></i>
+                            </a>
+                            <input class="form-control chat-message-space" name="mensaje" placeholder="Type your message here..." type="text">
+                            
+                            <input type="hidden" name="from_user_id" value="{{}}">
+                            <input type="hidden" name="campo_oculto_2" value="valor2">
+                    
+                            <a aria-label="anchor" class="btn btn-primary ms-2 btn-icon btn-send" href="javascript:void(0)" onclick="this.closest('form').submit()">
+                                <i class="ri-send-plane-2-line"></i>
+                            </a>
+                        </div>
+                    </form> --}}
+                    
                    </div>
                </div>
            </div>

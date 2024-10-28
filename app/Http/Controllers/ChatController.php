@@ -5,12 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use App\Models\User;
 
 class ChatController extends Controller
 {
@@ -19,33 +15,35 @@ class ChatController extends Controller
         // Método para devolver una vista con datos y el nombre de usuario autenticado
     }
 
-    public function index()
+    private function getUserRoleChatTargets()
     {
         $user = auth()->user();
 
-        $users = collect();
-
         if ($user->hasRole('Estudiante')) {
-            $users = User::role('Editor')->get();
-        } elseif ($user->hasRole('Editor')) {
-            $users = User::role('Estudiante')->get();
-        } elseif ($user->hasRole('Administrador')) {
-            $users = User::role(['Editor', 'Estudiante'])->get();
+            return User::role('Editor')->get();
         }
 
-        return view('chats.view_chats', compact('users'));
+        if ($user->hasRole('Editor')) {
+            return User::role('Estudiante')->get();
+        }
+
+        if ($user->hasRole('Administrador')) {
+            return User::role(['Editor', 'Estudiante'])->get();
+        }
+
+        return collect();
     }
 
-    public function store(Request $request)
+    public function index()
     {
-        // Método para almacenar un nuevo usuario en la base de datos con validación
+        $users = $this->getUserRoleChatTargets();
+        return view('chats.view_chats', compact('users'));
     }
 
     public function show($uuid)
     {
         $user = auth()->user();
-        $userInfo = User::where('uuid', $uuid)->first();
-        $users = collect();
+        $userInfo = User::where('uuid', $uuid)->firstOrFail();
 
         $chats = Chat::where(function ($query) use ($uuid, $user) {
             $query->where(function ($q) use ($uuid, $user) {
@@ -57,15 +55,14 @@ class ChatController extends Controller
             });
         })->with(['fromUser', 'toUser'])->get();
 
-        if ($user->hasRole('Estudiante')) {
-            $users = User::role('Editor')->get();
-        } elseif ($user->hasRole('Editor')) {
-            $users = User::role('Estudiante')->get();
-        } elseif ($user->hasRole('Administrador')) {
-            $users = User::role(['Editor', 'Estudiante'])->get();
-        }
+        $users = $this->getUserRoleChatTargets();
 
-        return view('chats.view_chat', compact('users', 'uuid', 'userInfo', 'chats'));
+        return view('chats.view_chat', compact('users', 'userInfo', 'chats'));
+    }
+
+    public function store(Request $request)
+    {
+
     }
 
     public function update(Request $request, $uuid)
