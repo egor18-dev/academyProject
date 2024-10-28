@@ -144,21 +144,52 @@ class ClassController extends Controller
 }
 
 
-    public function streamVideo($id)
-    {
-        if (!auth()->check()) {
-            abort(403);
-        }
-
-        $class = ClassModel::findOrFail($id);
-        $video = $class->getFirstMedia('videos');
-
-        if ($video) {
-            return $video->toResponse(request());
-        }
-
-        abort(404, 'Video no encontrado');
+public function streamVideo($id)
+{
+    if (!auth()->check()) {
+        abort(403);
     }
+
+    $class = ClassModel::findOrFail($id);
+    $video = $class->getFirstMedia('videos');
+
+    if ($video) {
+        $path = $video->getPath();
+
+        if (!file_exists($path)) {
+            abort(404, 'Video no encontrado');
+        }
+
+        $size = filesize($path);
+        $start = 0;
+        $length = $size;
+        $status = 200;
+        $headers = [
+            'Content-Type' => 'video/mp4',
+            'Accept-Ranges' => 'bytes',
+        ];
+
+        if (isset($_SERVER['HTTP_RANGE'])) {
+            $range = $_SERVER['HTTP_RANGE'];
+            $range = str_replace('bytes=', '', $range);
+            $range = explode('-', $range);
+            $start = intval($range[0]);
+            $length = $size - $start;
+            $status = 206;
+            $headers['Content-Range'] = "bytes $start-" . ($size - 1) . "/$size";
+            $headers['Content-Length'] = $length;
+        }
+
+        return response()->stream(function () use ($path, $start, $length) {
+            $file = fopen($path, 'rb');
+            fseek($file, $start);
+            echo fread($file, $length);
+            fclose($file);
+        }, $status, $headers);
+    }
+
+    abort(404, 'Video no encontrado');
+}
 
     public function view($uuid)
     {
