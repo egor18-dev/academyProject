@@ -17,12 +17,12 @@ class Chat extends Model
         'message',
     ];
 
-    public function sender()
+    public function fromUser()
     {
         return $this->belongsTo(User::class, 'from_user_id', 'uuid');
     }
 
-    public function receiver()
+    public function toUser()
     {
         return $this->belongsTo(User::class, 'to_user_id', 'uuid');
     }

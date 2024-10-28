@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
@@ -43,9 +44,18 @@ class ChatController extends Controller
     public function show($uuid)
     {
         $user = auth()->user();
-
         $userInfo = User::where('uuid', $uuid)->first();
         $users = collect();
+
+        $chats = Chat::where(function ($query) use ($uuid, $user) {
+            $query->where(function ($q) use ($uuid, $user) {
+                $q->where('from_user_id', $uuid)
+                  ->where('to_user_id', $user->uuid);
+            })->orWhere(function ($q) use ($uuid, $user) {
+                $q->where('from_user_id', $user->uuid)
+                  ->where('to_user_id', $uuid);
+            });
+        })->with(['fromUser', 'toUser'])->get();
 
         if ($user->hasRole('Estudiante')) {
             $users = User::role('Editor')->get();
@@ -55,7 +65,7 @@ class ChatController extends Controller
             $users = User::role(['Editor', 'Estudiante'])->get();
         }
 
-        return view('chats.view_chat', compact('users', 'uuid', 'userInfo'));
+        return view('chats.view_chat', compact('users', 'uuid', 'userInfo', 'chats'));
     }
 
     public function update(Request $request, $uuid)

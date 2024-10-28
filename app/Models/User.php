@@ -55,16 +55,6 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(UserExam::class, 'user_id', 'uuid');
     }
 
-    public function sentMessages()
-    {
-        return $this->hasMany(Message::class, 'from_user_id', 'uuid');
-    }
-
-    public function receivedMessages()
-    {
-        return $this->hasMany(Message::class, 'to_user_id', 'uuid');
-    }
-
     protected static function boot()
     {
         parent::boot();

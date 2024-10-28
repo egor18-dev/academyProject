@@ -72,162 +72,31 @@
                    </div>
                    <div class="p-3 pt-0">
                        <div class="chat-content border p-3 bg-light rounded" id="main-chat-content">
+                            
                            <ul class="list-unstyled">
-                               <li class="chat-item-start">
-                                   <div class="chat-list-inner">
-                                       <div class="chat-user-profile">
-                                           <span class="avatar avatar-md online avatar-rounded chatstatusperson">
-                                               <img class="chatimageperson" src="../assets/images/faces/8.jpg"
-                                                   alt="img">
-                                           </span>
-                                       </div>
-                                       <div class="ms-3">
-                                           <span class="chatting-user-info">
-                                               <span class="chatnameperson">Aria Robinson</span> <span
-                                                   class="msg-sent-time">11:48 PM</span>
-                                           </span>
-                                           <div class="main-chat-msg">
-                                               <div>
-                                                   <p class="mb-0">Hey there! &#128522; How's it going?</p>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   </div>
-                               </li>
-                               <li class="chat-item-end">
-                                   <div class="chat-list-inner">
-                                       <div class="me-3">
-                                           <span class="chatting-user-info">
-                                               <span class="msg-sent-time"><span
-                                                       class="chat-read-mark align-middle d-inline-flex"><i
-                                                           class="ri-check-double-line"></i></span>11:50PM</span>
-                                               You
-                                           </span>
-                                           <div class="main-chat-msg">
-                                               <div>
-                                                   <p class="mb-0">Hey! I'm good, thanks. Just finished some work.
-                                                       How about you?</p>
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="chat-user-profile">
-                                           <span class="avatar avatar-md online avatar-rounded">
-                                               <img src="../assets/images/faces/15.jpg" alt="img">
-                                           </span>
-                                       </div>
-                                   </div>
-                               </li>
-                               <li class="chat-item-start">
-                                   <div class="chat-list-inner">
-                                       <div class="chat-user-profile">
-                                           <span class="avatar avatar-md online avatar-rounded chatstatusperson">
-                                               <img class="chatimageperson" src="../assets/images/faces/8.jpg"
-                                                   alt="img">
-                                           </span>
-                                       </div>
-                                       <div class="ms-3">
-                                           <span class="chatting-user-info">
-                                               <span class="chatnameperson">Aria Robinson</span> <span
-                                                   class="msg-sent-time">11:51 PM</span>
-                                           </span>
-                                           <div class="main-chat-msg">
-                                               <div>
-                                                   <p class="mb-0">Not too bad, just chilling. Have any exciting
-                                                       plans for the weekend?</p>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   </div>
-                               </li>
-                               <li class="chat-item-end">
-                                   <div class="chat-list-inner">
-                                       <div class="me-3">
-                                           <span class="chatting-user-info">
-                                               <span class="msg-sent-time"><span
-                                                       class="chat-read-mark align-middle d-inline-flex"><i
-                                                           class="ri-check-double-line"></i></span>11:52 PM</span>
-                                               You
-                                           </span>
-                                           <div class="main-chat-msg">
-                                               <div>
-                                                   <p class="mb-0">Not really, just relaxing. Maybe catch up on
-                                                       some movies. You?</p>
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="chat-user-profile">
-                                           <span class="avatar avatar-md online avatar-rounded">
-                                               <img src="../assets/images/faces/15.jpg" alt="img">
-                                           </span>
-                                       </div>
-                                   </div>
-                               </li>
-                               <li class="chat-item-start">
-                                   <div class="chat-list-inner">
-                                       <div class="chat-user-profile">
-                                           <span class="avatar avatar-md online avatar-rounded chatstatusperson">
-                                               <img class="chatimageperson" src="../assets/images/faces/8.jpg"
-                                                   alt="img">
-                                           </span>
-                                       </div>
-                                       <div class="ms-3">
-                                           <span class="chatting-user-info">
-                                               <span class="chatnameperson">Aria Robinson</span> <span
-                                                   class="msg-sent-time">11:55 PM</span>
-                                           </span>
-                                           <div class="main-chat-msg">
-                                               <div>
-                                                   <p class="mb-0">Same here. Thinking of trying out that new cafe
-                                                       downtown. Heard they have amazing coffee.</p>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   </div>
-                               </li>
-                               <li class="chat-item-end">
-                                   <div class="chat-list-inner">
-                                       <div class="me-3">
-                                           <span class="chatting-user-info">
-                                               <span class="msg-sent-time"><span
-                                                       class="chat-read-mark align-middle d-inline-flex"><i
-                                                           class="ri-check-double-line"></i></span>11:52 PM</span>
-                                               You
-                                           </span>
-                                           <div class="main-chat-msg">
-                                               <div class="">
-                                                   <p class="mb-0">Oh, nice! Let me know how it is. I might check
-                                                       it out too.</p>
-                                               </div>
-                                           </div>
-                                       </div>
-                                       <div class="chat-user-profile">
-                                           <span class="avatar avatar-md online avatar-rounded">
-                                               <img src="../assets/images/faces/15.jpg" alt="img">
-                                           </span>
-                                       </div>
-                                   </div>
-                               </li>
-                               <li class="chat-item-start">
-                                   <div class="chat-list-inner">
-                                       <div class="chat-user-profile">
-                                           <span class="avatar avatar-md online avatar-rounded">
-                                               <img class="chatimageperson" src="../assets/images/faces/8.jpg"
-                                                   alt="img">
-                                           </span>
-                                       </div>
-                                       <div class="ms-3">
-                                           <span class="chatting-user-info chatnameperson">
-                                               Aria Robinson <span class="msg-sent-time">11:45 PM</span>
-                                           </span>
-                                           <div class="main-chat-msg">
-                                               <div>
-                                                   <p class="mb-0">No spoilers, promise! Enjoy the binge-watching
-                                                       session. &#128516;</p>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   </div>
-                               </li>
+                                @foreach ($chats as $chat)
+                                <li class="{{$chat->from_user_id == $chat->fromUser->uuid ? 'chat-item-end' : 'chat-item-start'}} ">
+                                    <div class="chat-list-inner">
+                                        <div class="chat-user-profile">
+                                            <span class="avatar avatar-md online avatar-rounded chatstatusperson">
+                                                <img class="chatimageperson" src="{{ route('profile.image', ['uuid' => $chat->fromUser->uuid]) }}"
+                                                    alt="img-profile">
+                                            </span>
+                                        </div>
+                                        <div class="ms-3">
+                                            <span class="chatting-user-info">
+                                                <span class="chatnameperson">{{$chat->fromUser->name}}</span> <span
+                                                    class="msg-sent-time">{{ $chat->created_at->format('d/m/Y H:i') }}</span>
+                                            </span>
+                                            <div class="main-chat-msg">
+                                                <div>
+                                                    <p class="mb-0">{{$chat->message}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                @endforeach
                            </ul>
                        </div>
                    </div>
