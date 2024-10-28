@@ -50,7 +50,7 @@ class ExamController extends Controller
         if (!Auth::check() || !Auth::user()->hasAnyRole(['Administrador', 'Editor'])) {
             abort(403, 'No tienes permiso para acceder a esta página.');
         }
-
+    
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
@@ -61,17 +61,22 @@ class ExamController extends Controller
             'level_id.required' => 'El nivel es obligatorio.',
             'level_id.exists' => 'El nivel seleccionado no es válido.',
         ]);
-
+    
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
-
+    
+        $existingExam = Exam::where('level_id', $request->level_id)->first();
+        if ($existingExam) {
+            return redirect()->route('exams.index')->withErrors(['error' => 'Ya existe un examen para este nivel.']);
+        }
+    
         $exam = Exam::create([
             'title' => $request->title,
             'description' => $request->description,
             'level_id' => $request->level_id,
         ]);
-
+    
         return redirect()->route('exams.index');
     }
 
