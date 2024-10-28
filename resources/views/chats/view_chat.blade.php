@@ -19,7 +19,7 @@
                                    <p class="text-muted fs-11 fw-medium mb-2 op-7">Chats activos</p>
                                </li>
                                @foreach ($users as $user)
-                               <li class="checkforactive {{$user->uuid === $uuid}}">
+                               <li class="checkforactive {{$user->uuid === $uuid ? 'active' : ''}}">
                                 <a href="{{ route('chats.show', ['uuid' => $user->uuid]) }}"
                                     onclick="changeTheInfo(this,'JaneDoe','5','online')">
                                     <div class="d-flex align-items-top">
