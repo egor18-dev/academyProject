@@ -44,6 +44,7 @@ class ChatController extends Controller
     {
         $user = auth()->user();
 
+        $userInfo = User::where('uuid', $uuid)->first();
         $users = collect();
 
         if ($user->hasRole('Estudiante')) {
@@ -54,7 +55,7 @@ class ChatController extends Controller
             $users = User::role(['Editor', 'Estudiante'])->get();
         }
 
-        return view('chats.view_chat', compact('users', 'uuid'));
+        return view('chats.view_chat', compact('users', 'uuid', 'userInfo'));
     }
 
     public function update(Request $request, $uuid)
