@@ -18,13 +18,13 @@
                                 @if ($question->type === "verdadero_falso")
                                 <div class="radio py-2">
                                     <label>
-                                        <input type="radio" data-question-number="87518975480" name="question-87518975480" id="bsr-radios-97468235242" data-alert-type="alert-danger" data-comment="<strong>Incorrect</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="true">
+                                        <input type="radio" data-question-number="{{$key}}" name="question-{{$key}}" id="bsr-radios-97468235242" data-alert-type="alert-danger" data-comment="<strong>Incorrect</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="true">
                                         Verdadero
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" data-question-number="87518975480" name="question-87518975480" id="bsr-radios-97468235243" data-alert-type="alert-success" data-comment="<strong>Correct</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="false">
+                                        <input type="radio" data-question-number="{{$key}}" name="question-{{$key}}" id="bsr-radios-97468235243" data-alert-type="alert-success" data-comment="<strong>Correct</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="false">
                                         Falso
                                     </label>
                                 </div>
@@ -38,32 +38,11 @@
                                     </div>
                                     @endforeach
                                 @endif
-                                {{-- <div class="radio pt-2">
-                                    <label>
-                                        <input type="radio" data-question-number="87518975480" name="question-87518975480" id="bsr-radios-97468235240" data-alert-type="alert-danger" data-comment="<strong>Incorrect</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="radio97468235240">
-                                        Color 1
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" data-question-number="87518975480" name="question-87518975480" id="bsr-radios-97468235241" data-alert-type="alert-danger" data-comment="<strong>Incorrect</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="radio97468235241">
-                                        Color 2
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" data-question-number="87518975480" name="question-87518975480" id="bsr-radios-97468235242" data-alert-type="alert-danger" data-comment="<strong>Incorrect</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="radio97468235242">
-                                        Color 3
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" data-question-number="87518975480" name="question-87518975480" id="bsr-radios-97468235243" data-alert-type="alert-success" data-comment="<strong>Correct</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="radio97468235243">
-                                        Color 4
-                                    </label>
-                                </div> --}}
                             </div>
                             @endforeach
+                            <div class="pt-3">
+                                <a href="#" class="btn btn-primary btn-sm" class="mt-3">Corregir</a>
+                            </div>
                         </form>
                         <div class="multiple-choice-alert alert hidden" id="87518975480" role="alert"></div>
                     </div>
