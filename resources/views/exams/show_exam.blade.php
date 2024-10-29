@@ -1,6 +1,6 @@
 @extends('page')
 @section('page')
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-3 top-exam">
     <div class="row">
         <div class="col-xl-12">
             <div class="card custom-card">
@@ -51,28 +51,126 @@
         </div>
     </div>
 </div>
+<div class="container-fluid mt-3 bottom-exam" style="display: none">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header justify-content-between">
+                    <div class="card-title">
+                        <h5>
+                            Egor Santamaria
+                        </h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row w-100 align-items-start justify-content-between">
+                        <div class="col-lg-8">
+                            <div class="left">
+                                <h6 class="text-muted fw-normal points">
+                                    Puntos: 8 / 10
+                                </h6>
+                                <p class="text-muted fw-normal duration">
+                                    Duración: 7min 39s
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="wrapper">
+                                <div class="circular-bar">
+                                    <div class="percent">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm">Volver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    window.addEventListener('load', () => {
-        const form = document.querySelector('form');
+    $(document).ready(function () {
+        const form = $('form');
+        let formChecked = false;
+        let time = 0;
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+        const formatDuration = (seconds) => {
+            const minutes = Math.floor(seconds / 60);
+            const secondsRestants = seconds % 60;
+            return `Duración: ${minutes}min ${secondsRestants}s`;
+        }
 
-            const questions = @json($exam->questions);
+        let timeInterval = setInterval(() => {
+            time++;
+        }, 1000);
 
-            questions.forEach((element, index) => {
-                const selectedOption = form.querySelector(`input[name="question-${index}"]:checked`);
-                
-                if (selectedOption) {
-                    const selectedValue = selectedOption.value;
-                    const label = selectedOption.closest('label'); 
-                    const isCorrect = element.answer === selectedValue;
+        form.on('submit', function (e) {
+                e.preventDefault();
 
-                    label.style.color = isCorrect ? 'green' : 'red';
+                clearInterval(timeInterval);
+
+                if(!formChecked){
+                    const questions = @json($exam->questions);
+                    let correctAnswers = 0;
+
+                $.each(questions, function (index, element) {
+                    const selectedOption = $(`input[name="question-${index}"]:checked`, form);
+                    
+                    if (selectedOption.length) {
+                        const selectedValue = selectedOption.val();
+                        const label = selectedOption.closest('label');
+                        const isCorrect = element.answer === selectedValue;
+
+                        label.css('color', isCorrect ? 'green' : 'red');
+                    
+                        if (isCorrect) correctAnswers++;
+                    }
+                });
+
+                const colors = ["#FF4C4C", "#FFD966", "#4CAF50"];
+                const circular = $('.circular-bar');
+                const percentNumber = circular.find('.percent');
+                const points = $('.points');
+                const duration = $('.duration');
+
+                const questionsLength = questions.length;
+                const result = correctAnswers / questionsLength;
+                const percentMark = result * 100;
+                let percentCircle = result * 360;
+
+                percentCircle = percentCircle < 10 ? 10 : percentCircle;
+
+                percentNumber.text(`${percentMark}%`);
+                points.text(`Puntos: ${correctAnswers} / ${questionsLength}`);
+                duration.text(formatDuration(time));
+
+                let initialTime = 0;
+                const speed = 3;
+                let color;
+
+                if (percentMark >= 50 && percentMark <= 59) {
+                    color = colors[1];
+                } else if (percentMark < 50) {
+                    color = colors[0];
+                } else if (percentMark >= 60) {
+                    color = colors[2];
                 }
-            });
+
+                const timer = setInterval(function () {
+                    initialTime++;
+                    circular.css('background', `conic-gradient(${color} ${initialTime}deg, #fff 0deg)`);
+
+                    if (initialTime >= percentCircle) {
+                        clearInterval(timer);
+                    }
+                }, speed);
+
+                $('.bottom-exam').fadeIn(400);
+                formChecked = true;
+            }
+
         });
     });
 </script>
