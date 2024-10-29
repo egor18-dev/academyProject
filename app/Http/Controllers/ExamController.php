@@ -161,6 +161,8 @@ class ExamController extends Controller
             }
         }
 
+        $exam->questions = $exam->questions->shuffle();
+
         return view('exams.show_exam', ['exam' => $exam]);
     }
 }

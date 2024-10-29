@@ -52,3 +52,13 @@
     </div>
   </div>
 @endsection
+
+<script>
+
+    window.addEventListener('load', () => {
+        const form = document.querySelector('form');
+
+        console.log(form);
+    });
+
+</script>
