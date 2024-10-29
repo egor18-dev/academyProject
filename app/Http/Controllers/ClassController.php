@@ -90,7 +90,6 @@ class ClassController extends Controller
         ]);
     }
 
-    // Obtiene todas las clases y los videos vistos por el usuario
     $classes = ClassModel::with('media:id,model_id,collection_name')
         ->orderByDesc('level_id')
         ->get();

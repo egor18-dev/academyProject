@@ -39,16 +39,6 @@
                                                 <span class="d-block mb-2">Clases totales</span>
                                                 <h3 class="fw-semibold mb-2 lh-1">{{$count}}</h3>
                                             </div>
-                                            <div class="dropdown"> 
-                                                <a aria-label="anchor" href="javascript:void(0);" data-bs-toggle="dropdown"> 
-                                                    <i class="ri-more-2-fill fs-18 text-muted"></i>
-                                                </a> 
-                                                <ul class="dropdown-menu" role="menu"> 
-                                                    <li><a class="dropdown-item" href="javascript:void(0);">Week</a></li> 
-                                                    <li><a class="dropdown-item" href="javascript:void(0);">Day</a></li> 
-                                                    <li><a class="dropdown-item" href="javascript:void(0);">Year</a></li> 
-                                                </ul> 
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -65,16 +55,6 @@
                                             <div class="flex-fill">
                                                 <span class="d-block mb-2">Instructores</span>
                                                 <h3 class="fw-semibold mb-2 lh-1">+5</h3>
-                                            </div>
-                                            <div class="dropdown"> 
-                                                <a aria-label="anchor" href="javascript:void(0);" data-bs-toggle="dropdown"> 
-                                                    <i class="ri-more-2-fill fs-18 text-muted"></i>
-                                                </a> 
-                                                <ul class="dropdown-menu" role="menu"> 
-                                                    <li><a class="dropdown-item" href="javascript:void(0);">Week</a></li> 
-                                                    <li><a class="dropdown-item" href="javascript:void(0);">Day</a></li> 
-                                                    <li><a class="dropdown-item" href="javascript:void(0);">Year</a></li> 
-                                                </ul> 
                                             </div>
                                         </div>
                                     </div>
@@ -93,16 +73,6 @@
                                                 <span class="d-block mb-2">Alumnos</span>
                                                 <h3 class="fw-semibold mb-2 lh-1">+{{$totalUsers}}</h3>
                                             </div>
-                                            <div class="dropdown"> 
-                                                <a aria-label="anchor" href="javascript:void(0);" data-bs-toggle="dropdown"> 
-                                                    <i class="ri-more-2-fill fs-18 text-muted"></i>
-                                                </a> 
-                                                <ul class="dropdown-menu" role="menu"> 
-                                                    <li><a class="dropdown-item" href="javascript:void(0);">Week</a></li> 
-                                                    <li><a class="dropdown-item" href="javascript:void(0);">Day</a></li> 
-                                                    <li><a class="dropdown-item" href="javascript:void(0);">Year</a></li> 
-                                                </ul> 
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +82,7 @@
                 <div class="row">
                     <div class="col-xxl-9">
                         </div>
-                        <div class="row">
+                        <div class="row align-items-center justify-content-start">
                             @foreach ($classes as $class)
                             <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 disabled">
                                 <div class="back"></div>
