@@ -57,9 +57,7 @@
             <div class="card custom-card">
                 <div class="card-header justify-content-between">
                     <div class="card-title">
-                        <h5>
-                            Egor Santamaria
-                        </h5>
+                        <h5 class="exam-name"></h5>
                     </div>
                 </div>
                 <div class="card-body">
@@ -90,87 +88,58 @@
 </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
         const form = $('form');
         let formChecked = false;
         let time = 0;
 
-        const formatDuration = (seconds) => {
-            const minutes = Math.floor(seconds / 60);
-            const secondsRestants = seconds % 60;
-            return `Duración: ${minutes}min ${secondsRestants}s`;
-        }
+        const formatDuration = (seconds) => `${Math.floor(seconds / 60)}min ${seconds % 60}s`;
 
-        let timeInterval = setInterval(() => {
-            time++;
-        }, 1000);
+        const timeInterval = setInterval(() => time++, 1000);
 
         form.on('submit', function (e) {
-                e.preventDefault();
+            e.preventDefault();
+            clearInterval(timeInterval);
 
-                clearInterval(timeInterval);
-
-                if(!formChecked){
-                    const questions = @json($exam->questions);
-                    let correctAnswers = 0;
+            if (!formChecked) {
+                const questions = @json($exam->questions);
+                const userName = @json($user->name);
+                let correctAnswers = 0;
 
                 $.each(questions, function (index, element) {
-                    const selectedOption = $(`input[name="question-${index}"]:checked`, form);
-                    
+                    const selectedOption = $(`input[name="question-${index}"]:checked`);
                     if (selectedOption.length) {
-                        const selectedValue = selectedOption.val();
-                        const label = selectedOption.closest('label');
-                        const isCorrect = element.answer === selectedValue;
-
-                        label.css('color', isCorrect ? 'green' : 'red');
-                    
+                        const isCorrect = element.answer === selectedOption.val();
+                        selectedOption.closest('label').css('color', isCorrect ? 'green' : 'red');
                         if (isCorrect) correctAnswers++;
                     }
                 });
 
+                const percentMark = (correctAnswers / questions.length) * 100;
+                const percentCircle = Math.max((correctAnswers / questions.length) * 360, 10);
+
                 const colors = ["#FF4C4C", "#FFD966", "#4CAF50"];
-                const circular = $('.circular-bar');
-                const percentNumber = circular.find('.percent');
-                const points = $('.points');
-                const duration = $('.duration');
+                const color = percentMark < 50 ? colors[0] : (percentMark <= 59 ? colors[1] : colors[2]);
 
-                const questionsLength = questions.length;
-                const result = correctAnswers / questionsLength;
-                const percentMark = result * 100;
-                let percentCircle = result * 360;
-
-                percentCircle = percentCircle < 10 ? 10 : percentCircle;
-
-                percentNumber.text(`${percentMark}%`);
-                points.text(`Puntos: ${correctAnswers} / ${questionsLength}`);
-                duration.text(formatDuration(time));
+                $('.circular-bar .percent').text(`${percentMark}%`);
+                $('.points').text(`Puntos: ${correctAnswers} / ${questions.length}`);
+                $('.duration').text(formatDuration(time));
+                $('.exam-name').text(userName);
 
                 let initialTime = 0;
                 const speed = 3;
-                let color;
-
-                if (percentMark >= 50 && percentMark <= 59) {
-                    color = colors[1];
-                } else if (percentMark < 50) {
-                    color = colors[0];
-                } else if (percentMark >= 60) {
-                    color = colors[2];
-                }
-
-                const timer = setInterval(function () {
+                const timer = setInterval(() => {
                     initialTime++;
-                    circular.css('background', `conic-gradient(${color} ${initialTime}deg, #fff 0deg)`);
-
-                    if (initialTime >= percentCircle) {
-                        clearInterval(timer);
-                    }
+                    $('.circular-bar').css('background', `conic-gradient(${color} ${initialTime}deg, #fff 0deg)`);
+                    if (initialTime >= percentCircle) clearInterval(timer);
                 }, speed);
 
                 $('.bottom-exam').fadeIn(400);
                 formChecked = true;
             }
-
         });
     });
 </script>
+

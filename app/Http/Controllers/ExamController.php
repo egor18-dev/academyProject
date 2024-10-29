@@ -150,6 +150,7 @@ class ExamController extends Controller
     public function showExam($uuid)
     {
         $exam = Exam::where('level_id', $uuid)->first();
+        $user = auth()->user();
 
         foreach($exam->questions as $tempExam){
             
@@ -163,6 +164,6 @@ class ExamController extends Controller
 
         $exam->questions = $exam->questions->shuffle();
 
-        return view('exams.show_exam', ['exam' => $exam]);
+        return view('exams.show_exam', ['exam' => $exam, 'user' => $user]);
     }
 }
