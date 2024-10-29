@@ -61,6 +61,43 @@
                     </div>
                     </div>
                 </div>
+                <hr>
+                <div class="col-xl-12">
+                    <div class="card custom-card">
+                        <div class="card-body p-0">
+                            <div class="tab-content" id="profile-tabs">
+                                <div class="tab-pane show active p-0 border-0" id="profile-about-tab-pane"
+                                    role="tabpanel" aria-labelledby="profile-about-tab" tabindex="0">
+                                    <div class="card custom-card overflow-hidden shadow-none mb-0">
+                                        <div class="card-body p-0">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item p-4">
+                                                    <span class="fw-medium fs-15 d-block mb-3"><span
+                                                            class="me-1"></span>Secciones terminadas :</span>
+                                                    <ul class="list-unstyled profile-timeline">
+                                                        @foreach ($levels as $key => $level)
+                                                            @if ($level->finished)
+                                                                <li>
+                                                                    <div> <span
+                                                                            class="avatar avatar-md bg-primary-transparent avatar-rounded profile-timeline-avatar">
+                                                                            <span class="avatar avatar-sm bg-primary avatar-rounded">{{$key + 1}}</span>
+                                                                            </span>
+                                                                        <div class="p-3 bg-light rounded">
+                                                                        <h6 class="fw-semibold mb-0">{{$level->name}}</h6>
+                                                                        <p class="mb-0 text-muted">{{$level->description}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            @endif
+                                                        @endforeach
+                                                       
+                                                    </ul>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                 <div class="progress mb-2">
                     <div class="progress-bar" role="progressbar" style="width: {{ $progressPercentage }}%;" aria-valuenow="{{ $progressPercentage }}" aria-valuemin="0" aria-valuemax="100">{{ round($progressPercentage) }}%</div>
                 </div>

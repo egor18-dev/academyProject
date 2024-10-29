@@ -6,7 +6,7 @@
             <div class="card custom-card">
                 <div class="card-header justify-content-between">
                     <div class="card-title">
-                        Hacer Examen
+                        {{$exam->title}}
                     </div>
                 </div>
                 <div class="card-body">
