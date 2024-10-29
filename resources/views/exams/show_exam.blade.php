@@ -32,7 +32,6 @@
                                     @foreach ($question->allElements as $element)
                                     <div class="radio pt-3">
                                         <label>
-                                            <!-- Asigna el texto de la opción como valor -->
                                             <input type="radio" data-question-number="{{$key}}" name="question-{{$key}}" id="bsr-radios-97468235243" data-alert-type="alert-success" data-comment="<strong>Correct</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="{{$element}}">
                                             {{$element}}
                                         </label>
@@ -65,13 +64,15 @@
 
             questions.forEach((element, index) => {
                 const selectedOption = form.querySelector(`input[name="question-${index}"]:checked`);
-                const val = selectedOption.value ? selectedOption.value : '';
+                
+                if (selectedOption) {
+                    const selectedValue = selectedOption.value;
+                    const label = selectedOption.closest('label'); 
+                    const isCorrect = element.answer === selectedValue;
 
-                if(selectedOption.answer === val){
-                    console.log("True");
+                    label.style.color = isCorrect ? 'green' : 'red';
                 }
             });
-
         });
     });
 </script>
