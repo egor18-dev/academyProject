@@ -149,6 +149,18 @@ class ExamController extends Controller
 
     public function showExam($uuid)
     {
+        $exam = Exam::where('level_id', $uuid)->first();
 
+        foreach($exam->questions as $tempExam){
+            
+            if ($tempExam->options) {
+                $falsesQuestions = json_decode($tempExam->options, true); 
+                array_push($falsesQuestions, $tempExam->answer); 
+                shuffle($falsesQuestions); 
+                $tempExam->allElements = $falsesQuestions;
+            }
+        }
+
+        return view('exams.show_exam', ['exam' => $exam]);
     }
 }
