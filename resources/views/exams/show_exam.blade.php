@@ -18,13 +18,13 @@
                                 @if ($question->type === "verdadero_falso")
                                 <div class="radio py-2">
                                     <label>
-                                        <input type="radio" data-question-number="{{$key}}" name="question-{{$key}}" id="bsr-radios-97468235242" data-alert-type="alert-danger" data-comment="<strong>Incorrect</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="true">
+                                        <input type="radio" data-question-number="{{$key}}" name="question-{{$key}}" id="bsr-radios-97468235242" data-alert-type="alert-danger" data-comment="<strong>Incorrect</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="Verdadero">
                                         Verdadero
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" data-question-number="{{$key}}" name="question-{{$key}}" id="bsr-radios-97468235243" data-alert-type="alert-success" data-comment="<strong>Correct</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="false">
+                                        <input type="radio" data-question-number="{{$key}}" name="question-{{$key}}" id="bsr-radios-97468235243" data-alert-type="alert-success" data-comment="<strong>Correct</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="Falso">
                                         Falso
                                     </label>
                                 </div>
@@ -32,7 +32,8 @@
                                     @foreach ($question->allElements as $element)
                                     <div class="radio pt-3">
                                         <label>
-                                            <input type="radio" data-question-number="87518975480" name="question-87518975480" id="bsr-radios-97468235243" data-alert-type="alert-success" data-comment="<strong>Correct</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="false">
+                                            <!-- Asigna el texto de la opción como valor -->
+                                            <input type="radio" data-question-number="{{$key}}" name="question-{{$key}}" id="bsr-radios-97468235243" data-alert-type="alert-success" data-comment="<strong>Correct</strong><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit." value="{{$element}}">
                                             {{$element}}
                                         </label>
                                     </div>
@@ -50,11 +51,10 @@
             </div>
         </div>
     </div>
-  </div>
+</div>
 @endsection
 
 <script>
-
     window.addEventListener('load', () => {
         const form = document.querySelector('form');
 
@@ -63,10 +63,15 @@
 
             const questions = @json($exam->questions);
 
-            console.log(questions);
+            questions.forEach((element, index) => {
+                const selectedOption = form.querySelector(`input[name="question-${index}"]:checked`);
+                const val = selectedOption.value ? selectedOption.value : '';
+
+                if(selectedOption.answer === val){
+                    console.log("True");
+                }
+            });
 
         });
     });
-
-
 </script>
