@@ -41,7 +41,7 @@
                             </div>
                             @endforeach
                             <div class="pt-3">
-                                <a href="#" class="btn btn-primary btn-sm" class="mt-3">Corregir</a>
+                                <button type="submit" class="btn btn-primary btn-sm" class="mt-3">Corregir</button>
                             </div>
                         </form>
                         <div class="multiple-choice-alert alert hidden" id="87518975480" role="alert"></div>
@@ -58,7 +58,15 @@
     window.addEventListener('load', () => {
         const form = document.querySelector('form');
 
-        console.log(form);
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const questions = @json($exam->questions);
+
+            console.log(questions);
+
+        });
     });
+
 
 </script>
