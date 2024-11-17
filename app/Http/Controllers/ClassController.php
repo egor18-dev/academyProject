@@ -87,26 +87,40 @@ class ClassController extends Controller
         $actualLevel = $keys->first();
         $actualVideo = -1;
 
+        $pendingExam = null;
+
         foreach($keys as $key)
         {
             $completed = true;
 
             foreach($classes[$key] as $tempIndex => $class)
             {
+                $class->allowed = true;
+
                 if(!in_array($class->uuid, $userClasses))
                 {
                     $completed = false;
                     $actualVideo = $tempIndex;
-                    $class->allowed = true;
                     break;
-                }else{
-                    $class->allowed = true;
                 }
             }
 
             if(!$completed){
                 $actualLevel = $key;
                 break;
+            }else{
+
+                $levelHasExam = Exam::where('level_id', $class->level_id)->first();
+
+                if($levelHasExam){
+                    $hasQuestions = $levelHasExam->questions()->exists();
+
+                    if($hasQuestions){
+                        $pendingExam = $levelHasExam->uuid;
+                        break;
+                    }
+                }
+
             }
         }
 
@@ -115,7 +129,7 @@ class ClassController extends Controller
             'keys' => $keys,
             'actualLevel' => $actualLevel,
             'actualVideo' => $actualVideo,
-            'pendingExams' => [],
+            'pendingExams' => $pendingExam,
             'count' => 0,
             'totalUsers' => User::count(),
         ]);

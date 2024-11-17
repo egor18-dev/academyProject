@@ -110,7 +110,7 @@
                                             </div>
                                             <div class="d-grid">
                                                 <a href="{{ route('userClasses.view', ['uuid' => $class->uuid]) }}" class="btn btn-primary btn-wave {{!$class->allowed ? 'disabled-button' : ''}}">
-                                                    {{!$class->allowed ? 'Ver anteriores' : 'Ver'}}
+                                                    {{!$class->allowed ? 'No disponible' : 'Ver'}}
                                                 </a>
                                             </div>
                                         </div>
