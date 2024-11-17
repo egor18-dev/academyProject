@@ -3,7 +3,7 @@
 <main class="main-home">
     <div class="section">
         <img src="https://cdn.prod.website-files.com/649220d2911fb5552e5aca5e/64c85a70b2ba9d101d5edb26_Team%20Focus.webp" alt="">
-        <h5>Traiding</h5>
+        <h5>Trading</h5>
         <a href="#">Saber más</a>
     </div>
     <div class="section">

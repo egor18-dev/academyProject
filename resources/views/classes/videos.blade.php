@@ -83,33 +83,41 @@
                     <div class="col-xxl-9">
                         </div>
                         <div class="row align-items-center justify-content-start">
-                            @foreach ($classes as $class)
-                            <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 disabled">
-                                <div class="back"></div>
-                                <div class="card custom-card class">
-                                    <div class="card-body">
-                                        <div class="position-relative mb-3 overflow-hidden rounded">
-                                            <img src="{{ route('userClasses.image', ['uuid' => $class->uuid]) }}" class="card-img rounded" style="height: 30vh" alt="dsa.">
-                                            <div class="nft-content">
-                                                <a class="fs-14 fw-bold text-fixed-white">{{$class->title}}</a>
-                                                <div class="d-flex mb-0 align-items-center flex-wrap gap-2 justify-content-between">
-                                                    <div> 
-                                                        <span class="fs-12 text-fixed-white d-block mb-1 op-8">Creado por</span>
-                                                        <span class="fw-medium text-fixed-white d-block lh-1">EgmaSolutions</span>
+                            @foreach ($keys as $key)
+                                @foreach ($classes[$key] as $class)
+                                <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="card custom-card class">
+                                        <div class="card-body">
+                                            <div class="position-relative mb-3 overflow-hidden rounded">
+                                                @if (!$class->allowed)
+                                                    <div class="disabled-video">
+                                                        <svg viewBox="0 0 8.4666669 8.4666669" id="svg8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg" fill="#fff" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs id="defs2"></defs> <g id="layer1" transform="translate(0,-288.53332)"> <path d="M 16 1 C 12.139297 1 9 4.1392882 9 8 L 9 13 L 7 13 A 1.0000999 1.0000999 0 0 0 6 14 L 6 30 A 1.0000999 1.0000999 0 0 0 7 31 L 25 31 A 1.0000999 1.0000999 0 0 0 26 30 L 26 14 A 1.0000999 1.0000999 0 0 0 25 13 L 23 13 L 23 8 C 23 4.1392882 19.860703 1 16 1 z M 16 3 C 18.787297 3 21 5.212674 21 8 L 21 13 L 11 13 L 11 8 C 11 5.212674 13.212703 3 16 3 z M 16 21.052734 A 0.99999992 0.99999992 0 0 1 17 22.052734 A 0.99999992 0.99999992 0 0 1 16 23.052734 A 0.99999992 0.99999992 0 0 1 15 22.052734 A 0.99999992 0.99999992 0 0 1 16 21.052734 z " id="rect864" style="color:#fff;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#fff;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#fff;solid-opacity:1;vector-effect:none;fill:#fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.99999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" transform="matrix(0.26458333,0,0,0.26458333,0,288.53332)"></path> </g> </g></svg>
+                                                    </div>
+                                                @endif
+                                                    
+                                                <img src="{{ route('userClasses.image', ['uuid' => $class->uuid]) }}" class="card-img rounded" style="height: 30vh" alt="dsa.">
+                                                <p class="mb-0 bg-secondary text-fixed-white nft-auction-time"> {{$class->level->name}} </p>
+                                                <div class="nft-content">
+                                                    <a class="fs-14 fw-bold text-fixed-white">{{$class->title}}</a>
+                                                    <div class="d-flex mb-0 align-items-center flex-wrap gap-2 justify-content-between">
+                                                        <div> 
+                                                            <span class="fs-12 text-fixed-white d-block mb-1 op-8">Creado por</span>
+                                                            <span class="fw-medium text-fixed-white d-block lh-1">EgmaSolutions</span>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="disabled-event"></div>
                                             </div>
-                                            <div class="disabled-event"></div>
-                                        </div>
-                                        <div class="d-grid">
-                                            <a href="{{ route('userClasses.view', ['uuid' => $class->uuid]) }}" class="btn btn-primary btn-wave {{$class->isAccessible ? '' : 'disabled-button'}}">
-                                                {{$class->isAccessible ? 'Ver' : 'Completa el nivel anterior'}}
-                                            </a>
+                                            <div class="d-grid">
+                                                <a href="{{ route('userClasses.view', ['uuid' => $class->uuid]) }}" class="btn btn-primary btn-wave {{!$class->allowed ? 'disabled-button' : ''}}">
+                                                    {{!$class->allowed ? 'Ver anteriores' : 'Ver'}}
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                @endforeach
+                                @endforeach
+                            @endforeach
                     </div>
             </div>
         </section>

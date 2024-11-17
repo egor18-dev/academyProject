@@ -8,6 +8,7 @@ use App\Models\Comments;
 use App\Models\Exam;
 use App\Models\Level;
 use App\Models\User;
+use App\Models\UserClass;
 use App\Models\UserVideoProgress;
 use App\Models\UserExam;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class ClassController extends Controller
         if (!auth()->user()->hasRole('Administrador|Editor')) {
             abort(403);
         }
-        
+
         $classes = ClassModel::with('media:id,model_id,collection_name')->get();
         $count = $classes->count();
 
@@ -65,130 +66,108 @@ class ClassController extends Controller
     }
 
     public function videos()
-{
-    if (!auth()->check()) {
-        abort(403);
-    }
+    {
+        if (!auth()->check()) {
+            abort(403);
+        }
 
-    $user = auth()->user();
+        $user = auth()->user();
 
-    if ($user->hasRole(['Administrador', 'Editor'])) {
-        $classes = ClassModel::with('media:id,model_id,collection_name')
-            ->orderByDesc('level_id')
-            ->get();
+        $userClasses = UserVideoProgress::where('user_id', $user->uuid)->pluck('class_id')->toArray();
 
-        foreach ($classes as $class) {
-            $class->description = Str::limit($class->description, 50, '...');
-            $class->isAccessible = true;
+        $classes = ClassModel::with('level')
+            ->select('classes.*', 'levels.name as level_name') 
+            ->join('levels', 'classes.level_id', '=', 'levels.uuid')
+            ->orderBy('levels.id')
+            ->orderBy('classes.id')
+            ->get()
+            ->groupBy('level_id');
+
+        $keys = $classes->keys();
+        $actualLevel = $keys->first();
+        $actualVideo = -1;
+
+        foreach($keys as $key)
+        {
+            $completed = true;
+
+            foreach($classes[$key] as $tempIndex => $class)
+            {
+                if(!in_array($class->uuid, $userClasses))
+                {
+                    $completed = false;
+                    $actualVideo = $tempIndex;
+                    $class->allowed = true;
+                    break;
+                }else{
+                    $class->allowed = true;
+                }
+            }
+
+            if(!$completed){
+                $actualLevel = $key;
+                break;
+            }
         }
 
         return $this->viewWithAuthName('classes.videos', [
             'classes' => $classes,
+            'keys' => $keys,
+            'actualLevel' => $actualLevel,
+            'actualVideo' => $actualVideo,
             'pendingExams' => [],
-            'count' => $classes->count(),
+            'count' => 0,
             'totalUsers' => User::count(),
         ]);
     }
 
-    $classes = ClassModel::with('media:id,model_id,collection_name')
-        ->orderByDesc('level_id')
-        ->get();
 
-    $watchedVideos = UserVideoProgress::where('user_id', $user->uuid)
-        ->pluck('class_id')
-        ->toArray();
-
-    $levels = $classes->groupBy('level_id')->sortKeysDesc();
-    $pendingExams = [];
-    $currentLevel = null;
-
-    foreach ($levels as $levelId => $levelClasses) {
-        $allWatched = $levelClasses->every(function ($class) use ($watchedVideos) {
-            return in_array($class->uuid, $watchedVideos);
-        });
-
-        if (!$allWatched) {
-            $currentLevel = $levelId;
-            break;
+    public function streamVideo($id)
+    {
+        if (!auth()->check()) {
+            abort(403);
         }
 
-        $examExists = Exam::where('level_id', $levelId)->exists();
-        if ($examExists) {
-            $examTaken = UserExam::where('user_id', $user->uuid)
-                ->whereHas('class', function ($query) use ($levelId) {
-                    $query->where('level_id', $levelId);
-                })
-                ->exists();
+        $class = ClassModel::findOrFail($id);
+        $video = $class->getFirstMedia('videos');
 
-            if (!$examTaken) {
-                $pendingExams[] = $levelId;
-                $currentLevel = $levelId;
-                break;
+        if ($video) {
+            $path = $video->getPath();
+
+            if (!file_exists($path)) {
+                abort(404, 'Video no encontrado');
             }
-        }
-    }
 
-    foreach ($classes as $index => $class) {
-        $class->description = Str::limit($class->description, 50, '...');
-        $class->isAccessible = $index == 0 || in_array($classes[$index - 1]->uuid, $watchedVideos);
-        $class->isWatched = in_array($class->uuid, $watchedVideos);
-    }
+            $size = filesize($path);
+            $start = 0;
+            $length = $size;
+            $status = 200;
+            $headers = [
+                'Content-Type' => 'video/mp4',
+                'Accept-Ranges' => 'bytes',
+            ];
 
-    return $this->viewWithAuthName('classes.videos', [
-        'classes' => $classes,
-        'pendingExams' => $pendingExams,
-        'count' => $classes->count(),
-        'totalUsers' => User::count(),
-    ]);
-}
+            if (isset($_SERVER['HTTP_RANGE'])) {
+                $range = $_SERVER['HTTP_RANGE'];
+                $range = str_replace('bytes=', '', $range);
+                $range = explode('-', $range);
+                $start = intval($range[0]);
+                $length = $size - $start;
+                $status = 206;
+                $headers['Content-Range'] = "bytes $start-" . ($size - 1) . "/$size";
+                $headers['Content-Length'] = $length;
+            }
 
-
-public function streamVideo($id)
-{
-    if (!auth()->check()) {
-        abort(403);
-    }
-
-    $class = ClassModel::findOrFail($id);
-    $video = $class->getFirstMedia('videos');
-
-    if ($video) {
-        $path = $video->getPath();
-
-        if (!file_exists($path)) {
-            abort(404, 'Video no encontrado');
+            return response()->stream(function () use ($path, $start, $length) {
+                $file = fopen($path, 'rb');
+                fseek($file, $start);
+                echo fread($file, $length);
+                fclose($file);
+            }, $status, $headers);
         }
 
-        $size = filesize($path);
-        $start = 0;
-        $length = $size;
-        $status = 200;
-        $headers = [
-            'Content-Type' => 'video/mp4',
-            'Accept-Ranges' => 'bytes',
-        ];
-
-        if (isset($_SERVER['HTTP_RANGE'])) {
-            $range = $_SERVER['HTTP_RANGE'];
-            $range = str_replace('bytes=', '', $range);
-            $range = explode('-', $range);
-            $start = intval($range[0]);
-            $length = $size - $start;
-            $status = 206;
-            $headers['Content-Range'] = "bytes $start-" . ($size - 1) . "/$size";
-            $headers['Content-Length'] = $length;
-        }
-
-        return response()->stream(function () use ($path, $start, $length) {
-            $file = fopen($path, 'rb');
-            fseek($file, $start);
-            echo fread($file, $length);
-            fclose($file);
-        }, $status, $headers);
+        abort(404, 'Video no encontrado');
     }
-
-    abort(404, 'Video no encontrado');
-}
 
     public function view($uuid)
     {
