@@ -10,7 +10,7 @@ class UserExam extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'level_id', 'passed'];
+    protected $fillable = ['user_id', 'level_id'];
 
     public function user()
     {

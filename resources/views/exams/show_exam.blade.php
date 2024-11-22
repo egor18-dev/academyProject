@@ -104,7 +104,9 @@
             clearInterval(timeInterval);
 
             if (!formChecked) {
+                const user_id = @json($user->uuid);
                 const questions = @json($exam->questions);
+                const level_id = @json($exam->level_id);
                 const userName = @json($user->name);
                 let correctAnswers = 0;
 
@@ -138,6 +140,25 @@
 
                 $('.bottom-exam').fadeIn(400);
                 formChecked = true;
+
+                if(percentMark >= 50){
+                    $.ajax({
+                    url: "/exams/completeExam", 
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        user_id: user_id,
+                        level_id: level_id
+                    },
+                    success: function(response) {
+                        console.log("Respuesta del servidor:", response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error en la petición:", status, error);
+                    }
+                });
+                }
+
             }
         });
     });

@@ -6,7 +6,7 @@
                         <p>
                             Para continuar, completa el siguiente examen. Lee cada pregunta con atención y responde según las indicaciones. Este paso es esencial para avanzar. ¡Buena suerte!
                         </p>
-                        <a href="{{ route('exams.showExam', ['uuid' => $pendingExams[0]]) }}" class="btn btn-white btn-sm">Hacer examen</a>
+                        <a href="{{ route('exams.showExam', ['uuid' => $pendingExams]) }}" class="btn btn-white btn-sm">Hacer examen</a>
                     </div>
                 @endif
                 <div class="row">

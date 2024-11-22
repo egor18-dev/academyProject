@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use App\Models\Level;
+use App\Models\UserExam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -149,8 +150,12 @@ class ExamController extends Controller
 
     public function showExam($uuid)
     {
-        $exam = Exam::where('level_id', $uuid)->first();
+        $exam = Exam::where('uuid', $uuid)->first();
         $user = auth()->user();
+
+        if(!$exam){
+            return redirect()->back()->withErrors(['error' => 'El examen no existe']);
+        }
 
         foreach($exam->questions as $tempExam){
             
@@ -165,5 +170,31 @@ class ExamController extends Controller
         $exam->questions = $exam->questions->shuffle();
 
         return view('exams.show_exam', ['exam' => $exam, 'user' => $user]);
+    }
+
+    public function completeExam(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,uuid',
+            'level_id' => 'required|exists:levels,uuid',
+        ], [
+            'user_id.required' => 'El usuario es obligatorio',
+            'user_id.exists' => 'El usuari seleccionado no es válido',
+            'level_id.required' => 'El nivel es obligatorio.',
+            'level_id.exists' => 'El nivel seleccionado no es válido.',
+        ]);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        UserExam::create([
+            'user_id' => $request->user_id,
+            'level_id' => $request->level_id
+        ]);
+
+        var_dump("Examen completado");
+        die;
     }
 }

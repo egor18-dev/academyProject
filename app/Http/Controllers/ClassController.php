@@ -116,8 +116,16 @@ class ClassController extends Controller
                     $hasQuestions = $levelHasExam->questions()->exists();
 
                     if($hasQuestions){
-                        $pendingExam = $levelHasExam->uuid;
-                        break;
+
+                        $examCompleted = UserExam::where('level_id', $class->level_id)
+                        ->where('user_id', $user->uuid) 
+                        ->first();
+
+                        if(!$examCompleted){
+                            $pendingExam = $levelHasExam->uuid;
+                            break;
+                        }
+                        
                     }
                 }
 

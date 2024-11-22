@@ -82,6 +82,7 @@ Route::group(['prefix' => 'exams'], function () {
     Route::put('/{uuid}', [ExamController::class, 'update'])->name('exams.update')->middleware('admin_or_editor');
     Route::delete('/{uuid}', [ExamController::class, 'delete'])->name('exams.delete')->middleware('admin_or_editor');
     Route::get('/{uuid}/showExam', [ExamController::class, 'showExam'])->name('exams.showExam');
+    Route::post('/completeExam', [ExamController::class, 'completeExam'])->name('exams.completeExam');
 });
 
 Route::group(['prefix' => 'exams/{examUuid}/questions'], function () {
