@@ -25,11 +25,23 @@ use App\Http\Controllers\ChatController;
 
 Route::get('/', function () {
     return view('main');
-});
+})->name('main');
 
 Route::get('/dashboard', function () {
-    return redirect()->to('/users');
+    return redirect()->to(path: '/users');
 });
+
+Route::get('/trading', function () {
+    return view('academyTrading');
+})->name('trading');
+
+Route::get('/cryptos', function () {
+    return view('academyCryptos');
+})->name('cryptos');
+
+Route::get('/academy', function () {
+    return view('academyInfo');
+})->name('academy');
 
 Route::group(['prefix' => 'users'], function () {
     Route::get('/', [UserController::class, 'index'])->name('users.index')->middleware('admin_or_editor');
@@ -44,10 +56,10 @@ Route::group(['prefix' => 'users'], function () {
 });
 
 Route::group(['prefix' => 'profile'], function () {
-    Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/{uuid}', [ProfileController::class, 'show'])->name('profile.show');
-    Route::get('/image/{uuid}', [ProfileController::class, 'serveImage'])->name('profile.image');
-    Route::put('/{uuid}', [UserController::class, 'update'])->name('profile.update');
+    Route::get('/', [ProfileController::class, 'index'])->name('profile.index')->middleware('auth');
+    Route::get('/{uuid}', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth');
+    Route::get('/image/{uuid}', [ProfileController::class, 'serveImage'])->name('profile.image')->middleware('auth');
+    Route::put('/{uuid}', [UserController::class, 'update'])->name('profile.update')->middleware('auth');
 });
 
 Route::group(['prefix' => 'levels'], function () {

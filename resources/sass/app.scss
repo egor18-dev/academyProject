@@ -15,6 +15,7 @@
 
 body {
     background-color: var(--backgroundColor) !important;
+    font-family: sans-serif !important;
 }
 
 .principalBtn {
@@ -25,7 +26,6 @@ body {
     border-radius: 5px;
     border: none;
 }
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 
 @import "variables";
 @import "switcher";

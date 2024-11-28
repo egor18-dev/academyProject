@@ -12,6 +12,13 @@
         position: relative;
         transition: 500ms all;
         overflow: hidden !important;
+        background-color: red;
+
+        h5{
+            transform: translateY(50%);
+            font-weight: 800 !important;
+            letter-spacing: 2px !important;
+        }
 
         &:hover {
             flex-grow: 2;
